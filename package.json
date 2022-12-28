@@ -1,0 +1,34 @@
+{
+  "name": "moopa",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next build && next export",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.3",
+    "@next/font": "13.0.7",
+    "apollo-client": "^2.6.10",
+    "apollo-link-http": "^1.5.17",
+    "eslint": "8.30.0",
+    "eslint-config-next": "13.0.7",
+    "gql": "^1.1.2",
+    "graphql": "^15.8.0",
+    "graphql-tag": "^2.12.6",
+    "isomorphic-unfetch": "^3.1.0",
+    "next": "13.0.7",
+    "next-themes": "^0.2.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "^6.5.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4"
+  }
+}
