@@ -23,6 +23,8 @@ function Navbar(props) {
     };
 
     const renderThemeChanger = () => {
+        
+        if(!mounted) return null;
 
         const currentTheme = theme === 'system' ? systemTheme : theme;
 
@@ -89,7 +91,7 @@ function Navbar(props) {
                             <Link href='/' className='font-karla font-bold text-[#8BA0B2] group-hover:text-cyan-700'>home</Link>
                         </button>
                         <button className='flex flex-col items-center group'>
-                            <Link href='/'>
+                            <Link href='/about'>
                             <svg width="27" height="25" viewBox="0 0 27 25" className="fill-[#8BA0B2] dark:fill-white group-hover:fill-cyan-700" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_224_292)">
                             <path d="M21.3402 0.5H5.65974C4.31427 0.500087 3.02394 0.996857 2.07261 1.88103C1.12127 2.7652 0.586852 3.96435 0.586914 5.21469V19.7853C0.586852 21.0356 1.12127 22.2348 2.07261 23.119C3.02394 24.0031 4.31427 24.4999 5.65974 24.5H21.3402C22.6856 24.4999 23.976 24.0031 24.9273 23.119C25.8786 22.2348 26.4131 21.0356 26.413 19.7853V5.21469C26.4131 3.96435 25.8786 2.7652 24.9273 1.88103C23.976 0.996857 22.6856 0.500087 21.3402 0.5ZM13.5 4.93182C13.8482 4.93182 14.1887 5.02779 14.4782 5.20759C14.7678 5.3874 14.9935 5.64297 15.1268 5.94197C15.2601 6.24098 15.2949 6.57 15.227 6.88742C15.159 7.20484 14.9913 7.49642 14.7451 7.72527C14.4988 7.95412 14.1851 8.10996 13.8435 8.1731C13.5019 8.23624 13.1479 8.20384 12.8261 8.07999C12.5043 7.95613 12.2293 7.7464 12.0358 7.4773C11.8424 7.2082 11.7391 6.89182 11.7391 6.56818C11.7391 6.13419 11.9246 5.71798 12.2548 5.4111C12.5851 5.10422 13.0329 4.93182 13.5 4.93182ZM15.9212 20.1364H11.2255C10.9142 20.1364 10.6156 20.0214 10.3954 19.8168C10.1753 19.6123 10.0516 19.3348 10.0516 19.0455C10.0516 18.7561 10.1753 18.4787 10.3954 18.2741C10.6156 18.0695 10.9142 17.9545 11.2255 17.9545H12.326V11.4091H11.2255C10.9142 11.4091 10.6156 11.2942 10.3954 11.0896C10.1753 10.885 10.0516 10.6075 10.0516 10.3182C10.0516 10.0289 10.1753 9.75138 10.3954 9.54679C10.6156 9.34221 10.9142 9.22727 11.2255 9.22727H14.6739V17.9545H15.9212C16.2325 17.9545 16.5311 18.0695 16.7512 18.2741C16.9714 18.4787 17.0951 18.7561 17.0951 19.0455C17.0951 19.3348 16.9714 19.6123 16.7512 19.8168C16.5311 20.0214 16.2325 20.1364 15.9212 20.1364Z"/>
@@ -101,7 +103,7 @@ function Navbar(props) {
                             </defs>
                             </svg>
                             </Link>
-                            <Link href='/' className='font-karla font-bold text-[#8BA0B2] group-hover:text-cyan-700'>about</Link>
+                            <Link href='/about' className='font-karla font-bold text-[#8BA0B2] group-hover:text-cyan-700'>about</Link>
                         </button>
                         <button className='flex flex-col items-center group '>
                             <div>
@@ -146,7 +148,7 @@ function Navbar(props) {
                      <Link href='/' className='hover:text-orange-600 px-3 py-2 transition-all duration-100'>home</Link>
                     </li>
                     <li>
-                     <Link href='/' className='hover:text-orange-600 p-2 transition-all duration-100'>about</Link>
+                     <Link href='/about' className='hover:text-orange-600 p-2 transition-all duration-100'>about</Link>
                     </li>
                     <li>
                      <Link href='/gallery' className='hover:text-orange-600 p-2 transition-all duration-100'>gallery</Link>

@@ -19,8 +19,8 @@ function Footer() {
               <div className='flex md:flex-row flex-col gap-10 md:gap-[5.94rem] font-karla font-bold'>
                 <ul className='flex flex-col gap-y-[0.7rem]'>
                   <li className='cursor-pointer hover:text-cyan-500'><a href='https://github.com/AniList/ApiV2-GraphQL-Docs'>API</a></li>
+                  <li className='cursor-pointer hover:text-cyan-500'><a href='/staff'>Staff</a></li>
                   <li className='cursor-pointer hover:text-cyan-500'>Recommendations</li>
-                  <li className='cursor-pointer hover:text-cyan-500'>Staff</li>
                   <li className='cursor-pointer hover:text-cyan-500'>Contact</li>
                 </ul>
                 <ul className='flex flex-col gap-y-[0.7rem]'>
@@ -40,10 +40,10 @@ function Footer() {
               </div>
               <div className='flex gap-[0.69rem]'>
                 <div>
-                  <a href='https://twitter.com/Factivens'><Twitter /></a>
+                  <a href='https://twitter.com/Factivens'><Twitter className="fill-[#4CFFFF]"/></a>
                 </div>
                 <div>
-                  <a href='https://www.instagram.com/dvnabny/'><Instagram /></a>
+                  <a href='https://www.instagram.com/dvnabny/'><Instagram className="fill-white"/></a>
                 </div>
               </div>
             </div>
