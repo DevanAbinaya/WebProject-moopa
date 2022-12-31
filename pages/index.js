@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import Chisato from '../components/chisato';
@@ -58,7 +59,7 @@ export default function Home() {
         </section>
 
         <section className='flex items-center justify-center bg-[#f9d9c8]'>
-          <div className='drop-shadow-2xl'><img src='https://cdn.discordapp.com/attachments/995564386540326933/1055495735589748797/another.png' alt='/' width={1440} height={810}/></div>
+          <div className='drop-shadow-2xl'><Image src='https://cdn.discordapp.com/attachments/995564386540326933/1055495735589748797/another.png' alt='/' width={1440} height={810}/></div>
         </section>
 
         <Footer />

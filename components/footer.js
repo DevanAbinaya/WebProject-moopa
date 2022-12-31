@@ -1,6 +1,7 @@
 import Twitter from '../components/twitter';
 import Instagram from '../components/instagram';
-import Copyright from '../components/copyright';
+import Link from 'next/link';
+import Image from 'next/image';
 
 function Footer() {
     return (
@@ -9,17 +10,17 @@ function Footer() {
             
             <div className='md:flex md:flex-col md:gap-y-[3.88rem]'>
               <h1 className='text-[2.56rem] font-outfit'>moopa</h1>
-              <p className='text-[0.81rem] font-karla text-[#CCCCCC] flex items-center gap-1'><Copyright />2022  eucrypt.my.id    |    Website Made by Factiven</p>
+              <p className='text-[0.81rem] font-karla text-[#CCCCCC] flex items-center gap-1'>&copy; {new Date().getFullYear()}  eucrypt.my.id    |    Website Made by Factiven</p>
             </div>
-            <div>
-              <img src='http://i1210.photobucket.com/albums/cc417/kusanagiblog/NarutoVSSasuke.gif' alt='gambar' title='request nya rapip yulistian' />
+            <div className=''>
+              <Image src='http://i1210.photobucket.com/albums/cc417/kusanagiblog/NarutoVSSasuke.gif' alt='gambar' title='request nya rapip yulistian' width={210} height={85} />
             </div>
             
             <div className='flex md:flex-row flex-col gap-10 md:gap-[9.06rem] md:items-end '>
               <div className='flex md:flex-row flex-col gap-10 md:gap-[5.94rem] font-karla font-bold'>
                 <ul className='flex flex-col gap-y-[0.7rem]'>
                   <li className='cursor-pointer hover:text-cyan-500'><a href='https://github.com/AniList/ApiV2-GraphQL-Docs'>API</a></li>
-                  <li className='cursor-pointer hover:text-cyan-500'><a href='/staff'>Staff</a></li>
+                  <li className='cursor-pointer hover:text-cyan-500'><Link href='/staff'>Staff</Link></li>
                   <li className='cursor-pointer hover:text-cyan-500'>Recommendations</li>
                   <li className='cursor-pointer hover:text-cyan-500'>Contact</li>
                 </ul>

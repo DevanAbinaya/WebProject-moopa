@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import { useState } from "react";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
@@ -10,7 +11,9 @@ export default function Staff() {
 
     const dev = { 
         name: 'Factiven', 
-        desc: '“Cupidatat adipisicing non duis adipisicing eu eiusmod ipsum.”',
+        desc: '“Bawah gw gay”',
+        coverImage: "https://cdn.discordapp.com/attachments/986579286397964290/1058308027075276890/1160925.jpg",
+        iClass: "bg-center rounded-t-lg",
         socials: {
             twitter: "https://twitter.com/Factivens",
             ig: "https://www.instagram.com/dvnabny/",
@@ -45,11 +48,10 @@ export default function Staff() {
         }
       }
 
-    const devCard = () => {
+    const DevCard = () => {
         return (
-                <div className="xl:mx-28 xl:scale-100 scale-[87%]">
-                    <div className="xl:w-[38rem] overflow-hidden shrink-0">
-                        <img src="https://cdn.discordapp.com/attachments/986579286397964290/1058308027075276890/1160925.jpg" alt="Profile Picture" className="object-cover h-[116px] w-full rounded-t-lg"/>
+                <div className="xl:mx-28 xl:scale-100 scale-95 antialiased">
+                    <div className={`xl:w-[38rem] h-[116px] bg-cover shrink ${dev.iClass}`} style={{ backgroundImage: `url(${dev.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`})`}}>
                     </div>
                     <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#212121] shadow-md rounded-b-[10px] gap-8">
                         <div>
@@ -75,7 +77,7 @@ export default function Staff() {
                                             <svg width="28" height="26" viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M26.524 3.63947C23.2599 8.42076 13.4283 18.0917 13.4283 18.0917L13.4244 18.0879C13.4013 18.1128 13.3804 18.1388 13.3557 18.1632C12.7377 18.7709 11.8993 19.0168 11.0939 18.9231C11.3529 19.9913 11.0796 21.164 10.2533 21.9987C10.2533 21.9987 6.11896 27.0357 1.53711 23.8621C1.53711 23.8621 4.00781 23.1801 4.22278 21.216C4.22278 21.216 3.89291 19.2368 5.70663 17.4027C6.51975 16.5804 7.65724 16.2982 8.70017 16.5382C8.6166 15.756 8.86675 14.9457 9.47591 14.3461C9.5001 14.3217 9.52704 14.3011 9.55233 14.2778L9.54848 14.274C9.54848 14.274 19.3741 4.59768 24.2342 1.38614C24.8774 0.932763 25.7757 0.985847 26.353 1.55406C26.9319 2.12335 26.9852 3.00681 26.524 3.63947ZM9.488 18.1383C9.08007 17.7363 8.55118 17.5072 7.98546 17.5072C7.41754 17.5072 6.88095 17.7326 6.47687 18.1415C5.08318 19.5509 5.29209 21.1662 5.29759 21.2166C5.17774 22.3107 4.54824 23.2429 3.89181 23.8036C4.12382 23.8453 4.35857 23.8664 4.59827 23.8664C7.20972 23.8664 9.40993 21.3422 9.43027 21.3184C9.43082 21.3184 10.9361 19.5656 9.488 18.1383ZM9.78378 16.2543C9.78378 16.6855 9.94267 17.0918 10.2533 17.3967C10.5639 17.7022 10.9944 17.8793 11.4331 17.8793C11.8718 17.8793 12.2682 17.7028 12.569 17.4059L13.4233 16.5555C13.4667 16.5116 13.5261 16.4521 13.574 16.4038L11.2665 14.1305C11.216 14.1787 11.1538 14.2377 11.1087 14.2816L10.2527 15.1141C9.94267 15.4186 9.78378 15.8232 9.78378 16.2543ZM25.5767 2.3216C25.4398 2.18672 25.2798 2.16668 25.1957 2.16668C25.0792 2.16668 24.9681 2.20135 24.8466 2.28693C21.4281 4.54568 14.9511 10.6107 12.0362 13.3927L14.3228 15.6455C17.1486 12.7768 23.3193 6.39222 25.6306 3.00735C25.7867 2.79393 25.7642 2.50522 25.5767 2.3216Z" className="fill-black dark:fill-white"/>
                                             </svg>
-                                            <span className="tooltiptext absolute bottom-10 -right-11 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">Lead Design</span>
+                                            <span className="tooltiptext absolute bottom-10 -right-11 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">Lead Designer</span>
                                         </div>
                                     </div>
                             </div>
@@ -115,12 +117,26 @@ export default function Staff() {
     }
 
     const staff = [
+        { 
+            id: 1, 
+            name: "rapiips_", 
+            desc: "Time is precious, waste it wisely", 
+            coverImage: "https://cdn.discordapp.com/attachments/986579286397964290/1058330187286204416/cute-anime-girl-blushing-4k-wallpaper-uhdpaper.com-230h.jpg",
+            iClass: "bg-center",
+            socials: {
+                ig: "https://www.instagram.com/rapiips_/",
+                discord: "Pipip#5048"
+            },
+            tags: {
+                moral: "Pendukung Moral"
+            }
+        },
         {
-            id: 1,
+            id: 2,
             name: "Isantuyskl", 
-            desc: "“Sedang mencari.”", 
+            desc: "Sedang mencari.", 
             coverImage: "https://cdn.discordapp.com/attachments/986579286397964290/1058420833376280656/23264b905fcd7ed378a6b3c5d8f2a047_7598772829043055595.png",
-            iClass: "dark:brightness-90",
+            iClass: "",
             socials: {
                 ig: "https://www.instagram.com/isantuyskl/",
                 discord: "X-San#5418"
@@ -130,23 +146,10 @@ export default function Staff() {
                 design: "Idea Proposer"
             }
         },
-        { 
-            id: 2, 
-            name: "rapiips_", 
-            desc: "“Time is precious, waste it wisely”", 
-            coverImage: "https://cdn.discordapp.com/attachments/986579286397964290/1058330187286204416/cute-anime-girl-blushing-4k-wallpaper-uhdpaper.com-230h.jpg",
-            iClass: "object-center dark:brightness-90",
-            socials: {
-                ig: "https://www.instagram.com/rapiips_/",
-                discord: "Pipip#5048"
-            },
-            tags: {
-                moral: "Pendukung Moral"
-            }
-        },
       ];
-    const staffCard = () => {
-        const [copySuccess, setCopySuccess] = useState('');
+
+const StaffCard = () => {
+const [copySuccess, setCopySuccess] = useState('');
 
 // your function to copy here
 
@@ -160,13 +163,13 @@ export default function Staff() {
   };
         
         return (
-                <div className="flex flex-col flex-wrap xl:flex-row xl:gap-20 gap-10 xl:mx-28 xl:scale-100 scale-[87%]">
+                <div className="flex flex-col flex-wrap xl:flex-row xl:gap-20 gap-20 xl:mx-28 xl:scale-100 scale-95 antialiased">
                     {staff.map(post => (
                         <div key={post.id}>
-                            <div className="xl:w-[38rem] overflow-hidden shrink">
-                                <img src={post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`} alt="Profile Picture" className={`object-cover object-[center_top] h-[116px] w-full rounded-t-lg ${post.iClass}`}/>
+                            <div className={`xl:w-[38rem] h-[116px] bg-cover shrink dark:brightness-90 rounded-t-lg ${post.iClass}`} style={{ backgroundImage: `url(${post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`})`}}>
+                                {/* <img src={post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`} alt="Profile Picture" className={`object-cover object-[center_top] h-[116px] w-full rounded-t-lg ${post.iClass}`}/> */}
                             </div>
-                            <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#212121] shadow-md rounded-b-[10px] gap-8">
+                            <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#212121] shadow-md rounded-b-lg gap-8">
                                 <div>
                                 <div className="flex justify-between items-center">
                                     <h1 className="font-karla font-bold text-[30px]">{post.name}</h1>
@@ -231,7 +234,7 @@ export default function Staff() {
                                     
                                 </div>
                             </div>
-                            <p className="font-robot font-light italic text-xl">{post.desc || 'description not provided'}</p>
+                            <p className="font-robot font-light italic text-xl">“{post.desc || 'description not provided'}”</p>
                     {post.socials && 
                         
                         <div className="pt-3">
@@ -277,20 +280,20 @@ export default function Staff() {
 
             <Navbar className="dark:bg-black"/>
             
-            <section className="h-auto flex flex-col xl:gap-16 gap-10 bg-[#F9F9F9] dark:bg-[#121212] p-5 xl:px-20 xl:py-10">
+            <section className="h-auto flex flex-col xl:gap-16 gap-10 bg-[#F9F9F9] dark:bg-[#121212] p-5 pt-10 xl:px-20 xl:py-10">
                 <div>
-                    <h1 className="font-roboto font-bold italic text-[23px]  dark:text-gray-300">MAIN CHARACTER</h1>
+                    <h1 className="font-roboto font-bold italic text-[23px]  dark:text-gray-200">MAIN CHARACTER</h1>
                 </div>
 
             {/* MAIN CHAR */}
-                {devCard()}
+                {DevCard()}
 
                 <div>
-                    <h1 className="font-roboto font-bold italic text-[23px] dark:text-gray-300">SIDE CHARACTER</h1>
+                    <h1 className="font-roboto font-bold italic text-[23px] dark:text-gray-200">SIDE CHARACTER</h1>
                 </div>
 
             {/* SIDE CHAR */}
-                {staffCard()}
+                {StaffCard()}
                 
             </section>
 
