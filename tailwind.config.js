@@ -6,7 +6,15 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+     
+      textColor: {
+        'gray-500': '#6c757d',
+      },
+      fontWeight: {
+        'bold': '700',
+      },
+    },
     fontFamily: {
       outfit: ["Outfit", "sans-serif"],
       karla: ["Karla", "sans-serif"],
@@ -17,8 +25,11 @@ module.exports = {
     extend: {
       display: ['group-focus'],
       opacity: ['group-focus'],
-      inset: ['group-focus']
+      inset: ['group-focus'],
+      backgroundImage: ['dark']
     },
+    textColor: ['responsive', 'hover', 'focus'],
+    fontWeight: ['responsive', 'hover', 'focus'],
   },
   plugins: [
   ],

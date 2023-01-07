@@ -17,8 +17,8 @@ export default function Home() {
       <main className='w-screen'>
         {/* <Hamburger className="fixed bottom-0 right-0" /> */}
         
-        <div className='bg-gradient-to-br from-slate-100 to-[#f9d9c8] text-black dark:bg-gradient-to-br dark:from-[#11161d] dark:to-[#11161d]'>
-        <Navbar className="dark:bg-black dark:text-white" />
+        <div className='bg-white dark:bg-slate-900'>
+        <Navbar className="text-black dark:bg-none dark:text-white" />
   
           <section className='h-[59.06rem] w-screen flex items-center justify-center'>
             <div className='flex flex-col gap-y-20 md:pb-0 pb-32 justify-center items-center'>
@@ -41,7 +41,7 @@ export default function Home() {
                   <a>MORE</a>
                 </div>
               </h1>
-              <Start />
+              <a href='https://eucrypt.my.id/capybara'><Start /></a>
             </div>
           </section>
         </div>
@@ -58,10 +58,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className='flex items-center justify-center bg-[#f9d9c8]'>
+        <section className='flex items-center justify-center'>
           <div className='drop-shadow-2xl'><Image src='https://cdn.discordapp.com/attachments/995564386540326933/1055495735589748797/another.png' alt='/' width={1440} height={810}/></div>
         </section>
-
         <Footer />
       </main>
     </>

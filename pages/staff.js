@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useState } from "react";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Twitter from "../components/twitter";
 import Instagram from "../components/instagram";
 import Discord from "../components/discord";
+import AniList from "../components/aniList";
 
 export default function Staff() {
 
@@ -17,7 +17,8 @@ export default function Staff() {
         socials: {
             twitter: "https://twitter.com/Factivens",
             ig: "https://www.instagram.com/dvnabny/",
-            discord: "Factiven#9110"
+            discord: "Factiven#9110",
+            aniList: "https://anilist.co/user/DevanAbinaya/"
         }
     
     }
@@ -91,18 +92,23 @@ export default function Staff() {
                             <div className="flex scale-90 gap-5">
                                 {dev.socials.twitter && 
                                     <div>
-                                        <a href={dev.socials.twitter}><Twitter className="fill-[#585858]"/></a>
+                                        <a href={dev.socials.twitter}><Twitter className="fill-[#585858] "/></a>
                                     </div>
                                 }
                                 {dev.socials.ig && 
                                     <div className="pt-[1px]">
-                                        <a href={dev.socials.ig}><Instagram className='fill-[#585858]'/></a>
+                                        <a href={dev.socials.ig}><Instagram className='fill-[#585858] '/></a>
                                     </div>
                                 }
                                 {dev.socials.discord && 
                                     <div className="pl-[1px] pt-[2px] scale-95 relative inline-block">
-                                        <a onClick={handleClickDev}><Discord className="fill-[#585858]" /></a>
+                                        <a onClick={handleClickDev}><Discord className="fill-[#585858] " /></a>
                                         {copied && <span className="absolute bottom-12  py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">Discord Tag copied to clipboard</span>}
+                                    </div>
+                                }
+                                {dev.socials.aniList && 
+                                    <div className="pt-[2px] xl:pt-[5px] ">
+                                        <a href={dev.socials.aniList}><AniList /></a>
                                     </div>
                                 }
                             </div>
@@ -139,12 +145,13 @@ export default function Staff() {
             iClass: "",
             socials: {
                 ig: "https://www.instagram.com/isantuyskl/",
-                discord: "X-San#5418"
+                discord: "X-San#5418",
+                aniList: "https://anilist.co/user/isantuyskl/"
             },
             tags: {
                 moral: "Pendukung Moral",
                 design: "Idea Proposer"
-            }
+            },
         },
       ];
 
@@ -166,7 +173,7 @@ const [copySuccess, setCopySuccess] = useState('');
                 <div className="flex flex-col flex-wrap xl:flex-row xl:gap-20 gap-20 xl:mx-28 xl:scale-100 scale-95 antialiased">
                     {staff.map(post => (
                         <div key={post.id}>
-                            <div className={`xl:w-[38rem] h-[116px] bg-cover shrink dark:brightness-90 rounded-t-lg ${post.iClass}`} style={{ backgroundImage: `url(${post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`})`}}>
+                            <div className={`xl:w-[38rem] h-[116px] bg-cover shrink dark:brightness-95 rounded-t-lg ${post.iClass}`} style={{ backgroundImage: `url(${post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`})`}}>
                                 {/* <img src={post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`} alt="Profile Picture" className={`object-cover object-[center_top] h-[116px] w-full rounded-t-lg ${post.iClass}`}/> */}
                             </div>
                             <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#212121] shadow-md rounded-b-lg gap-8">
@@ -238,24 +245,29 @@ const [copySuccess, setCopySuccess] = useState('');
                     {post.socials && 
                         
                         <div className="pt-3">
-                            <div className="flex gap-4 items-center">
-                            <div className="flex scale-90 gap-5">
+                            <div className="flex gap-4 items center ">
+                            <div className="flex scale-90 gap-5 ">
                                 {post.socials.twitter && 
                                     <div>
-                                        <a href={post.socials.twitter}><Twitter className="fill-[#585858]"/></a>
+                                        <a href={post.socials.twitter}><Twitter className="fill-[#585858] "/></a>
                                     </div>
                                 }
                                 {post.socials.ig && 
                                     <div className="pt-[1px]">
-                                        <a href={post.socials.ig}><Instagram className='fill-[#585858]'/></a>
+                                        <a href={post.socials.ig}><Instagram className='fill-[#585858] '/></a>
                                     </div>
                                 }
                                 {post.socials.discord && 
                                     <div className="pl-[1px] pt-[2px] scale-95 tooltip relative inline-block">
-                                        <a onClick={() => copyStaff(post.socials.discord)}><Discord className="fill-[#585858]" /></a>
-                                        <span className="tooltiptext absolute bottom-12 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">Tap to copy Discord Tag</span>
+                                        <a onClick={() => copyStaff(post.socials.discord)}><Discord className="fill-[#585858] " /></a>
+                                        <span className="tooltiptext  absolute bottom-12 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">Tap to copy Discord Tag</span>
                                     </div>
                                 }
+                                {post.socials.aniList && 
+                                    <div className="pt-[2px] xl:pt-[5px] ">
+                                        <a href={post.socials.aniList}><AniList /></a>
+                                    </div>
+                                } 
                             </div>
                             </div>
                         </div>

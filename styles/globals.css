@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 ::-webkit-scrollbar {
   width: 0;  /* Remove scrollbar space */
   background: transparent;  /* Optional: just make scrollbar invisible */
@@ -24,6 +23,10 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+.nav-hidden {
+  top: -100%;
 }
 
 /* :root {
