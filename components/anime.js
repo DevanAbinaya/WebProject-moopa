@@ -66,7 +66,7 @@ const Anime = ({ searchQuery = "overlord" }) => {
 
         const cleanDesc = truncateDescription(anime.description?.replace(/<br\s*[\/]?>/gi, ' ').replace(/<i>/g, '<em>').replace(/<\/i>/g, '</em>'), MAX_LENGTH);
         return (
-          <div key={anime.id} className='items-center h-auto w-full overflow-hidden max-w-md mx-auto md:max-w-[100rem] shadow-lg rounded-xl  dark:bg-[#212121] bg-white'>
+          <div key={anime.id} className='items-center transition-colors duration-500 h-auto w-full overflow-hidden max-w-md mx-auto md:max-w-[100rem] shadow-lg rounded-xl  dark:bg-[#212121] bg-white'>
           <div className='md:flex items-center '>
             <div className='md:shrink-0 flex justify-end relative '>
               <img className='absolute scale-50 md:hidden z-10 shadow-xl object-cover rounded-lg top-[-20px]' src={anime.coverImage.large} alt={anime.title.english} height='' />

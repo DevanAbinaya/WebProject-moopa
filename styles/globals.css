@@ -29,6 +29,14 @@
   top: -100%;
 }
 
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* :root {
   --max-width: 1100px;
   --border-radius: 12px;

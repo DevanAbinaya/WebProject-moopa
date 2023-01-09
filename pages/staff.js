@@ -2,10 +2,10 @@ import Head from "next/head";
 import { useState } from "react";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
-import Twitter from "../components/twitter";
-import Instagram from "../components/instagram";
-import Discord from "../components/discord";
-import AniList from "../components/aniList";
+import Twitter from "../components/media/twitter";
+import Instagram from "../components/media/instagram";
+import Discord from "../components/media/discord";
+import AniList from "../components/media/aniList";
 
 export default function Staff() {
 

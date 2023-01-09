@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    domains: [
+      'tenor.com'
+    ],
     unoptimized: true
   },
   trailingSlash: true

@@ -1,5 +1,5 @@
-import Twitter from '../components/twitter';
-import Instagram from '../components/instagram';
+import Twitter from './media/twitter';
+import Instagram from './media/instagram';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -18,10 +18,10 @@ function Footer() {
             
             <div className='flex md:flex-row flex-col gap-10 md:gap-[9.06rem] md:items-end '>
               <div className='flex md:flex-row flex-col gap-10 md:gap-[5.94rem] font-karla font-bold'>
-                <ul className='flex flex-col gap-y-[0.7rem]'>
+                <ul className='flex flex-col gap-y-[0.7rem] '>
                   <li className='cursor-pointer hover:text-cyan-500'><a href='https://github.com/AniList/ApiV2-GraphQL-Docs'>API</a></li>
                   <li className='cursor-pointer hover:text-cyan-500'><Link href='/staff'>Staff</Link></li>
-                  <li className='cursor-pointer hover:text-cyan-500'>Recommendations</li>
+                  <li className='cursor-pointer hover:text-cyan-500'><Link href='/wip'>Recommendations</Link></li>
                   <li className='cursor-pointer hover:text-cyan-500'>Contact</li>
                 </ul>
                 <ul className='flex flex-col gap-y-[0.7rem]'>

@@ -127,7 +127,7 @@ function Navbar(props) {
                         </button>
                         <button className='flex flex-col items-center group gap-y-[1px]'>
                             {renderThemeChanger()}
-                            <Link href='' className='font-karla font-bold text-[#8BA0B2] group-hover:text-cyan-700'>theme</Link>
+                            <div className='font-karla font-bold text-[#8BA0B2] group-hover:text-cyan-700'>theme</div>
                         </button>
                     </div>
                     <button onClick={handleHideClick}>
