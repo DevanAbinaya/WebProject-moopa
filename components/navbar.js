@@ -52,7 +52,7 @@ function Navbar(props) {
     
 
     return (
-    <header className={props.className}>
+    <header className={`${props.className}`}>
         <div className='flex justify-between items-center w-auto md:w-[80%] md:mx-auto h-16 md:px-0 px-5'>
             <div className='text-4xl md:block font-outfit font-semibold pb-2'>
                 <Link href='/'>
@@ -62,8 +62,8 @@ function Navbar(props) {
             
             {/* Mobile Hamburger */}
             {!isVisible && (
-                <button onClick={handleShowClick} className='md:hidden dark:bg-[#212831] fixed bottom-[47px] flex justify-center items-center right-[47px] bg-[#FBFBFB] w-[65px] h-[66px] cursor-pointer rounded-[10px] shadow-lg z-50' id='bars'>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-[48px] w-[61.5px] text-[#8BA0B2] dark:fill-orange-500" viewBox="0 0 20 20" fill="currentColor">
+                <button onClick={handleShowClick} className='md:hidden dark:bg-[#101925] fixed bottom-[30px] flex justify-center items-center right-[20px] bg-[#FBFBFB] w-[50px] h-[51px] cursor-pointer rounded-[8px] shadow-light dark:shadow-menu z-[100]' id='bars'>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-[42px] w-[61.5px] text-[#8BA0B2] dark:fill-orange-500" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                     </svg>
                 </button>
@@ -71,9 +71,9 @@ function Navbar(props) {
             
 
             {/* Mobile Menu */}
-            <div className={`transition-all duration-300 ${fade ? "opacity-100" : "opacity-0"} z-50`}>
+            <div className={`transition-all duration-500 ${fade ? "opacity-100" : "opacity-0"} z-50`}>
                 {isVisible && (
-                    <div className='md:hidden text-[11px] flex justify-center items-center gap-8 bg-[#FBFBFB] dark:bg-[#212831] w-[320px] h-[66px] fixed bottom-[47px] right-[47px] rounded-[10px] shadow-lg z-50'>
+                    <div className='md:hidden dark:shadow-menu shadow-light text-[11px] flex justify-center items-center gap-8 bg-[#FBFBFB] dark:bg-[#101925] w-[320px] h-[66px] fixed bottom-[25px] right-[15px] rounded-[10px] z-50'>
                     <div className='flex gap-7'>
                         <button className='flex flex-col items-center group'>
                             <Link href='/' className=''>

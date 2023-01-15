@@ -21,7 +21,7 @@ function Footer() {
                 <ul className='flex flex-col gap-y-[0.7rem] '>
                   <li className='cursor-pointer hover:text-cyan-500'><a href='https://github.com/AniList/ApiV2-GraphQL-Docs'>API</a></li>
                   <li className='cursor-pointer hover:text-cyan-500'><Link href='/staff'>Staff</Link></li>
-                  <li className='cursor-pointer hover:text-cyan-500'><Link href='/wip'>Recommendations</Link></li>
+                  <li className='cursor-pointer hover:text-cyan-500'><Link href='/recommendation'>Recommendations</Link></li>
                   <li className='cursor-pointer hover:text-cyan-500'>Contact</li>
                 </ul>
                 <ul className='flex flex-col gap-y-[0.7rem]'>

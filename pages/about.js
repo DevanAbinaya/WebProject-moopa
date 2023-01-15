@@ -1,20 +1,19 @@
-import Footer from "../components/footer";
-import Navbar from "../components/navbar";
 import Head from "next/head";
+import Layout from "../components/layout";
 import UnderConstruction from "../components/underConst";
 
 export default function About() {    
     return (
-        <section>
-            <Head>
+        <>
+        <Head>
             <title>Moopa - About</title>
             <meta name="about" content="About this web" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/c.svg" />
-            </Head>
-            <Navbar className="md:px-5 md:pt-5" />
+        </Head>
+        <Layout>
             <UnderConstruction />
-            <Footer />
-        </section>
+        </Layout>
+        </>
     )
 }
