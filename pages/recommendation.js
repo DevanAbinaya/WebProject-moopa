@@ -14,12 +14,7 @@ export default function Reco() {
             <link rel="icon" href="/c.svg" />
             </Head>
             <Layout>
-            {/* <UnderConstruction /> */}
-            <div className="relative max-w-screen pt-nav overflow-hidden">
-                <div className="h-screen relative flex gap-6 justify-center items-center snap-x snap-mandatory overflow-x-auto duration-500">
-                <Link href='#'>Let's go to /[mango]/[yes].js</Link>
-                </div>
-            </div>
+            <UnderConstruction />
             </Layout>
         </>
     )

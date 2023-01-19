@@ -8,7 +8,7 @@ function Start(props) {
   
     // onClick={handleClick}
     return (
-      <button type="button" className={`text-3xl bg-[#8589EA] hover:bg-[#6D73F3] text-white w-[165px] h-[42px] rounded-full text-center shadow-md ${props.className}`}><Link href='/beta/search'>START</Link></button>
+      <Link href='/beta/search'><button type="button" className={`text-3xl bg-[#8589EA] hover:bg-[#6D73F3] text-white w-[165px] h-[42px] rounded-full text-center shadow-md ${props.className}`}>START</button></Link>
     );
   }
   
