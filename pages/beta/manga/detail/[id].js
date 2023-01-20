@@ -1,7 +1,7 @@
 import Layout from "../../../../components/layout";
 import React, { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Chapter(props) {
     // console.log(props);
@@ -19,61 +19,72 @@ const itemsperPage = 10;
     const endIndex = startIndex + itemsperPage;
 
     return (
-        <Layout>
-            <div className="pt-[5.5rem] md:w-[1600px] min-h-screen relative flex flex-col">
-            {manga && (
-                    <div className="flex flex-col md:gap-20 gap-10">
-
-                        {/* PC/Tablet */}
-                        <div className="md:flex hidden flex-col md:flex-row gap-10 items-start md:pt-nav"><img className="md:w-[225px] md:h-[336px] w-52 h-52 object-cover" src={manga.thumb} alt={manga.title} />
-                            <div className="flex flex-col gap-10">
-                                <h1 className="md:text-5xl font-karla">{manga.title}</h1>
-                                <p className="">{manga.synopsis}</p>
-                            </div>
-                        </div>
-
-                        {/* Mobile */}
-                        <div className="flex flex-col gap-3 md:hidden">
-                            <div className='md:shrink-0 flex justify-end relative '>
-                                <img className='absolute h-[125px] w-[90px] md:hidden z-10 shadow-xl object-cover rounded-lg top-[2rem] right-[1.5rem]' src={manga.thumb} alt={manga.title} />
-                                <img className='h-[7rem] w-full object-cover md:h-[312px] md:w-[224px] md:blur-none blur-[1px] z-0' src={manga.thumb} alt={manga.title} />
-                            </div>
-                            <div className="px-2 flex flex-col gap-7">
-                                <h1 className="font-bold font-karla w-64 text-xl">{manga.title}</h1>
-                                <p className="font-robot font-light text-sm px-4 inline" ref={synopsisRef}>{manga && manga.synopsis && manga.synopsis.substring(0, 150)} {showFull && <p>{manga.synopsis}</p>} <button className="font-bold " onClick={() => {setShowFull(!showFull)}}>{showFull ? 'Read Less' : 'Read More...'}</button></p>
-                                {/* <p className="font-robot font-light text-sm px-4">{data.synopsis}</p> */}
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col md:gap-16 gap-10 md:px-0 px-3 justify-between h-[70vh]">
-                            <div className="flex flex-col md:gap-16 gap-10">
-                                <h1 className="md:text-4xl font-bold font-outfit">CHAPTERS</h1>
-                                <div className="flex flex-col gap-5 md:text-2xl">
-                                    {manga && Array.isArray(manga.chapter) && manga.chapter.slice(startIndex, endIndex).map(({ chapter_title, chapter_endpoint }, index) => {
-                                        return (
-                                        <div key={index} className=''>
-                                            <Link href={`/beta/manga/chapter/[chapter]`} as={`/beta/manga/chapter/${chapter_endpoint}`} >
-                                            <p>{chapter_title}</p>
-                                            </Link>
-                                        </div>
-                                        )
-                                    })}
+        <>
+            <Head>
+            <title>Moopa - Details</title>
+            <meta name="Detail" content="Detail information about the Manga" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="icon" href="/c.svg" />
+          </Head>
+            <Layout>
+                <div className="md:pt-[5.5rem] pt-[3rem] md:w-[1600px] min-h-screen relative flex flex-col">
+                {manga && (
+                        <>
+                            <div className="flex flex-col relative md:gap-20 gap-10 mt-4 pb-10">
+                                <div className="absolute top-[10px] "><a className="text-xl font-karla" href="/beta/search">{'<'}  Back to search page</a></div>
+                                {/* PC/Tablet */}
+                                <div className="md:flex hidden flex-col md:flex-row gap-10 items-start md:pt-nav"><img className="md:w-[225px] md:h-[336px] w-52 h-52 object-cover" src={manga.thumb} alt={manga.title} />
+                                    <div className="flex flex-col gap-10">
+                                        <h1 className="md:text-5xl font-karla font-bold">{manga.title}</h1>
+                                        <p className="">{manga.synopsis}</p>
+                                    </div>
                                 </div>
+        
+                                {/* Mobile */}
+                                <div className="flex flex-col gap-3 md:hidden">
+                                    <div className='md:shrink-0 flex justify-end relative '>
+                                        <img className='absolute h-[125px] w-[90px] md:hidden z-10 shadow-xl object-cover rounded-lg top-[2rem] right-[1.5rem]' src={manga.thumb} alt={manga.title} />
+                                        <img className='h-[7rem] w-full object-cover md:h-[312px] md:w-[224px] md:blur-none blur-[1px] z-0' src={manga.thumb} alt={manga.title} />
+                                    </div>
+                                    <div className="px-2 flex flex-col gap-7">
+                                        <h1 className="font-bold font-outfit w-64 text-2xl">{manga.title}</h1>
+                                        <p className="font-robot font-light text-sm px-4 inline" ref={synopsisRef}>{manga && manga.synopsis && manga.synopsis.substring(0, 150)} {showFull && <p>{manga.synopsis}</p>} <button className="font-bold " onClick={() => {setShowFull(!showFull)}}>{showFull ? 'Read Less' : 'Read More...'}</button></p>
+                                        {/* <p className="font-robot font-light text-sm px-4">{data.synopsis}</p> */}
+                                    </div>
+                                </div>
+        
+                                <div className="flex flex-col md:gap-16 gap-10 md:px-0 px-3 justify-between">
+                                    <div className="flex flex-col md:gap-10 gap-5">
+                                        <h1 className="md:text-4xl text-2xl font-bold font-outfit">Chapters</h1>
+                                        <div className="flex flex-col md:gap-5 gap-3 md:text-2xl">
+                                            {manga && Array.isArray(manga.chapter) && manga.chapter.slice(startIndex, endIndex).map(({ chapter_title, chapter_endpoint }, index) => {
+                                                return (
+                                                <div key={index} className='md:w-[50%] grid gap-3'>
+                                                    <div className="h-[1px] bg-black dark:bg-white"></div>
+                                                    <Link href={`/beta/manga/chapter/[chapter]`} as={`/beta/manga/chapter/${chapter_endpoint}`} >
+                                                    <p className="pl-5">{chapter_title}</p>
+                                                    </Link>
+                                                </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div className="flex mx-auto md:mx-0 gap-16 font-bold">
+                                        {manga && manga.chapter && currentPage > 1 && (
+                                            <button className="chapter-button" onClick={() => setCurrentPage(currentPage - 1)}>Back</button>
+                                        )}
+                                        {manga && manga.chapter && currentPage < Math.ceil(manga.chapter.length / itemsperPage) && (
+                                            <button className="chapter-button" onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                                        ) }
+                                    </div>
                             </div>
-                            <div className="flex gap-16 md:text-4xl">
-                                {manga && manga.chapter && currentPage > 1 && (
-                                    <button onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
-                                )}
-                                {manga && manga.chapter && currentPage < Math.ceil(manga.chapter.length / itemsperPage) && (
-                                    <button onClick={() => setCurrentPage(currentPage + 1)}>next</button>
-                                ) }
-                            </div>
-                        </div>
-                        <a className="" href="/beta/search">return to index</a>
-                    </div>
-                )}
-            </div>
-        </Layout>
+                        </>
+                    )}
+                </div>
+            </Layout>
+        </>
     )
 }
 

@@ -37,6 +37,10 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+.chapter-button {
+  @apply md:border-2 border-[1px] md:p-3 scale-100 md:scale-90 h-auto text-center md:text-2xl w-20 md:w-40 rounded-full md:rounded-3xl;
+}
+
 /* :root {
   --max-width: 1100px;
   --border-radius: 12px;
