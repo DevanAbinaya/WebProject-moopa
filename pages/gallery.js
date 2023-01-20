@@ -6,7 +6,7 @@ import client from '../lib/apolloClient';
 import Layout from '../components/layout';
 
 const MediaTypeSelector = ({selectedType, onChange}) => (
-  <select value={selectedType} onChange={onChange} className="md:w-40 md:h-10 w-20 h-8 ring-gray-300 antialiased rounded-md text-center text-gray-800 dark:text-white transition-all duration-300 dark:bg-[#121212] ring-transparent bg-slate-50 shadow-sm">
+  <select value={selectedType} onChange={onChange} className="md:w-40 md:h-10 w-20 h-8 ring-gray-300 antialiased rounded-md text-center text-gray-800 dark:text-white transition-all duration-300 dark:bg-[#121212] ring-transparent shadow-sm">
     <option value="ANIME">Anime</option>
     <option value="MANGA">Manga</option>
   </select>
