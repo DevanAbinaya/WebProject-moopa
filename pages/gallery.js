@@ -37,9 +37,9 @@ export default function Gallery() {
             <Layout>
               <div className='flex justify-between items-center pt-nav transition-colors duration-500 bg-[#F9F9F9] dark:bg-[#121212] md:justify-start pl-0 '>
                 <div className='flex justify-between w-screen my-5 md:my-10 mx-auto md:px-44 px-8 '>
-                  <input className='w-auto md:scale-100 scale-75 md:w-[270px] text-center dark:bg-[#121212] dark:ring-white ring-gray-300 ring-[0.6px] rounded-md' placeholder='Search here...' onChange={checkSetQuery} />
+                  <input className='w-auto md:w-[270px] text-center dark:bg-[#121212] dark:ring-white ring-gray-300 ring-[0.6px] rounded-md' placeholder='Search here...' onChange={checkSetQuery} />
 
-                  <div className='flex items-center gap-10 md:scale-100 scale-75'><h1 className='font-bold font-outfit hidden md:block'>BROWSE</h1><MediaTypeSelector selectedType={selectedType} onChange={handleTypeChange}/></div>
+                  <div className='flex items-center gap-10'><h1 className='font-bold font-outfit hidden md:block'>BROWSE</h1><MediaTypeSelector selectedType={selectedType} onChange={handleTypeChange}/></div>
                 </div>
               </div>
 
