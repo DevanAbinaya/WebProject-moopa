@@ -6,7 +6,7 @@ import client from '../lib/apolloClient';
 import Layout from '../components/layout';
 
 const MediaTypeSelector = ({selectedType, onChange}) => (
-  <select value={selectedType} onChange={onChange} className="w-40 h-10 ring-gray-300 dark:ring-1 subpixel-antialiased ring-0 rounded-md text-center text-gray-800 dark:text-white transition-all duration-300 dark:bg-[#121212] dark:ring-white bg-slate-50 shadow-button">
+  <select value={selectedType} onChange={onChange} className="md:w-40 md:h-10 w-20 h-8 ring-gray-300 antialiased rounded-md text-center text-gray-800 dark:text-white transition-all duration-300 dark:bg-[#121212] ring-transparent bg-slate-50 shadow-sm">
     <option value="ANIME">Anime</option>
     <option value="MANGA">Manga</option>
   </select>
@@ -35,12 +35,12 @@ export default function Gallery() {
             <link rel="icon" href="/c.svg" />
           </Head>
             <Layout>
-              <div className='flex justify-between items-center pt-nav transition-colors duration-500 bg-[#F9F9F9] dark:bg-[#121212] md:justify-start pl-0 '>
-                <div className='flex justify-between w-screen my-5 md:my-10 mx-auto md:px-44 px-8 '>
-                  <input className='w-auto md:scale-100 scale-75 md:w-[270px] text-center dark:bg-[#121212] dark:ring-white ring-gray-300 ring-[0.6px] rounded-md' placeholder='Search here...' onChange={checkSetQuery} />
-
-                  <div className='flex items-center gap-10 md:scale-100 scale-75'><h1 className='font-bold font-outfit hidden md:block'>BROWSE</h1><MediaTypeSelector selectedType={selectedType} onChange={handleTypeChange}/></div>
-                </div>
+              <div className=' pt-[8rem] flex transition-all duration-500 md:justify-center w-screen bg-[#f9f9f9] dark:bg-[#121212]'>
+              <div className=' flex flex-col md:flex-row justify-between gap-4 md:mx-0 mx-5 md:w-[80%] w-screen'>
+                <input className='h-8 md:w-52 text-center rounded-md md:scale-100' placeholder='Search here...' onChange={checkSetQuery} />
+  
+                <div className='flex items-center justify-between gap-10 text-sm md:text-lg md:scale-100'><h1 className='font-karla font-bold'>BROWSE</h1><div className='scale-[85%] md:scale-100'><MediaTypeSelector selectedType={selectedType} onChange={handleTypeChange}/></div></div>
+              </div>
               </div>
 
              
