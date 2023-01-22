@@ -7,6 +7,21 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      'animation': {
+        'text':'text 5s ease infinite',
+    },
+    'keyframes': {
+        'text': {
+            '0%, 100%': {
+               'background-size':'200% 200%',
+                'background-position': 'left center'
+            },
+            '50%': {
+               'background-size':'200% 200%',
+                'background-position': 'right center'
+            }
+        },
+    },
       boxShadow: {
         'menu': '0 0 10px 0px rgba(255, 107, 0, 0.1)',
         'light': '0 2px 10px 2px rgba(0, 0, 0, 0.1)',
@@ -23,6 +38,7 @@ module.exports = {
       }
     },
     fontFamily: {
+      rama: ["Ramabhadra", "sans-serif"],
       outfit: ["Outfit", "sans-serif"],
       karla: ["Karla", "sans-serif"],
       roboto: ["Roboto", "sans-serif"],
