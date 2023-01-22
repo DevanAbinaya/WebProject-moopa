@@ -15,6 +15,20 @@ const [showFull, setShowFull] = useState(false);
 const synopsisRef = useRef(null);
 const itemsperPage = 10;
 
+const [clickedChapters, setClickedChapters] = useState([]);
+
+    const handleClick = (endpoint) => {
+        setClickedChapters([...clickedChapters, endpoint]);
+        localStorage.setItem("clickedChapters", JSON.stringify([...clickedChapters, endpoint]));
+    }
+
+    useEffect(() => {
+        const storedChapters = localStorage.getItem("clickedChapters");
+        if (storedChapters) {
+            setClickedChapters(JSON.parse(storedChapters));
+        }
+    }, []);
+
     const startIndex = (currentPage - 1) * itemsperPage;
     const endIndex = startIndex + itemsperPage;
 
@@ -56,13 +70,13 @@ const itemsperPage = 10;
                                 <div className="flex flex-col md:gap-16 gap-10 md:px-0 px-3 justify-between">
                                     <div className="flex flex-col md:gap-10 gap-5">
                                         <h1 className="md:text-4xl text-2xl font-bold font-outfit">Chapters</h1>
-                                        <div className="flex flex-col md:gap-5 gap-3 md:text-2xl">
-                                            {manga && Array.isArray(manga.chapter) && manga.chapter.slice(startIndex, endIndex).map(({ chapter_title, chapter_endpoint }, index) => {
+                                        <div className="flex flex-col md:text-2xl">
+                                            {manga && Array.isArray(manga.chapter) && manga.chapter.slice(startIndex, endIndex).map(({ chapter_title, chapter_endpoint }) => {
                                                 return (
-                                                <div key={index} className='md:w-[50%] grid gap-3'>
+                                                <div key={chapter_endpoint} className='md:w-[50%]'>
                                                     <div className="h-[1px] bg-black dark:bg-white"></div>
-                                                    <Link href={`/beta/manga/chapter/[chapter]`} as={`/beta/manga/chapter/${chapter_endpoint}`} >
-                                                    <p className="pl-5">{chapter_title}</p>
+                                                    <Link onClick={() => handleClick(chapter_endpoint)} href={`/beta/manga/chapter/[chapter]`} as={`/beta/manga/chapter/${chapter_endpoint}`} >
+                                                    <p className={clickedChapters.includes(chapter_endpoint) ? "text-gray-500 flex items-center pl-5 h-14 " : "flex items-center pl-5 h-14 "}>{chapter_title}</p>
                                                     </Link>
                                                 </div>
                                                 )

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
 
 function Navbar(props) {
     const [isVisible, setIsVisible] = useState(false);

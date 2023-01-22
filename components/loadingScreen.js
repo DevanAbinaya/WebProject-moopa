@@ -1,75 +1,30 @@
 import React from "react";
-import styled from "styled-components";
-
-const Screen = styled.div`
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  opacity: 0;
-  animation: fade 0.4s ease-in forwards;
-  background: black;
-
-  @keyframes fade {
-    0% {
-      opacity: 0.4;
-    }
-    50% {
-      opacity: 0.8;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Balls = styled.div`
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  .ball {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background: #1b5299;
-    margin: 0 6px 0 0;
-    animation: oscillate 0.7s ease-in forwards infinite;
-  }
-
-  .one {
-    animation-delay: 0.5s;
-  }
-  .two {
-    animation-delay: 1s;
-  }
-  .three {
-    animation-delay: 2s;
-  }
-
-  @keyframes oscillate {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(20px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-`;
+import Typewriter from 'typewriter-effect';
 
 const LoadingScreen = () => {
     return (
-        <Screen>
-            <Balls>
-                <div className="ball one"></div>
-                <div className="ball two"></div>
-                <div className="ball three"></div>
-            </Balls>
-        </Screen>
+        <main className="flex items-center md:justify-center h-screen bg-white dark:bg-[#121212] md:pb-48 pb-56">
+            <div className="flex flex-col w-screen items-center md:justify-center">
+              
+            <img src="https://media.discordapp.net/attachments/997882702751596674/1066581397533368401/Qiqi_1.png?width=701&height=701" alt="qiqi" className="md:scale-[85%] scale-[75%] translate-y-16"/>
+                <div className="font-outfit font-medium text-2xl md:text-4xl">
+                    <i>
+                        <Typewriter
+                            options={{
+                                autoStart: true,
+                                loop: true,
+                            }}
+                            onInit={(typewriter) => {
+                                typewriter.typeString('Loading...')
+                                    .pauseFor(1500)
+                                    .deleteAll()
+                                    .start();  
+                            }}
+                        />
+                    </i>
+                </div>
+            </div>
+        </main>
     )
 }
 
