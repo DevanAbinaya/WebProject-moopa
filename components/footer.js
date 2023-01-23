@@ -13,7 +13,7 @@ function Footer() {
               <p className='text-[0.81rem] font-karla text-[#CCCCCC] flex items-center gap-1'>&copy; {new Date().getFullYear()}  eucrypt.my.id    |    Website Made by Factiven</p>
             </div>
             <div className=''>
-              <Image src='http://i1210.photobucket.com/albums/cc417/kusanagiblog/NarutoVSSasuke.gif' alt='gambar' title='request nya rapip yulistian' width={210} height={85} />
+              <Image src='https://i1210.photobucket.com/albums/cc417/kusanagiblog/NarutoVSSasuke.gif' alt='gambar' title='request nya rapip yulistian' width={210} height={85} />
             </div>
             
             <div className='flex md:flex-row flex-col gap-10 md:gap-[9.06rem] md:items-end '>
@@ -41,10 +41,10 @@ function Footer() {
               </div>
               <div className='flex gap-[0.69rem]'>
                 <div>
-                  <a href='https://twitter.com/Factivens'><Twitter className="fill-[#4CFFFF]"/></a>
+                  <Link href='https://twitter.com/Factivens'><Twitter className="fill-[#4CFFFF]"/></Link>
                 </div>
                 <div>
-                  <a href='https://www.instagram.com/dvnabny/'><Instagram className="fill-white"/></a>
+                  <Link href='https://www.instagram.com/dvnabny/'><Instagram className="fill-white"/></Link>
                 </div>
               </div>
             </div>
