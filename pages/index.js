@@ -9,6 +9,7 @@ export default function Home() {
     <>
       <Head>
         <title>Moopa</title>
+        <meta charSet='UTF-8'></meta>
         <meta name="description" content="Are you sure about that?" />
         {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
         <link rel="icon" href="/c.svg" />
