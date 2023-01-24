@@ -9,7 +9,10 @@ function Loading() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const handleStart = (url) => (url !== router.asPath) && setLoading(true);
+    const handleStart = (url) => {
+      (url !== router.asPath) && setLoading(true);
+      window.scrollTo({ top: 0, });
+    } 
     const handleComplete = (url) => {
       (url !== router.asPath) && setLoading(false);
       document.body.style.overflow = "auto";
@@ -35,6 +38,7 @@ function Loading() {
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
+
   return (
           <>
             
