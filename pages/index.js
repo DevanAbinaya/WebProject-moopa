@@ -9,6 +9,7 @@ export default function Home() {
     <>
       <Head>
         <title>Moopa</title>
+        <meta charSet='UTF-8'></meta>
         <meta name="description" content="Are you sure about that?" />
         {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
         <link rel="icon" href="/c.svg" />
@@ -20,27 +21,31 @@ export default function Home() {
           {/* <Navbar className="text-black dark:bg-none dark:text-white md:px-5 md:pt-5 px-2 pt-2" /> */}
     
             <section className='h-[46.5rem] md:h-[59.06rem] w-screen flex items-center justify-center'>
-              <div className='flex flex-col md:gap-y-20 gap-y-10 md:pb-0 pb-[8.5rem] md:-translate-y-14 -translate-y-0  justify-center items-center'>
+              <div className='flex flex-col md:gap-y- gap-y-10 md:pb-0 pb-[8.5rem] md:-translate-y-14 -translate-y-0  justify-center items-center'>
   
               {/* Mobile */}
-              <h1 className='md:hidden text-[2.5rem] font-semibold flex md:flex-row flex-col text-slate-700 dark:text-slate-300 cursor-default transition-all duration-500'>
-                  <div className='gap-3.5 flex'>A
-                    <a className='bg-gradient-to-r from-[#7661FA] to-[#FF8990] bg-clip-text text-transparent'>PLACE</a>
+              <h1 className='md:hidden text-[2.5rem] font-rama flex md:flex-row flex-col text-slate-700 dark:text-slate-300 cursor-default transition-all duration-500w-[130%]'>
+                  <div className='gap-3.5 flex'>DIVE
+                    <a className=''>INTO</a>
                   </div>
-                  <a className=''>TO LEARN MORE</a>
+                  <div className=''>A NEW <a className='animate-text bg-gradient-to-r from-[#7661FA] to-[#FF8990] bg-clip-text text-transparent'>WORLD</a></div>
               </h1>
   
               {/* Pc/Tablet */}
-                <h1 className='hidden text-5xl font-semibold md:flex gap-3 md:flex-row flex-col text-slate-700 dark:text-slate-300 cursor-default transition-all duration-700 hover:gap-10 '>
-                  <div className='flex md:flex-row flex-col gap-3'>
-                    <a>A</a>
-                    <a className='bg-gradient-to-r from-[#7661FA] to-[#FF8990] bg-clip-text text-transparent'>PLACE</a>
-                    <a>TO</a>
-                    <a>LEARN</a>
-                    <a>MORE</a>
+                <h1 className='hidden text-5xl font-semibold md:flex gap-3 md:flex-row flex-col text-slate-700 dark:text-slate-300 cursor-default transition-all duration-700 text-center hover:gap-10 '>
+                  <div className='flex items-start flex-col gap-3'>
+                    <div className='flex gap-3'>
+                      <div>DIVE INTO A NEW <a className='bg-gradient-to-r from-[#7661FA] to-[#FF8990] animate-text bg-clip-text text-transparent'>WORLD</a></div>
+                    </div>
+                    
+                    {/* <div className='flex gap-3'>
+                      <a>IMAGINATION</a>
+                      <a>AND</a>
+                      <a></a>
+                    </div> */}
                   </div>
                 </h1>
-                <Start className="scale-75 md:scale-100"/>
+                <Start className="scale-90 md:scale-100"/>
               </div>
             </section>
           </div>
@@ -59,7 +64,7 @@ export default function Home() {
           </section>
   
           <section className='flex items-center justify-center md:mt-0 mt-16'>
-            <div className='drop-shadow-2xl'><Image src='https://cdn.discordapp.com/attachments/986579286397964290/1061674162336305212/yes.png' alt='/' width={1440} height={810}/></div>
+            <div className='drop-shadow-2xl'><Image src='https://cdn.discordapp.com/attachments/986579286397964290/1061674162336305212/yes.png' alt='/' width={1440} height={840}/></div>
           </section>
         </Layout>
     </>
