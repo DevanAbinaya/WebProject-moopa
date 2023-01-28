@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import Link from 'next/link';
 
 const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
   const ANIME_QUERY = gql`
@@ -71,6 +72,8 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
           
   
           const cleanDesc = truncateDescription(anime.description?.replace(/<br\s*[\/]?>/gi, ' ').replace(/<i>/g, '<em>').replace(/<\/i>/g, '</em>'), MAX_LENGTH);
+
+          if (anime.type === "MANGA") {
           return (
             <div key={anime.id} className='items-center transition-colors duration-500 h-auto w-full overflow-hidden max-w-md mx-auto md:max-w-[100rem] shadow-lg rounded-xl  dark:bg-[#212121] bg-white'>
             <div className='md:flex items-center '>
@@ -81,7 +84,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
               </div>
 
               <div className='flex flex-col m-5 gap-6 '>
-                <a href={"https://anilist.co/"+anime.type.toString().toLowerCase()+"/"+anime.id} className='font-karla md:text-2xl text-xl md:w-full w-64 font-bold'>{anime.title.romaji}</a>
+                <Link href={`/beta/manga/detail/id/[id]`} as={`/beta/manga/detail/id/${anime.id}`} className='font-karla md:text-2xl text-xl md:w-full w-64 font-bold'>{anime.title.romaji}</Link>
                 <div className='text-sm md:text-xl'>
                   {anime.description ? <p dangerouslySetInnerHTML={{ __html: cleanDesc }} /> : <p>No description available</p>}
                 </div>
@@ -91,6 +94,28 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
             </div>
           </div>
           )
+          } else if (anime.type === "ANIME") {
+            return (
+              <div key={anime.id} className='items-center transition-colors duration-500 h-auto w-full overflow-hidden max-w-md mx-auto md:max-w-[100rem] shadow-lg rounded-xl  dark:bg-[#212121] bg-white'>
+              <div className='md:flex items-center '>
+  
+                <div className='md:shrink-0 flex justify-end relative '>
+                  <img className='absolute h-[125px] w-[90px] md:hidden z-10 shadow-xl object-cover rounded-lg top-[2rem] right-[1.5rem]' src={anime.coverImage.large} alt={anime.title.english} />
+                  <img className='h-[7rem] w-full object-cover md:h-[312px] md:w-[224px] md:blur-none blur-[1px] z-0' src={anime.coverImage.large} alt={anime.title.english} />
+                </div>
+  
+                <div className='flex flex-col m-5 gap-6 '>
+                  <Link href={"https://anilist.co/"+anime.type.toString().toLowerCase()+"/"+anime.id} className='font-karla md:text-2xl text-xl md:w-full w-64 font-bold'>{anime.title.romaji}</Link>
+                  <div className='text-sm md:text-xl'>
+                    {anime.description ? <p dangerouslySetInnerHTML={{ __html: cleanDesc }} /> : <p>No description available</p>}
+                  </div>
+    
+                  <p>Popularity: {anime.popularity}</p>
+                </div>
+              </div>
+            </div>
+            )
+          }
         })}
       </div>
     </main>

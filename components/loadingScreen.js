@@ -15,7 +15,7 @@ const LoadingScreen = () => {
                                 loop: true,
                             }}
                             onInit={(typewriter) => {
-                                typewriter.typeString('Loading...')
+                                typewriter.typeString('Please wait...')
                                     .pauseFor(1500)
                                     .deleteAll()
                                     .start();  

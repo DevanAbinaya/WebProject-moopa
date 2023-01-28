@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import LoadingScreen from '../components/loadingScreen';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { SessionProvider } from 'next-auth/react';
 import { AnimatePresence, motion as m } from 'framer-motion';
 
 function Loading() {
@@ -41,35 +42,33 @@ export default function App({ Component, pageProps }) {
 
   return (
           <>
-            
-            <ThemeProvider attribute='class'>
-              <AnimatePresence mode='wait'>
-                <div className='relative'>
-                <Loading key={`loading-${router.route}`} className="absolute"/>
-                  <m.div
-                    key={`route-${router.route}`}
-                    transition={{duration: 0.5}}
-                    initial="initialState"
-                    animate="animateState"
-                    exit="exitState"
-                    variants={{
-                      initialState: {
-                        opacity: 0,
-                      },
-                      animateState: {
-                        opacity: 1,
-                      },
-                      exitState: {
-                      },
-                    }} 
-                    className="w-screen z-10"
-                  >
-                    <Component {...pageProps} />
-                  </m.div> 
-                </div>
-              </AnimatePresence>
-            </ThemeProvider>
-                
+                <ThemeProvider attribute='class'>
+                  <AnimatePresence mode='wait'>
+                    <div className='relative'>
+                    <Loading key={`loading-${router.route}`} className="absolute"/>
+                      <m.div
+                        key={`route-${router.route}`}
+                        transition={{duration: 0.5}}
+                        initial="initialState"
+                        animate="animateState"
+                        exit="exitState"
+                        variants={{
+                          initialState: {
+                            opacity: 0,
+                          },
+                          animateState: {
+                            opacity: 1,
+                          },
+                          exitState: {
+                          },
+                        }} 
+                        className="w-screen z-10"
+                      >
+                        <Component {...pageProps} />
+                      </m.div> 
+                    </div>
+                  </AnimatePresence>
+                </ThemeProvider>
           </>
   )
 }

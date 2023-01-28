@@ -1,4 +1,4 @@
-import Layout from "../../../../components/layout";
+import Layout from "../../../../../components/layout";
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Head from "next/head";
@@ -31,6 +31,7 @@ const [clickedChapters, setClickedChapters] = useState([]);
 
     const startIndex = (currentPage - 1) * itemsperPage;
     const endIndex = startIndex + itemsperPage;
+    
 
     return (
         <>
@@ -108,8 +109,3 @@ export async function getServerSideProps(context) {
     const data = await res.json()
     return { props: {data} }
 }
-// Chapter.getInitialProps = async () => {
-//     const res = await axios.get(`https://manga-api-production-30a1.up.railway.app/api/manga/detail/`)
-//     return { mangaDetail: res.data };
-// };
-

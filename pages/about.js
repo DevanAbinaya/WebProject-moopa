@@ -3,6 +3,8 @@ import Layout from "../components/layout";
 import UnderConstruction from "../components/underConst";
 
 export default function About() {    
+    const clientId = process.env.ANILIST_CLIENT_ID;
+
     return (
         <>
         <Head>
@@ -12,7 +14,10 @@ export default function About() {
             <link rel="icon" href="/c.svg" />
         </Head>
         <Layout>
-            <UnderConstruction />
+            {/* <UnderConstruction /> */}
+           <div className="h-screen pt-nav">
+            <a href={`https://anilist.co/api/v2/oauth/authorize?client_id=${clientId}&response_type=token`}>Login with AniList</a>
+            </div>
         </Layout>
         </>
     )

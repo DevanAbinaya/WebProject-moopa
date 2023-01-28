@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
+import { Router } from 'next/router';
 
 function Navbar(props) {
     const [isVisible, setIsVisible] = useState(false);
@@ -49,10 +51,11 @@ function Navbar(props) {
 
          
     }
-    
 
+    const client_id = process.env.ANILIST_CLIENT_ID;
+    
     return (
-    <header className={`${props.className}`}>
+        <header className={`${props.className}`}>
         <div className='flex justify-between items-center w-auto md:w-[80%] md:mx-auto h-16 md:px-0 px-5'>
             <div className='text-4xl md:block font-outfit font-semibold pb-2'>
                 <Link href='/'>
@@ -145,7 +148,9 @@ function Navbar(props) {
             <nav className='hidden left-0 top-[-100%] w-auto md:flex items-center gap-10 px-5'>
                 <ul className='md:flex hidden text-xl gap-10 font-roboto '>
                     <li>
-                     <Link href='/' className='hover:text-orange-600 px-3 py-2 transition-all duration-100'>home</Link>
+                    {/* <button ><a href="/api/auth/anilist">Sign In with AniList</a></button> */}
+                    {/* <a href={`https://anilist.co/api/v2/oauth/authorize?client_id=${client_id}&response_type=token`}>Login with AniList</a> */}
+                     <Link href='/' className='hover:text-orange-600 p-2 transition-all duration-100'>home</Link>
                     </li>
                     <li>
                      <Link href='/about' className='hover:text-orange-600 p-2 transition-all duration-100'>about</Link>
@@ -156,17 +161,7 @@ function Navbar(props) {
                 </ul>
                 {renderThemeChanger()}
             </nav>
-            
-
          </div>
-         
-         {/* <div className='bg-slate-800 bg-opacity-50 hidden px-5' id='mobile-menu'>
-            <div className='flex flex-col text-center text-3xl gap-1 py-3'>
-                <a href='' className='bg-gray-900 text-white block px-3 py-2 rounded-md'>Home</a>
-                <a href='' className='hover:text-gray-300 hover:bg-white/5 text-white block px-3 py-2 rounded-md'>About</a>
-                <a href='' className='hover:text-gray-300 hover:bg-white/5 text-white block px-3 py-2 rounded-md'>Gallery</a>
-            </div>
-        </div> */}
     </header>
     );
 }

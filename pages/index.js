@@ -64,7 +64,7 @@ export default function Home() {
           </section>
   
           <section className='flex items-center justify-center md:mt-0 mt-16'>
-            <div className='drop-shadow-2xl'><Image src='https://cdn.discordapp.com/attachments/986579286397964290/1061674162336305212/yes.png' alt='/' width={1440} height={810}/></div>
+            <div className='drop-shadow-2xl'><Image src='https://cdn.discordapp.com/attachments/986579286397964290/1061674162336305212/yes.png' alt='/' width={1440} height={840}/></div>
           </section>
         </Layout>
     </>
