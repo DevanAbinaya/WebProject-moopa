@@ -1,8 +1,6 @@
 import Head from "next/head";
 import Layout from "../components/layout";
 import UnderConstruction from "../components/underConst";
-import Spline from '@splinetool/react-spline';
-import Link from "next/link";
 
 export default function Reco() {
     return (

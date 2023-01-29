@@ -3,7 +3,6 @@ import '../styles/globals.css';
 import LoadingScreen from '../components/loadingScreen';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { SessionProvider } from 'next-auth/react';
 import { AnimatePresence, motion as m } from 'framer-motion';
 
 function Loading() {

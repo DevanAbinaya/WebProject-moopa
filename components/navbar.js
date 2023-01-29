@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/react';
-import { Router } from 'next/router';
 
 function Navbar(props) {
     const [isVisible, setIsVisible] = useState(false);

@@ -14,10 +14,7 @@ export default function About() {
             <link rel="icon" href="/c.svg" />
         </Head>
         <Layout>
-            {/* <UnderConstruction /> */}
-           <div className="h-screen pt-nav">
-            <a href={`https://anilist.co/api/v2/oauth/authorize?client_id=${clientId}&response_type=token`}>Login with AniList</a>
-            </div>
+            <UnderConstruction />
         </Layout>
         </>
     )
