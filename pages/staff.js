@@ -52,9 +52,9 @@ export default function Staff() {
     const DevCard = () => {
         return (
                 <div className="xl:mx-28 xl:scale-100 scale-95 antialiased">
-                    <div className={`xl:w-[38rem] h-[116px] bg-cover shrink ${dev.iClass}`} style={{ backgroundImage: `url(${dev.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`})`}}>
+                    <div className={`xl:w-[38rem] h-[116px] bg-[#dadada] bg-cover shrink ${dev.iClass}`} style={{ backgroundImage: `url(${dev.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`})`}}>
                     </div>
-                    <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#212121] shadow-md rounded-b-[10px] gap-8">
+                    <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#181818] shadow-md rounded-b-[10px] gap-8">
                         <div>
                             <div className="flex justify-between items-center">
                                 <h1 className="font-karla font-bold text-[30px]">{dev.name}</h1>
@@ -122,6 +122,7 @@ export default function Staff() {
         )
     }
 
+
     const staff = [
         { 
             id: 1, 
@@ -153,6 +154,18 @@ export default function Staff() {
                 design: "Idea Proposer"
             },
         },
+        {
+            id: 3,
+            name: "kha//sak?",
+            desc: "if you don't like it, ignore it\nI know your future, you can't defeat me..",
+            socials: {
+                ig: "https://www.instagram.com/khasakh_1364/",
+                discord: "sakh#0835"
+            },
+            tags: {
+                design: "Idea Proposer"
+            }
+        }
       ];
 
 const StaffCard = () => {
@@ -173,10 +186,10 @@ const [copySuccess, setCopySuccess] = useState('');
                 <div className="flex flex-col flex-wrap xl:flex-row xl:gap-20 gap-20 xl:mx-28 xl:scale-100 scale-95 antialiased">
                     {staff.map(post => (
                         <div key={post.id}>
-                            <div className={`xl:w-[38rem] h-[116px] bg-cover shrink dark:brightness-95 rounded-t-lg ${post.iClass}`} style={{ backgroundImage: `url(${post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`})`}}>
+                            <div className={`xl:w-[38rem] h-[116px] bg-[#dadada] bg-cover shrink dark:brightness-95 rounded-t-lg ${post.iClass}`} style={{ backgroundImage: `url(${post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`})`}}>
                                 {/* <img src={post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`} alt="Profile Picture" className={`object-cover object-[center_top] h-[116px] w-full rounded-t-lg ${post.iClass}`}/> */}
                             </div>
-                            <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#212121] shadow-md rounded-b-lg gap-8">
+                            <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#181818] shadow-md rounded-b-lg gap-8">
                                 <div>
                                 <div className="flex justify-between items-center">
                                     <h1 className="font-karla font-bold text-[30px]">{post.name}</h1>
@@ -292,7 +305,7 @@ const [copySuccess, setCopySuccess] = useState('');
 
             <Navbar className="dark:bg-black"/>
             
-            <section className="h-auto flex flex-col xl:gap-16 gap-10 bg-[#F9F9F9] dark:bg-[#121212] p-5 pt-10 xl:px-20 xl:py-10">
+            <section className="h-auto flex flex-col xl:gap-16 gap-10 bg-[#F9F9F9] dark:bg-[#111111] p-5 pt-10 xl:px-20 xl:py-10">
                 <div>
                     <h1 className="font-roboto font-bold italic text-[23px]  dark:text-gray-200">MAIN CHARACTER</h1>
                 </div>
