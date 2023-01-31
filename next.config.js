@@ -3,10 +3,10 @@
 const NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['tenor.com'],
+    domains: ["tenor.com"],
     unoptimized: true,
   },
   trailingSlash: true,
-}
+};
 
 module.exports = NextConfig;
