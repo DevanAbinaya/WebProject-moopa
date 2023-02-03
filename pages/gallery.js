@@ -42,7 +42,7 @@ export default function Gallery() {
         <div className=" flex w-screen bg-[#f9f9f9] pt-[8rem] transition-all duration-500 dark:bg-[#121212] md:justify-center">
           <div className=" mx-5 flex w-screen flex-col justify-between gap-4 md:mx-0 md:w-[80%] md:flex-row">
             <input
-              className="h-8 rounded-md text-center shadow-md dark:bg-[#1F1F1F] dark:text-[#DDDDDD] md:w-52 md:scale-100"
+              className="h-8 rounded-md shadow-md text-center dark:bg-[#1F1F1F] dark:text-[#DDDDDD] md:w-52 md:scale-100"
               placeholder="Search here..."
               onChange={checkSetQuery}
             />
