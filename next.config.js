@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
+const NextConfig = {
   reactStrictMode: true,
   images: {
     domains: ["tenor.com"],
@@ -8,3 +8,5 @@ module.exports = {
   },
   trailingSlash: true,
 };
+
+module.exports = NextConfig;

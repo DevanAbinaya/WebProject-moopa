@@ -4,38 +4,38 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     extend: {
-      'animation': {
-        'text':'text 5s ease infinite',
-    },
-    'keyframes': {
-        'text': {
-            '0%, 100%': {
-               'background-size':'200% 200%',
-                'background-position': 'left center'
-            },
-            '50%': {
-               'background-size':'200% 200%',
-                'background-position': 'right center'
-            }
+      animation: {
+        text: "text 5s ease infinite",
+      },
+      keyframes: {
+        text: {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
+          },
         },
-    },
+      },
       boxShadow: {
-        'menu': '0 0 10px 0px rgba(255, 107, 0, 0.1)',
-        'light': '0 2px 10px 2px rgba(0, 0, 0, 0.1)',
-        'button': '0 0px 5px 0.5px rgba(0, 0, 0, 0.1)',
+        menu: "0 0 10px 0px rgba(255, 107, 0, 0.1)",
+        light: "0 2px 10px 2px rgba(0, 0, 0, 0.1)",
+        button: "0 0px 5px 0.5px rgba(0, 0, 0, 0.1)",
       },
       textColor: {
-        'gray-500': '#6c757d',
+        "gray-500": "#6c757d",
       },
       fontWeight: {
-        'bold': '700',
+        bold: "700",
       },
       padding: {
-        'nav': '5.3rem'
-      }
+        nav: "5.3rem",
+      },
     },
     fontFamily: {
       rama: ["Ramabhadra", "sans-serif"],
@@ -46,14 +46,13 @@ module.exports = {
   },
   variants: {
     extend: {
-      display: ['group-focus'],
-      opacity: ['group-focus'],
-      inset: ['group-focus'],
-      backgroundImage: ['dark']
+      display: ["group-focus"],
+      opacity: ["group-focus"],
+      inset: ["group-focus"],
+      backgroundImage: ["dark"],
     },
-    textColor: ['responsive', 'hover', 'focus'],
-    fontWeight: ['responsive', 'hover', 'focus'],
+    textColor: ["responsive", "hover", "focus"],
+    fontWeight: ["responsive", "hover", "focus"],
   },
-  plugins: [
-  ],
-}
+  plugins: [],
+};

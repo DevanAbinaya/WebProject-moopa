@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import React from "react";
+import { useQuery, gql } from "@apollo/client";
+import Link from "next/link";
 
 const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
   const ANIME_QUERY = gql`
@@ -29,11 +30,15 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
     }
   }
   `;
-  
 
   // use useQuery hook to execute query and get data
   const { loading, error, data } = useQuery(ANIME_QUERY, {
-    variables: { search: searchQuery, page: 1, perPage: 10, sort: "POPULARITY_DESC"},
+    variables: {
+      search: searchQuery,
+      page: 1,
+      perPage: 10,
+      sort: "TRENDING_DESC",
+    },
   });
 
   // render component
@@ -45,52 +50,127 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
   // const cleanDescription = description.replace(/<br>/g, '').replace(/\n/g, '  ');
 
   return (
-    <main className='flex flex-col'>
-      <div className='flex flex-col gap-10 my-10 md:w-full md:mx-auto mx-[1rem]'>
-        {media.map(anime => {
-    // max length desc
-  
+    <main className="flex flex-col">
+      <div className="my-10 mx-[1rem] flex flex-col gap-10 md:mx-auto md:w-full">
+        {media.map((anime) => {
+          // max length desc
+
           const MAX_LENGTH = 350;
-  
-          const aniLink = `https://anilist.co/${anime.type.toString().toLowerCase()}/${anime.id}`;
-  
+
+          const aniLink = `https://anilist.co/${anime.type
+            .toString()
+            .toLowerCase()}/${anime.id}`;
+
           function truncateDescription(description, maxLength) {
-          if (description) {
-            if (description.length > maxLength) {
-              return description.substring(0, maxLength) + `<a href="${aniLink}" class="read-more-btn text-gray-800 dark:text-gray-300 font-bold">...Read More</a>`;
+            if (description) {
+              if (description.length > maxLength) {
+                return (
+                  description.substring(0, maxLength) +
+                  `<a href="${aniLink}" class="read-more-btn text-gray-800 dark:text-gray-300 font-bold">...Read More</a>`
+                );
+              } else {
+                return description;
+              }
             } else {
-              return description;
+              return <p>There's no Description</p>;
             }
-          } else {
+          }
+
+          const cleanDesc = truncateDescription(
+            anime.description
+              ?.replace(/<br\s*[\/]?>/gi, " ")
+              .replace(/<i>/g, "<em>")
+              .replace(/<\/i>/g, "</em>"),
+            MAX_LENGTH
+          );
+
+          if (anime.type === "MANGA") {
             return (
-              <p>There's no Description</p>
-            )
-          }
-            
-          }
-          
-  
-          const cleanDesc = truncateDescription(anime.description?.replace(/<br\s*[\/]?>/gi, ' ').replace(/<i>/g, '<em>').replace(/<\/i>/g, '</em>'), MAX_LENGTH);
-          return (
-            <div key={anime.id} className='items-center transition-colors duration-500 h-auto w-full overflow-hidden max-w-md mx-auto md:max-w-[100rem] shadow-lg rounded-xl  dark:bg-[#212121] bg-white'>
-            <div className='md:flex items-center '>
+              <div
+                key={anime.id}
+                className="mx-auto h-auto w-full max-w-md items-center overflow-hidden rounded-xl bg-white shadow-lg transition-colors duration-500  dark:bg-[#212121] md:max-w-[100rem]"
+              >
+                <div className="items-center md:flex ">
+                  <div className="relative flex justify-end md:shrink-0 ">
+                    <img
+                      className="absolute top-[2rem] right-[1.5rem] z-10 h-[125px] w-[90px] rounded-lg object-cover shadow-xl md:hidden"
+                      src={anime.coverImage.large}
+                      alt={anime.title.english}
+                    />
+                    <img
+                      className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
+                      src={anime.coverImage.large}
+                      alt={anime.title.english}
+                    />
+                  </div>
 
-              <div className='md:shrink-0 flex justify-end relative '>
-                <img className='absolute h-[125px] w-[90px] md:hidden z-10 shadow-xl object-cover rounded-lg top-[2rem] right-[1.5rem]' src={anime.coverImage.large} alt={anime.title.english} />
-                <img className='h-[7rem] w-full object-cover md:h-[312px] md:w-[224px] md:blur-none blur-[1px] z-0' src={anime.coverImage.large} alt={anime.title.english} />
-              </div>
+                  <div className="m-5 flex flex-col gap-6 ">
+                    <Link
+                      href={`/beta/manga/detail/id/[id]`}
+                      as={`/beta/manga/detail/id/${anime.id}`}
+                      className="w-64 font-karla text-xl font-bold md:w-full md:text-2xl"
+                    >
+                      {anime.title.romaji}
+                    </Link>
+                    <div className="text-sm md:text-xl">
+                      {anime.description ? (
+                        <p dangerouslySetInnerHTML={{ __html: cleanDesc }} />
+                      ) : (
+                        <p>No description available</p>
+                      )}
+                    </div>
 
-              <div className='flex flex-col m-5 gap-6 '>
-                <a href={"https://anilist.co/"+anime.type.toString().toLowerCase()+"/"+anime.id} className='font-karla md:text-2xl text-xl md:w-full w-64 font-bold'>{anime.title.romaji}</a>
-                <div className='text-sm md:text-xl'>
-                  {anime.description ? <p dangerouslySetInnerHTML={{ __html: cleanDesc }} /> : <p>No description available</p>}
+                    <p>Popularity: {anime.popularity}</p>
+                  </div>
                 </div>
-  
-                <p>Popularity: {anime.popularity}</p>
               </div>
-            </div>
-          </div>
-          )
+            );
+          } else if (anime.type === "ANIME") {
+            return (
+              <div
+                key={anime.id}
+                className="mx-auto h-auto w-full max-w-md items-center overflow-hidden rounded-xl bg-white shadow-lg transition-colors duration-500  dark:bg-[#212121] md:max-w-[100rem]"
+              >
+                <div className="items-center md:flex ">
+                  <div className="relative flex justify-end md:shrink-0 ">
+                    <img
+                      className="absolute top-[2rem] right-[1.5rem] z-10 h-[125px] w-[90px] rounded-lg object-cover shadow-xl md:hidden"
+                      src={anime.coverImage.large}
+                      alt={anime.title.english}
+                    />
+                    <img
+                      className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
+                      src={anime.coverImage.large}
+                      alt={anime.title.english}
+                    />
+                  </div>
+
+                  <div className="m-5 flex flex-col gap-6 ">
+                    <Link
+                      href={
+                        "https://anilist.co/" +
+                        anime.type.toString().toLowerCase() +
+                        "/" +
+                        anime.id
+                      }
+                      className="w-64 font-karla text-xl font-bold md:w-full md:text-2xl"
+                    >
+                      {anime.title.romaji}
+                    </Link>
+                    <div className="text-sm md:text-xl">
+                      {anime.description ? (
+                        <p dangerouslySetInnerHTML={{ __html: cleanDesc }} />
+                      ) : (
+                        <p>No description available</p>
+                      )}
+                    </div>
+
+                    <p>Popularity: {anime.popularity}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          }
         })}
       </div>
     </main>

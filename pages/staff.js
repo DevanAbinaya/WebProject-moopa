@@ -49,9 +49,9 @@ export default function Staff() {
 
   const DevCard = () => {
     return (
-      <div className="xl:mx-28 xl:scale-100 scale-95 antialiased">
+      <div className="scale-95 antialiased xl:mx-28 xl:scale-100">
         <div
-          className={`xl:w-[38rem] h-[116px] bg-[#dadada] bg-cover shrink ${dev.iClass}`}
+          className={`h-[116px] shrink bg-[#dadada50] bg-cover xl:w-[38rem] ${dev.iClass}`}
           style={{
             backgroundImage: `url(${
               dev.coverImage ||
@@ -59,10 +59,10 @@ export default function Staff() {
             })`,
           }}
         ></div>
-        <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#181818] shadow-md rounded-b-[10px] gap-8">
+        <div className="flex h-auto flex-col gap-8 rounded-b-[10px] bg-white px-[30px] pb-[30px] pt-5 shadow-md dark:bg-[#181818] xl:w-[38rem] xl:px-[40px] xl:pb-[40px]">
           <div>
-            <div className="flex justify-between items-center">
-              <h1 className="font-karla font-bold text-[30px]">{dev.name}</h1>
+            <div className="flex items-center justify-between">
+              <h1 className="font-karla text-[30px] font-bold">{dev.name}</h1>
               <div className="flex gap-5">
                 <div className="tooltip relative inline-block">
                   <svg
@@ -95,7 +95,7 @@ export default function Staff() {
                       </clipPath>
                     </defs>
                   </svg>
-                  <span className="tooltiptext absolute bottom-10 -right-12 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">
+                  <span className="tooltiptext absolute bottom-10 -right-12 w-max rounded-md bg-[#18191c] py-2 px-4 text-center text-sm font-semibold text-slate-200 transition-all duration-300 ease-out">
                     Lead Developer
                   </span>
                 </div>
@@ -114,18 +114,18 @@ export default function Staff() {
                       className="fill-black dark:fill-white"
                     />
                   </svg>
-                  <span className="tooltiptext absolute bottom-10 -right-11 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">
+                  <span className="tooltiptext absolute bottom-10 -right-11 w-max rounded-md bg-[#18191c] py-2 px-4 text-center text-sm font-semibold text-slate-200 transition-all duration-300 ease-out">
                     Lead Designer
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <p className="font-robot font-light italic text-xl">{dev.desc}</p>
+          <p className="font-robot text-xl font-light italic">{dev.desc}</p>
 
           {dev.socials && (
             <div className="pt-3">
-              <div className="flex gap-4 items-center">
+              <div className="flex items-center gap-4">
                 <div className="flex scale-90 gap-5">
                   {dev.socials.twitter && (
                     <div>
@@ -142,12 +142,12 @@ export default function Staff() {
                     </div>
                   )}
                   {dev.socials.discord && (
-                    <div className="pl-[1px] pt-[2px] scale-95 relative inline-block">
+                    <div className="relative inline-block scale-95 pl-[1px] pt-[2px]">
                       <a onClick={handleClickDev}>
                         <Discord className="fill-[#585858] " />
                       </a>
                       {copied && (
-                        <span className="absolute bottom-12  py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">
+                        <span className="absolute bottom-12  w-max rounded-md bg-[#18191c] py-2 px-4 text-center text-sm font-semibold text-slate-200 transition-all duration-300 ease-out">
                           Discord Tag copied to clipboard
                         </span>
                       )}
@@ -231,24 +231,19 @@ export default function Staff() {
     };
 
     return (
-      <div className="flex flex-col flex-wrap xl:flex-row xl:gap-20 gap-20 xl:mx-28 xl:scale-100 scale-95 antialiased">
+      <div className="flex scale-95 flex-col flex-wrap gap-20 antialiased xl:mx-28 xl:scale-100 xl:flex-row xl:gap-20">
         {staff.map((post) => (
           <div key={post.id}>
             <div
-              className={`xl:w-[38rem] h-[116px] bg-[#dadada] bg-cover shrink dark:brightness-95 rounded-t-lg ${post.iClass}`}
-              style={{
-                backgroundImage: `url(${
-                  post.coverImage ||
-                  `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`
-                })`,
-              }}
+              className={`h-[116px] shrink rounded-t-lg bg-[#dadada50] bg-cover dark:brightness-95 xl:w-[38rem] ${post.iClass}`}
+              style={{ backgroundImage: `url(${post.coverImage || ``})` }}
             >
               {/* <img src={post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`} alt="Profile Picture" className={`object-cover object-[center_top] h-[116px] w-full rounded-t-lg ${post.iClass}`}/> */}
             </div>
-            <div className="xl:w-[38rem] h-auto flex flex-col xl:px-[40px] xl:pb-[40px] pb-[30px] px-[30px] pt-5 bg-white dark:bg-[#181818] shadow-md rounded-b-lg gap-8">
+            <div className="flex h-auto flex-col gap-8 rounded-b-lg bg-white px-[30px] pb-[30px] pt-5 shadow-md dark:bg-[#181818] xl:w-[38rem] xl:px-[40px] xl:pb-[40px]">
               <div>
-                <div className="flex justify-between items-center">
-                  <h1 className="font-karla font-bold text-[30px]">
+                <div className="flex items-center justify-between">
+                  <h1 className="font-karla text-[30px] font-bold">
                     {post.name}
                   </h1>
                   {post.tags && (
@@ -285,7 +280,7 @@ export default function Staff() {
                               </clipPath>
                             </defs>
                           </svg>
-                          <span className="tooltiptext absolute bottom-10 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">
+                          <span className="tooltiptext absolute bottom-10 w-max rounded-md bg-[#18191c] py-2 px-4 text-center text-sm font-semibold text-slate-200 transition-all duration-300 ease-out">
                             {post.tags.dev}
                           </span>
                         </div>
@@ -316,7 +311,7 @@ export default function Staff() {
                               </clipPath>
                             </defs>
                           </svg>
-                          <span className="tooltiptext absolute bottom-10 -right-14 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">
+                          <span className="tooltiptext absolute bottom-10 -right-14 w-max rounded-md bg-[#18191c] py-2 px-4 text-center text-sm font-semibold text-slate-200 transition-all duration-300 ease-out">
                             {post.tags.moral}
                           </span>
                         </div>
@@ -338,7 +333,7 @@ export default function Staff() {
                               className="fill-black dark:fill-white"
                             />
                           </svg>
-                          <span className="tooltiptext absolute bottom-10 -right-11 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">
+                          <span className="tooltiptext absolute bottom-10 -right-11 w-max rounded-md bg-[#18191c] py-2 px-4 text-center text-sm font-semibold text-slate-200 transition-all duration-300 ease-out">
                             {post.tags.design}
                           </span>
                         </div>
@@ -347,12 +342,12 @@ export default function Staff() {
                   )}
                 </div>
               </div>
-              <p className="font-robot font-light italic text-xl">
+              <p className="font-robot text-xl font-light italic">
                 “{post.desc || "description not provided"}”
               </p>
               {post.socials && (
                 <div className="pt-3">
-                  <div className="flex gap-4 items center ">
+                  <div className="items center flex gap-4 ">
                     <div className="flex scale-90 gap-5 ">
                       {post.socials.twitter && (
                         <div>
@@ -369,11 +364,11 @@ export default function Staff() {
                         </div>
                       )}
                       {post.socials.discord && (
-                        <div className="pl-[1px] pt-[2px] scale-95 tooltip relative inline-block">
+                        <div className="tooltip relative inline-block scale-95 pl-[1px] pt-[2px]">
                           <a onClick={() => copyStaff(post.socials.discord)}>
                             <Discord className="fill-[#585858] " />
                           </a>
-                          <span className="tooltiptext  absolute bottom-12 py-2 px-4 text-center w-max bg-[#18191c] text-sm text-slate-200 rounded-md font-semibold transition-all duration-300 ease-out">
+                          <span className="tooltiptext  absolute bottom-12 w-max rounded-md bg-[#18191c] py-2 px-4 text-center text-sm font-semibold text-slate-200 transition-all duration-300 ease-out">
                             Tap to copy Discord Tag
                           </span>
                         </div>
@@ -407,9 +402,9 @@ export default function Staff() {
 
       <Navbar className="dark:bg-black" />
 
-      <section className="h-auto flex flex-col xl:gap-16 gap-10 bg-[#F9F9F9] dark:bg-[#111111] p-5 pt-10 xl:px-20 xl:py-10">
+      <section className="flex h-auto flex-col gap-10 bg-[#F9F9F9] p-5 pt-10 dark:bg-[#111111] xl:gap-16 xl:px-20 xl:py-10">
         <div>
-          <h1 className="font-roboto font-bold italic text-[23px]  dark:text-gray-200">
+          <h1 className="font-roboto text-[23px] font-bold italic dark:text-gray-200">
             MAIN CHARACTER
           </h1>
         </div>
@@ -418,7 +413,7 @@ export default function Staff() {
         {DevCard()}
 
         <div>
-          <h1 className="font-roboto font-bold italic text-[23px] dark:text-gray-200">
+          <h1 className="font-roboto text-[23px] font-bold italic dark:text-gray-200">
             SIDE CHARACTER
           </h1>
         </div>
