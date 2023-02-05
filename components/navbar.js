@@ -66,8 +66,6 @@ function Navbar(props) {
     }
   };
 
-  const client_id = process.env.ANILIST_CLIENT_ID;
-
   return (
     <header className={`${props.className}`}>
       <div className="flex h-16 w-auto items-center justify-between px-5 md:mx-auto md:w-[80%] md:px-0">

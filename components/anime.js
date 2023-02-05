@@ -37,7 +37,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
       search: searchQuery,
       page: 1,
       perPage: 10,
-      sort: "POPULARITY_DESC",
+      sort: "TRENDING_DESC",
     },
   });
 

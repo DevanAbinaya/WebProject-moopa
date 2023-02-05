@@ -48,7 +48,7 @@ export default function Gallery() {
             />
 
             <div className="flex items-center justify-between gap-10 text-sm md:scale-100 md:text-lg">
-              <h1 className="font-karla font-bold">BROWSE</h1>
+              <h1 className="font-karla font-bold">NOW TRENDING</h1>
               <div className="scale-[85%] md:scale-100">
                 <MediaTypeSelector
                   selectedType={selectedType}

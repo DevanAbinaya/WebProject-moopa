@@ -43,8 +43,10 @@ export default function Chapter(props) {
     );
     const json = await res.json();
     const manga = json.manga_list;
-    const found = manga.find((manga) =>
-      manga.title.includes(props.detail.title.romaji)
+    const found = manga.find(
+      (manga) =>
+        // manga.title.includes(props.detail.title.romaji)
+        manga.title === props.detail.title.romaji
     );
     if (found) {
       const endpoint = found.endpoint;
@@ -57,6 +59,8 @@ export default function Chapter(props) {
     }
   }
 
+  console.log(props.genre);
+
   let banner;
 
   return (
@@ -68,7 +72,7 @@ export default function Chapter(props) {
         <link rel="icon" href="/c.svg" />
       </Head>
       <Layout>
-        <div className="relative flex min-h-screen flex-col pt-[3rem] md:w-[1600px] md:pt-[5.5rem] ">
+        <div className="relative flex min-h-screen flex-col pt-[3rem] md:mx-[10%] md:pt-[5.5rem]">
           <div className="relative mt-4 flex flex-col gap-10 pb-10 md:gap-20">
             <div className="absolute top-[10px] ">
               <a className="font-karla text-xl" href="/gallery">
@@ -78,15 +82,26 @@ export default function Chapter(props) {
             {/* PC/Tablet */}
             <div className="hidden flex-col items-start gap-10 md:flex md:flex-row md:pt-nav">
               <img
-                className="h-52 w-52 object-cover md:h-[336px] md:w-[225px]"
+                className="h-52 w-52 translate-y-2 object-cover md:h-[336px] md:w-[225px]"
                 src={props.coverImage}
                 alt={props.title}
               />
+
               <div className="flex flex-col gap-10">
                 <h1 className="font-karla font-bold md:text-5xl">
                   {props.title}
                 </h1>
-                <p dangerouslySetInnerHTML={props.descHTML} />
+                <div className="flex flex-col gap-3 rounded-md bg-[#1d1d1d] p-5">
+                  <h2 className="font-karla text-lg font-extrabold">
+                    Description
+                  </h2>
+                  <p dangerouslySetInnerHTML={props.descHTML} />
+                  <div className="flex h-9">
+                    <div className="flex h-full items-center justify-center rounded-lg bg-[#362f2f] px-5">
+                      <h5>Score : {props.averageScore}%</h5>
+                    </div>
+                  </div>
+                </div>
                 {/* <p dangerouslySetInnerHTML={text ? {__html: detail.decription} : undefined}>{!text ? manga.synopsis : null}</p> */}
               </div>
             </div>
@@ -114,9 +129,15 @@ export default function Chapter(props) {
                   ref={synopsisRef}
                 >
                   {props &&
-                    props.description &&
-                    props.description.substring(0, 150)}{" "}
-                  {showFull && <p>{props.description}</p>}{" "}
+                    props.detail.description &&
+                    props.detail.description.substring(0, 150)}{" "}
+                  {showFull && (
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: props.detail.description,
+                      }}
+                    />
+                  )}{" "}
                   <button
                     className="font-bold "
                     onClick={() => {
@@ -163,7 +184,7 @@ export default function Chapter(props) {
                         );
                       })
                   ) : (
-                    <p className="text-xl font-bold">No Chapters</p>
+                    <p className="text-xl font-bold">No Chapters Available</p>
                   )}
                 </div>
               </div>
@@ -236,7 +257,9 @@ export async function getServerSideProps(context) {
   const detail = anilistData.data.Media;
   const coverImage = detail.coverImage.extraLarge;
   const bannerImage = detail.bannerImage;
+  const genre = detail.genres;
   const title = detail.title.romaji;
+  const averageScore = detail.averageScore;
   const descHTML = { __html: detail?.description };
 
   return {
@@ -246,6 +269,8 @@ export async function getServerSideProps(context) {
       descHTML,
       coverImage,
       bannerImage,
+      averageScore,
+      genre,
     },
   };
 }
