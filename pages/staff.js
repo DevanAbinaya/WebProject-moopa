@@ -51,7 +51,7 @@ export default function Staff() {
     return (
       <div className="scale-95 antialiased xl:mx-28 xl:scale-100">
         <div
-          className={`h-[116px] shrink bg-[#dadada] bg-cover xl:w-[38rem] ${dev.iClass}`}
+          className={`h-[116px] shrink bg-[#dadada50] bg-cover xl:w-[38rem] ${dev.iClass}`}
           style={{
             backgroundImage: `url(${
               dev.coverImage ||
