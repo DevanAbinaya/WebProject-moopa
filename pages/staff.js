@@ -175,8 +175,8 @@ export default function Staff() {
       name: "rapiips_",
       desc: "Time is precious, waste it wisely",
       coverImage:
-        "https://cdn.discordapp.com/attachments/986579286397964290/1058330187286204416/cute-anime-girl-blushing-4k-wallpaper-uhdpaper.com-230h.jpg",
-      iClass: "bg-center",
+        "https://media.discordapp.net/attachments/1068758633464201268/1072001529889959946/anime-girl-morning-breakfast-4k-wallpaper-uhdpaper.com-850i.jpg?width=1246&height=701",
+      bgPosition: "50% 25%",
       socials: {
         ig: "https://www.instagram.com/rapiips_/",
         discord: "Pipip#5048",
@@ -191,7 +191,7 @@ export default function Staff() {
       desc: "Sedang mencari.",
       coverImage:
         "https://cdn.discordapp.com/attachments/986579286397964290/1058420833376280656/23264b905fcd7ed378a6b3c5d8f2a047_7598772829043055595.png",
-      iClass: "",
+      bgPosition: "50% 15%",
       socials: {
         ig: "https://www.instagram.com/isantuyskl/",
         discord: "X-San#5418",
@@ -235,8 +235,11 @@ export default function Staff() {
         {staff.map((post) => (
           <div key={post.id}>
             <div
-              className={`h-[116px] shrink rounded-t-lg bg-[#dadada50] bg-cover dark:brightness-95 xl:w-[38rem] ${post.iClass}`}
-              style={{ backgroundImage: `url(${post.coverImage || ``})` }}
+              className={`h-[116px] shrink rounded-t-lg bg-[#dadada50] bg-cover dark:brightness-95 xl:w-[38rem]`}
+              style={{
+                backgroundImage: `url(${post.coverImage || ``})`,
+                backgroundPosition: `${post.bgPosition}`,
+              }}
             >
               {/* <img src={post.coverImage || `https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png`} alt="Profile Picture" className={`object-cover object-[center_top] h-[116px] w-full rounded-t-lg ${post.iClass}`}/> */}
             </div>

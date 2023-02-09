@@ -23,6 +23,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
           large
         }
         description
+        bannerImage
         type
         popularity
         averageScore
@@ -91,7 +92,17 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                 className="mx-auto h-auto w-full max-w-md items-center overflow-hidden rounded-xl bg-white shadow-lg transition-colors duration-500  dark:bg-[#212121] md:max-w-[100rem]"
               >
                 <div className="items-center md:flex ">
-                  <div className="relative flex justify-end md:shrink-0 ">
+                  {/* PC / Tablet */}
+                  <div className="relative hidden justify-end md:flex md:shrink-0">
+                    <img
+                      className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
+                      src={anime.coverImage.large}
+                      alt={anime.title.english}
+                    />
+                  </div>
+
+                  {/* Mobile */}
+                  <div className="relative flex justify-end md:hidden md:shrink-0">
                     <img
                       className="absolute top-[2rem] right-[1.5rem] z-10 h-[125px] w-[90px] rounded-lg object-cover shadow-xl md:hidden"
                       src={anime.coverImage.large}
@@ -99,7 +110,11 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                     />
                     <img
                       className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
-                      src={anime.coverImage.large}
+                      src={
+                        anime.bannerImage
+                          ? anime.bannerImage
+                          : anime.coverImage.large
+                      }
                       alt={anime.title.english}
                     />
                   </div>
@@ -132,7 +147,17 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                 className="mx-auto h-auto w-full max-w-md items-center overflow-hidden rounded-xl bg-white shadow-lg transition-colors duration-500  dark:bg-[#212121] md:max-w-[100rem]"
               >
                 <div className="items-center md:flex ">
-                  <div className="relative flex justify-end md:shrink-0 ">
+                  {/* PC / Tablet */}
+                  <div className="relative hidden justify-end md:flex md:shrink-0">
+                    <img
+                      className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
+                      src={anime.coverImage.large}
+                      alt={anime.title.english}
+                    />
+                  </div>
+
+                  {/* Mobile */}
+                  <div className="relative flex justify-end md:hidden md:shrink-0">
                     <img
                       className="absolute top-[2rem] right-[1.5rem] z-10 h-[125px] w-[90px] rounded-lg object-cover shadow-xl md:hidden"
                       src={anime.coverImage.large}
@@ -140,7 +165,11 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                     />
                     <img
                       className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
-                      src={anime.coverImage.large}
+                      src={
+                        anime.bannerImage
+                          ? anime.bannerImage
+                          : anime.coverImage.large
+                      }
                       alt={anime.title.english}
                     />
                   </div>
