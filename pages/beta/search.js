@@ -3,6 +3,7 @@ import axios from "axios";
 import Layout from "../../components/layout";
 import Link from "next/link";
 import Head from "next/head";
+import { MANGA } from "@consumet/extensions";
 import { motion as m } from "framer-motion";
 
 export default function Manga(props) {
@@ -112,6 +113,9 @@ export default function Manga(props) {
 }
 
 Manga.getInitialProps = async function () {
+  const [result, setResults] = useState([]);
+  const manga = new MANGA.Mangasee123();
+
   const res = await fetch(
     "https://manga-api-production-30a1.up.railway.app/api/manga/popular/1"
   );

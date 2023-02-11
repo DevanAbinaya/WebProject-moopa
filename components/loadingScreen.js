@@ -3,7 +3,7 @@ import Typewriter from "typewriter-effect";
 
 const LoadingScreen = () => {
   return (
-    <main className="flex h-screen items-center bg-white pb-56 dark:bg-[#121212] md:justify-center md:pb-48">
+    <main className="z-50 flex h-screen items-center bg-white pb-56 dark:bg-[#121212] md:justify-center md:pb-48">
       <div className="flex w-screen flex-col items-center md:justify-center">
         <img
           src="https://media.discordapp.net/attachments/997882702751596674/1066581397533368401/Qiqi_1.png?width=701&height=701"

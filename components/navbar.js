@@ -170,7 +170,7 @@ function Navbar(props) {
                 </button>
                 <button className="group flex flex-col items-center ">
                   <div>
-                    <Link href="/gallery">
+                    <Link href="/search">
                       <svg
                         width="36"
                         height="25"
@@ -199,10 +199,10 @@ function Navbar(props) {
                     </Link>
                   </div>
                   <Link
-                    href="/gallery"
+                    href="/search"
                     className="font-karla font-bold text-[#8BA0B2] group-hover:text-cyan-700"
                   >
-                    gallery
+                    search
                   </Link>
                 </button>
                 <button className="group flex flex-col items-center gap-y-[1px]">
@@ -265,10 +265,10 @@ function Navbar(props) {
             </li>
             <li>
               <Link
-                href="/gallery"
+                href="/search"
                 className="p-2 transition-all duration-100 hover:text-orange-600"
               >
-                gallery
+                search
               </Link>
             </li>
           </ul>

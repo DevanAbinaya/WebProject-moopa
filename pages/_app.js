@@ -4,6 +4,7 @@ import LoadingScreen from "../components/loadingScreen";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion as m } from "framer-motion";
+import NextNProgress from "nextjs-progressbar";
 
 function Loading() {
   const router = useRouter();
@@ -44,7 +45,6 @@ export default function App({ Component, pageProps }) {
       <ThemeProvider attribute="class">
         <AnimatePresence mode="wait">
           <div className="relative">
-            <Loading key={`loading-${router.route}`} className="absolute" />
             <m.div
               key={`route-${router.route}`}
               transition={{ duration: 0.5 }}
@@ -60,8 +60,15 @@ export default function App({ Component, pageProps }) {
                 },
                 exitState: {},
               }}
-              className="z-10 w-screen"
+              className="z-50 w-screen"
             >
+              <NextNProgress
+                color="#FF7E2C"
+                startPosition={0.3}
+                stopDelayMs={200}
+                height={3}
+                showOnShallow={true}
+              />
               <Component {...pageProps} />
             </m.div>
           </div>
