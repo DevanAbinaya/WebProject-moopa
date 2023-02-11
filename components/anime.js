@@ -18,6 +18,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
         idMal
         title {
           romaji
+          english
         }
         coverImage {
           large
@@ -125,7 +126,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                       as={`/beta/manga/detail/id/${anime.id}`}
                       className="w-64 font-karla text-xl font-bold md:w-full md:text-2xl"
                     >
-                      {anime.title.romaji}
+                      {anime.title.english}
                     </Link>
                     <div className="text-sm md:text-xl">
                       {anime.description ? (
@@ -176,15 +177,10 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
 
                   <div className="m-5 flex flex-col gap-6 ">
                     <Link
-                      href={
-                        "https://anilist.co/" +
-                        anime.type.toString().toLowerCase() +
-                        "/" +
-                        anime.id
-                      }
+                      href={`/himitsu?title=${anime.title.english}&id=${anime.id}`}
                       className="w-64 font-karla text-xl font-bold md:w-full md:text-2xl"
                     >
-                      {anime.title.romaji}
+                      {anime.title.english}
                     </Link>
                     <div className="text-sm md:text-xl">
                       {anime.description ? (

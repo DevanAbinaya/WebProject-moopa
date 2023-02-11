@@ -16,7 +16,7 @@ const MediaTypeSelector = ({ selectedType, onChange }) => (
   </select>
 );
 
-export default function Gallery() {
+export default function Search() {
   const [query, setQuery] = useState(null);
   const [selectedType, setSelectedType] = useState("ANIME");
 
@@ -33,8 +33,8 @@ export default function Gallery() {
   return (
     <>
       <Head>
-        <title>Moopa - Gallery</title>
-        <meta name="gallery" content="Search your Anime or Manga" />
+        <title>Moopa - Search</title>
+        <meta name="search" content="Search your Anime or Manga" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/c.svg" />
       </Head>

@@ -1,5 +1,7 @@
 import Layout from "../../../../../components/layout";
 import React, { useEffect, useState, useRef } from "react";
+import { MANGA } from "@consumet/extensions";
+import { weirdToNormalChars } from "weird-to-normal-chars";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -7,15 +9,17 @@ export default function Chapter(props) {
   // console.log(props);
   const detail = props.manga;
   // console.log(manga)
-
+  const [results, setResults] = useState([]);
   const [data, setData] = useState(null);
   const [isloading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [showFull, setShowFull] = useState(false);
+  const [showChapter, setShowChapter] = useState("A");
+  const [clickedChapters, setClickedChapters] = useState([]);
   const synopsisRef = useRef(null);
   const itemsperPage = 10;
 
-  const [clickedChapters, setClickedChapters] = useState([]);
+  // console.log(showChapter);
 
   const handleClick = (endpoint) => {
     setClickedChapters([...clickedChapters, endpoint]);
@@ -31,12 +35,14 @@ export default function Chapter(props) {
       setClickedChapters(JSON.parse(storedChapters));
     }
     fetchData();
+    main();
   }, []);
 
   const startIndex = (currentPage - 1) * itemsperPage;
   const endIndex = startIndex + itemsperPage;
 
   async function fetchData() {
+    setIsLoading(true);
     const query = encodeURIComponent(props.detail.title.romaji);
     const res = await fetch(
       `https://manga-api-production-30a1.up.railway.app/api/search/${query}`
@@ -57,9 +63,41 @@ export default function Chapter(props) {
       const chapter = detail.chapter;
       setData(chapter);
     }
+    setIsLoading(false);
   }
 
-  console.log(props.genre);
+  const str = weirdToNormalChars(props.detail.title.romaji);
+  const judul = str.replace(/[\W_]+/g, " ");
+
+  // console.log(isloading);
+
+  const main = async () => {
+    setIsLoading(true);
+    const manga = new MANGA.Mangasee123();
+    const results = await manga.search(judul);
+    // console.log(results);
+    if (!results) {
+      return;
+    }
+    const found = results.results.find((match) => match.title === judul);
+    if (found) {
+      const detail = await manga.fetchMangaInfo(found.id);
+      setResults(detail);
+    } else {
+      if (results.results.length === 0) {
+        return;
+      }
+      const detail = await manga.fetchMangaInfo(results.results[0].id);
+      setResults(detail);
+    }
+    setIsLoading(false);
+  };
+
+  // console.log(results);
+  const enChapter = results.chapters;
+  // console.log(props.bannerImage);
+
+  console.log(showChapter);
 
   let banner;
 
@@ -75,7 +113,7 @@ export default function Chapter(props) {
         <div className="relative flex min-h-screen flex-col pt-[3rem] md:mx-[10%] md:pt-[5.5rem]">
           <div className="relative mt-4 flex flex-col gap-10 pb-10 md:gap-20">
             <div className="absolute top-[10px] ">
-              <a className="font-karla text-xl" href="/gallery">
+              <a className="font-karla text-xl" href="/search">
                 {"<"} Back to search page
               </a>
             </div>
@@ -116,7 +154,7 @@ export default function Chapter(props) {
                 />
                 <img
                   className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
-                  src={banner ? props.bannerImage : props.coverImage}
+                  src={props.bannerImage ? props.bannerImage : props.coverImage}
                   alt={props.title}
                 />
               </div>
@@ -153,22 +191,47 @@ export default function Chapter(props) {
 
             <div className="flex flex-col justify-between gap-10 px-3 md:gap-16 md:px-0">
               <div className="flex flex-col gap-5 md:gap-10">
-                <h1 className="font-outfit text-2xl font-bold md:text-4xl">
-                  Chapters
-                </h1>
-                <div className="flex flex-col md:text-2xl">
-                  {data ? (
-                    Array.isArray(data) &&
-                    data
-                      .slice(startIndex, endIndex)
-                      .map(({ chapter_title, chapter_endpoint }) => {
+                <div className="flex items-center gap-10 font-semibold">
+                  <h1 className="font-outfit text-2xl font-bold md:text-4xl">
+                    Chapters
+                  </h1>
+                  <div className="flex items-center gap-4 rounded-xl bg-[#292929] px-4">
+                    <button
+                      onClick={() => setShowChapter("B")}
+                      className={`text-gray-${
+                        showChapter === "B" ? "50" : "700"
+                      }`}
+                    >
+                      EN
+                    </button>
+                    <div className="h-5 w-[1px] bg-white" />
+                    <button
+                      onClick={() => setShowChapter("A")}
+                      className={`text-gray-${
+                        showChapter === "A" ? "50" : "700"
+                      }`}
+                    >
+                      ID
+                    </button>
+                  </div>
+                </div>
+                {showChapter === "A" ? (
+                  <div
+                    id="ID"
+                    className="flex h-[720px] w-[50%] flex-col overflow-scroll overflow-x-hidden md:text-2xl"
+                  >
+                    {isloading ? (
+                      <p className="pl-1">Loading Chapters...</p>
+                    ) : data ? (
+                      Array.isArray(data) &&
+                      data.slice(startIndex, endIndex).map((manga) => {
+                        const { chapter_title, chapter_endpoint } = manga;
                         return (
-                          <div key={chapter_endpoint} className="md:w-[50%]">
-                            <div className="h-[1px] bg-black dark:bg-white"></div>
+                          <div key={chapter_endpoint} className="">
                             <Link
                               onClick={() => handleClick(chapter_endpoint)}
-                              href={`/beta/manga/chapter/[chapter]`}
-                              as={`/beta/manga/chapter/${chapter_endpoint}`}
+                              href={`/beta/manga/chapter/id/[chapter]`}
+                              as={`/beta/manga/chapter/id/${chapter_endpoint}`}
                             >
                               <p
                                 className={
@@ -180,32 +243,99 @@ export default function Chapter(props) {
                                 {chapter_title}
                               </p>
                             </Link>
+                            <div className="h-[1px] bg-black dark:bg-white" />
                           </div>
                         );
                       })
-                  ) : (
-                    <p className="text-xl font-bold">No Chapters Available</p>
-                  )}
-                </div>
+                    ) : (
+                      <p className="text-xl font-bold">No Chapters Available</p>
+                    )}
+                    <div className="mx-auto flex gap-16 pt-5 font-bold md:mx-0">
+                      {data && (
+                        <React.Fragment>
+                          {currentPage > 1 && (
+                            <button
+                              className="chapter-button"
+                              onClick={() => setCurrentPage(currentPage - 1)}
+                            >
+                              Back
+                            </button>
+                          )}
+                          {currentPage <
+                            Math.ceil(data.length / itemsperPage) && (
+                            <button
+                              className="chapter-button"
+                              onClick={() => setCurrentPage(currentPage + 1)}
+                            >
+                              Next
+                            </button>
+                          )}
+                        </React.Fragment>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    id="EN"
+                    className="flex h-[720px] w-[50%] flex-col overflow-scroll overflow-x-hidden md:text-2xl"
+                  >
+                    {isloading ? (
+                      <p className="pl-1">Loading Chapters...</p>
+                    ) : results.chapters ? (
+                      results.chapters.map((enManga) => {
+                        const { title, id } = enManga;
+                        return (
+                          <div key={id} className="">
+                            <Link
+                              onClick={() => handleClick(id)}
+                              href={`/beta/manga/chapter/en/[chapter]`}
+                              as={`/beta/manga/chapter/en/${id}`}
+                            >
+                              <p
+                                className={
+                                  clickedChapters.includes(id)
+                                    ? "flex h-14 items-center pl-5 font-light italic text-gray-500 "
+                                    : "flex h-14 items-center pl-5 font-light italic"
+                                }
+                              >
+                                {title ? title : "No Title"}
+                              </p>
+                            </Link>
+                            <div className="h-[1px] bg-black dark:bg-white" />
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <p className="text-xl font-bold">No Chapters Available</p>
+                    )}
+                    {/* <div className="mx-auto flex gap-16 pt-5 font-bold md:mx-0">
+                      {results.chapters && (
+                        <React.Fragment>
+                          {currentPage > 1 && (
+                            <button
+                              className="chapter-button"
+                              onClick={() => setCurrentPage(currentPage - 1)}
+                            >
+                              Back
+                            </button>
+                          )}
+                          {currentPage <
+                            Math.ceil(
+                              results.chapters.length / itemsperPage
+                            ) && (
+                            <button
+                              className="chapter-button"
+                              onClick={() => setCurrentPage(currentPage + 1)}
+                            >
+                              Next
+                            </button>
+                          )}
+                        </React.Fragment>
+                      )}
+                    </div> */}
+                  </div>
+                )}
               </div>
-            </div>
-            <div className="mx-auto flex gap-16 font-bold md:mx-0">
-              {data && currentPage > 1 && (
-                <button
-                  className="chapter-button"
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                >
-                  Back
-                </button>
-              )}
-              {data && currentPage < Math.ceil(data.length / itemsperPage) && (
-                <button
-                  className="chapter-button"
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                >
-                  Next
-                </button>
-              )}
             </div>
           </div>
         </div>
