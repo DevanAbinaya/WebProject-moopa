@@ -13,7 +13,8 @@ export default function Himitsu(props) {
 
   // console.log(info);
   // console.log(props.firstAnime);
-  // console.log(props.judul);
+  const epi1 = info.episodes.filter((epi) => epi.number === 1);
+  // console.log(epi1[0]);
   return (
     <>
       <Head>
@@ -63,6 +64,32 @@ export default function Himitsu(props) {
                           <h1>Status:</h1>
                           <p>{info.status}</p>
                         </div>
+                      </div>
+                      <div className="flex">
+                        <Link
+                          href={`/beta/anime/watch?title=${encodeURIComponent(
+                            info.title
+                          )}&id=${epi1[0].id}&idInt=${props.idInt}&epi=${
+                            epi1[0].number
+                          }&epiTitle=${encodeURIComponent(epi1[0].title)}`}
+                          legacyBehavior
+                        >
+                          <h1 className="flex cursor-pointer items-center gap-2 rounded-[20px] bg-[#ff9537] px-4 py-2 font-bold text-[#ffffff]">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="13"
+                              height="12"
+                              fill="none"
+                              viewBox="0 0 250 289"
+                            >
+                              <path
+                                fill="#fff"
+                                d="M249.734 144.5l-249 143.761V.741l249 143.759z"
+                              ></path>
+                            </svg>{" "}
+                            WATCH
+                          </h1>
+                        </Link>
                       </div>
                     </div>
                   </div>
