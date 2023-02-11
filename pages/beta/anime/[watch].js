@@ -1,4 +1,5 @@
 import axios from "axios";
+import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { weirdToNormalChars } from "weird-to-normal-chars";
 import Navbar from "../../../components/navbar";
@@ -90,8 +91,16 @@ export default function Test(props) {
     }
   }, [url, sources]);
 
+  // console.log();
+
   return (
     <>
+      <Head>
+        <title>{props.meTitle}</title>
+        <meta name="watching" content="Watching Anime" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/c.svg" />
+      </Head>
       <Navbar className="md:bg-black" />
       <div className="flex">
         <div className="flex">
@@ -171,8 +180,9 @@ export default function Test(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { title, id, idInt, epi } = context.query;
+  const { title, id, idInt, epi, epiTitle } = context.query;
   const query = decodeURIComponent(title);
+  const meTitle = decodeURIComponent(epiTitle);
   const str = weirdToNormalChars(query);
   const judul = str.replace(/[\W_]+/g, " ");
   const idInts = parseInt(idInt);
@@ -209,6 +219,7 @@ export async function getServerSideProps(context) {
       animeInfo: animeInfo.data,
       judul,
       epiInts,
+      meTitle,
       // decodeId,
       id,
     },
