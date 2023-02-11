@@ -38,9 +38,9 @@ export default function Himitsu(props) {
           ) : info ? (
             <div className="flex flex-col items-center">
               <div className="flex flex-col gap-10 md:w-[70%] ">
-                <div className="z-40 flex flex-col gap-10 px-5 pt-[7rem] md:flex-row lg:px-0 lg:pt-[10rem]">
+                <div className="z-40 flex flex-col gap-10 px-5 pt-[8rem] md:flex-row lg:mt-[5rem] lg:px-0">
                   <div className="flex gap-10 md:h-[250px] md:w-52">
-                    <div className="flex h-[200px] w-48 bg-[#dadada50] md:w-full">
+                    <div className="flex h-[200px] w-52 bg-[#dadada50] md:h-[250px] md:w-full">
                       <img
                         src={info.image}
                         className="w- h-[200px] shrink-0 object-cover md:h-[250px]"
@@ -71,17 +71,23 @@ export default function Himitsu(props) {
                     <h1 className="hidden text-2xl font-semibold lg:block">
                       {info.title}
                     </h1>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: showText ? info.description : slicedDesc,
-                      }}
-                    ></div>
-                    <button
-                      onClick={() => setShowtext(!showText)}
-                      className="font-rama font-bold text-white"
-                    >
-                      {showText ? " Show Less" : " Show More"}
-                    </button>
+                    <p
+                      dangerouslySetInnerHTML={{ __html: info.description }}
+                      className="hidden lg:block"
+                    />
+                    <div className="lg:hidden">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: showText ? info.description : slicedDesc,
+                        }}
+                      ></div>
+                      <button
+                        onClick={() => setShowtext(!showText)}
+                        className="font-rama font-bold text-white"
+                      >
+                        {showText ? " Show Less" : " Show More"}
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div className="z-20 flex flex-col gap-10 p-3 lg:p-0">
