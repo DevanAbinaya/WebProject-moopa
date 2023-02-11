@@ -77,6 +77,7 @@ export default function Test(props) {
   // console.log(sources);
 
   useEffect(() => {
+    setIsloading(true);
     if (sources) {
       setPlayers(
         <Player
@@ -89,6 +90,7 @@ export default function Test(props) {
         />
       );
     }
+    setIsloading(false);
   }, [url, sources]);
 
   // console.log();
@@ -129,7 +131,7 @@ export default function Test(props) {
                     Episode {episodeNumber}
                   </h1>
                 </div>
-                <div>
+                <div className="px-3">
                   <div
                     dangerouslySetInnerHTML={{
                       __html: showText ? text : truncatedText,
@@ -142,7 +144,7 @@ export default function Test(props) {
                     {showText ? "Show Less" : "Show More"}
                   </button>
                 </div>
-                <div className="flex h-[640px] flex-col gap-5 overflow-scroll overflow-x-hidden pt-5">
+                <div className="flex h-[640px] flex-col gap-5 overflow-scroll overflow-x-hidden px-3 pt-5">
                   {info.episodes.map((episode, index) => {
                     return (
                       <div key={index} className="flex flex-col gap-3">
