@@ -30,7 +30,7 @@ function Layout(props) {
         <Navbar
           className={`absolute z-50 hidden w-full duration-500 md:fixed md:top-0 md:block md:transition-all ${
             isAtTop
-              ? `px-2 pt-2 transition-all duration-500 md:px-5 md:pt-5 ${props.navTop}`
+              ? `px-2 pt-2 transition-all duration-500 ${props.navTop}`
               : isScrollingDown
               ? "md:h-16 md:translate-y-[-100%] md:bg-white md:shadow-sm md:dark:bg-black "
               : "md:bg-white md:px-0 md:pt-0 md:shadow-sm md:dark:bg-black"
