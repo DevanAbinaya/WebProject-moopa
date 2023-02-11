@@ -126,7 +126,9 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                       as={`/beta/manga/detail/id/${anime.id}`}
                       className="w-64 font-karla text-xl font-bold md:w-full md:text-2xl"
                     >
-                      {anime.title.english}
+                      {anime.title.english
+                        ? anime.title.english
+                        : anime.title.romaji}
                     </Link>
                     <div className="text-sm md:text-xl">
                       {anime.description ? (
@@ -180,7 +182,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                       href={`/himitsu?title=${anime.title.english}&id=${anime.id}`}
                       className="w-64 font-karla text-xl font-bold md:w-full md:text-2xl"
                     >
-                      {anime.title.english}
+                      {anime.title.english || anime.title.romaji}
                     </Link>
                     <div className="text-sm md:text-xl">
                       {anime.description ? (

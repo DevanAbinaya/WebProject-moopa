@@ -22,36 +22,51 @@ export default function Test(props) {
   const [url, setDefUrl] = useState(null);
   const [sources, setSources] = useState(null);
   const [players, setPlayers] = useState(null);
-  console.log(title);
+  const [isVpn, setIsVpn] = useState(false);
+  // console.log(title);
   // console.log(props.animeInfo);
   useEffect(() => {
     setIsloading(true);
     async function fetchData() {
-      const response = await axios.get(
-        `https://api.consumet.org/anime/enime/watch?episodeId=${props.id}`
-      );
-      const dataEpi = response.data.sources;
-      let sumber = dataEpi.find((source) => source.quality === "default");
+      try {
+        const response = await axios.get(
+          `https://api.consumet.org/anime/enime/watch?episodeId=${props.id}`,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
+        if (response.status === 404) {
+          console.log("Resource not found:", response.status);
+          return;
+        }
+        const dataEpi = response.data.sources;
+        let sumber = dataEpi.find((source) => source.quality === "default");
 
-      const source = response.data.sources
-        .map((items) => ({
-          html: items.quality,
-          url: `https://proxy.vnxservers.com/proxy/m3u8/${encodeURIComponent(
-            items.url
-          )}/${encodeURIComponent(`{"referer":"https://playgo1.cc"}`)}`,
-        }))
-        .sort((a, b) => {
-          if (a.html === "default") return -1;
-          if (b.html === "default") return 1;
-          return 0;
-        });
-      setSources(source);
+        const source = response.data.sources
+          .map((items) => ({
+            html: items.quality,
+            url: `https://proxy.vnxservers.com/proxy/m3u8/${encodeURIComponent(
+              items.url
+            )}/${encodeURIComponent(`{"referer":"https://playgo1.cc"}`)}`,
+          }))
+          .sort((a, b) => {
+            if (a.html === "default") return -1;
+            if (b.html === "default") return 1;
+            return 0;
+          });
+        setSources(source);
 
-      const defUrl = `https://proxy.vnxservers.com/proxy/m3u8/${encodeURIComponent(
-        sumber.url
-      )}/${encodeURIComponent(`{"referer":"https://playgo1.cc"}`)}`;
-      setDefUrl(defUrl);
-      //
+        const defUrl = `https://proxy.vnxservers.com/proxy/m3u8/${encodeURIComponent(
+          sumber.url
+        )}/${encodeURIComponent(`{"referer":"https://playgo1.cc"}`)}`;
+        setDefUrl(defUrl);
+        //
+      } catch (error) {
+        console.log(error);
+        setIsVpn(true);
+      }
     }
     fetchData();
 
@@ -84,8 +99,12 @@ export default function Test(props) {
             <p>sabar ya bang...</p>
           ) : (
             <div className="flex w-screen flex-col items-center gap-5">
-              <div className="h-[260px] w-screen md:h-[720px] md:w-[85%]">
-                {players}
+              <div className="flex h-[260px] w-screen items-center justify-center text-center md:h-[720px] md:w-[85%]">
+                {isVpn ? (
+                  <p>{`> The video isn't showing? Try to use VPN or change your DNS.`}</p>
+                ) : (
+                  <div className="h-[260px] w-screen md:h-full">{players}</div>
+                )}
               </div>
 
               <div className="flex flex-col gap-5 lg:w-[85%]">
@@ -102,7 +121,11 @@ export default function Test(props) {
                   </h1>
                 </div>
                 <div>
-                  {showText ? text : truncatedText}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: showText ? text : truncatedText,
+                    }}
+                  ></div>
                   <button
                     onClick={() => setShowtext(!showText)}
                     className="font-rama font-bold text-white"
