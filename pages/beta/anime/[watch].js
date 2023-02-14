@@ -7,36 +7,31 @@ import Player from "../../../lib/Artplayer";
 
 export default function Test(props) {
   const title = props.judul;
-
-  const info = props.animeInfo;
+  const info = props.data;
+  const id = props.id;
+  const potonganDesc = props.potonganDesc;
+  const text = props.text;
+  const displayTitle = props.displayTitle;
   const episodeNumber = props.epiInts;
 
   const [isLoading, setIsloading] = useState(false);
   const [showText, setShowtext] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
-
-  const text = info.description;
-  const truncatedText = text.slice(0, 150) + "...";
-  // const rawTitle = info.title;
-  const displayTitle = title.slice(0, 25) + "...";
+  const [log, setLog] = useState([]);
 
   const [url, setDefUrl] = useState(null);
   const [sources, setSources] = useState(null);
   const [players, setPlayers] = useState(null);
   const [isVpn, setIsVpn] = useState(false);
-  // console.log(title);
-  // console.log(props.animeInfo);
+
   useEffect(() => {
     setIsloading(true);
     async function fetchData() {
       try {
         const response = await axios.get(
-          `https://api.consumet.org/anime/enime/watch?episodeId=${props.id}`,
-          {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-            },
-          }
+          `https://cors.consumet.stream/https://api.consumet.org/meta/anilist/watch/${decodeURIComponent(
+            id
+          )}`
         );
         if (response.status === 404) {
           console.log("Resource not found:", response.status);
@@ -63,7 +58,6 @@ export default function Test(props) {
           sumber.url
         )}/${encodeURIComponent(`{"referer":"https://playgo1.cc"}`)}`;
         setDefUrl(defUrl);
-        //
       } catch (error) {
         console.log(error);
         setIsVpn(true);
@@ -74,6 +68,7 @@ export default function Test(props) {
     setIsloading(false);
   }, []);
 
+  // console.log(potonganDesc);
   // console.log(sources);
 
   useEffect(() => {
@@ -98,7 +93,7 @@ export default function Test(props) {
   return (
     <>
       <Head>
-        <title>{props.meTitle}</title>
+        <title>{props.episode}</title>
         <meta name="watching" content="Watching Anime" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/c.svg" />
@@ -134,7 +129,7 @@ export default function Test(props) {
                 <div className="px-3">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: showText ? text : truncatedText,
+                      __html: showText ? text : potonganDesc,
                     }}
                   ></div>
                   <button
@@ -144,7 +139,7 @@ export default function Test(props) {
                     {showText ? "Show Less" : "Show More"}
                   </button>
                 </div>
-                <div className="flex h-[640px] flex-col gap-5 overflow-scroll overflow-x-hidden px-3 pt-5">
+                <div className="flex h-[640px] flex-col gap-5 overflow-scroll px-3 pt-5 overflow-x-hidden">
                   {info.episodes.map((episode, index) => {
                     return (
                       <div key={index} className="flex flex-col gap-3">
@@ -152,7 +147,11 @@ export default function Test(props) {
                           href={
                             episode.number === episodeNumber
                               ? "#"
-                              : `/beta/anime/watch?title=${info.title}&id=${episode.id}&idInt=${info.anilistId}&epi=${episode.number}`
+                              : `/beta/anime/watch?title=${
+                                  info.title.english
+                                }&id=${episode.id}&idInt=${info.id}&epi=${
+                                  episode.number
+                                }&epiTitle=${encodeURIComponent(episode.title)}`
                           }
                           className="text-start text-xl"
                         >
@@ -167,7 +166,7 @@ export default function Test(props) {
                             <div>Episode {episode.number}</div>
                           )}
                         </a>
-                        <div className="h-[1px] bg-black dark:bg-white" />
+                        <div className="h-[1px] bg-white" />
                       </div>
                     );
                   })}
@@ -184,46 +183,29 @@ export default function Test(props) {
 export async function getServerSideProps(context) {
   const { title, id, idInt, epi, epiTitle } = context.query;
   const query = decodeURIComponent(title);
-  const meTitle = decodeURIComponent(epiTitle);
+  const episode = decodeURIComponent(epiTitle);
   const str = weirdToNormalChars(query);
   const judul = str.replace(/[\W_]+/g, " ");
-  const idInts = parseInt(idInt);
   const epiInts = parseInt(epi);
   const results = await axios.get(
-    `https://cors.consumet.stream/https://api.consumet.org/anime/enime/${judul}`,
-    {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
+    `https://cors.consumet.stream/https://api.consumet.org/meta/anilist/info/${idInt}`
   );
   const data = results.data;
-  const firstAnime = data.results.filter(
-    (results) => results.anilistId === idInts
-  );
-  const animeInfo = await axios.get(
-    `https://cors.consumet.stream/https://api.consumet.org/anime/enime/info?id=${firstAnime[0].id}`,
-    {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
-  );
-  // const res = await axios.get(
-  //   `https://api.consumet.org/anime/enime/watch?episodeId=cldonlvrdlcvppk01742960i5`
-  // );
-  //
+  const text = data.description;
+
+  const potonganDesc = text.slice(0, 150) + "...";
+  const displayTitle = title.slice(0, 25) + "...";
 
   return {
     props: {
-      // results: results.data,
-      // animeInfo: animeInfo.data,
-      animeInfo: animeInfo.data,
+      data,
       judul,
       epiInts,
-      meTitle,
-      // decodeId,
+      episode,
       id,
+      potonganDesc,
+      displayTitle,
+      text,
     },
   };
 }

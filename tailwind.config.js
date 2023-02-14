@@ -53,6 +53,7 @@ module.exports = {
     },
     textColor: ["responsive", "hover", "focus"],
     fontWeight: ["responsive", "hover", "focus"],
+    scrollbar: ["rounded"],
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar"), require("tailwind-scrollbar-hide")],
 };

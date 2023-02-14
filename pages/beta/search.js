@@ -52,10 +52,10 @@ export default function Manga(props) {
       <Layout>
         <form
           onSubmit={() => handleSubmit(query)}
-          className="flex justify-center pt-[8rem] md:justify-start"
+          className="flex justify-center bg-[#1F1F1F] pt-[8rem] md:justify-start"
         >
           <input
-            className="h-7 w-[80%] rounded-md text-center shadow-md dark:bg-[#3b3b3b] md:w-52"
+            className="h-7 w-[80%] rounded-md bg-[#1F1F1F] text-center shadow-md md:w-52"
             placeholder="Search here..."
             onChange={checkSetQuery}
           />

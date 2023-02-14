@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
 import Link from "next/link";
+import Image from "next/image";
 
 const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
   const ANIME_QUERY = gql`
@@ -95,21 +96,25 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                 <div className="items-center md:flex ">
                   {/* PC / Tablet */}
                   <div className="relative hidden justify-end md:flex md:shrink-0">
-                    <img
+                    <Image
                       className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
                       src={anime.coverImage.large}
                       alt={anime.title.english}
+                      width={224}
+                      height={312}
                     />
                   </div>
 
                   {/* Mobile */}
                   <div className="relative flex justify-end md:hidden md:shrink-0">
-                    <img
+                    <Image
                       className="absolute top-[2rem] right-[1.5rem] z-10 h-[125px] w-[90px] rounded-lg object-cover shadow-xl md:hidden"
                       src={anime.coverImage.large}
                       alt={anime.title.english}
+                      width={90}
+                      height={125}
                     />
-                    <img
+                    <Image
                       className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
                       src={
                         anime.bannerImage
@@ -117,6 +122,8 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                           : anime.coverImage.large
                       }
                       alt={anime.title.english}
+                      width={224}
+                      height={312}
                     />
                   </div>
 
@@ -152,21 +159,25 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                 <div className="items-center md:flex ">
                   {/* PC / Tablet */}
                   <div className="relative hidden justify-end md:flex md:shrink-0">
-                    <img
+                    <Image
                       className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
                       src={anime.coverImage.large}
                       alt={anime.title.english}
+                      width={224}
+                      height={312}
                     />
                   </div>
 
                   {/* Mobile */}
                   <div className="relative flex justify-end md:hidden md:shrink-0">
-                    <img
+                    <Image
                       className="absolute top-[2rem] right-[1.5rem] z-10 h-[125px] w-[90px] rounded-lg object-cover shadow-xl md:hidden"
                       src={anime.coverImage.large}
                       alt={anime.title.english}
+                      width={90}
+                      height={125}
                     />
-                    <img
+                    <Image
                       className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
                       src={
                         anime.bannerImage
@@ -174,12 +185,16 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                           : anime.coverImage.large
                       }
                       alt={anime.title.english}
+                      width={224}
+                      height={312}
                     />
                   </div>
 
                   <div className="m-5 flex flex-col gap-6 ">
                     <Link
-                      href={`/himitsu?title=${anime.title.english}&id=${anime.id}`}
+                      href={`/himitsu?title=${
+                        anime.title.english || anime.title.romaji
+                      }&id=${anime.id}`}
                       className="w-64 font-karla text-xl font-bold md:w-full md:text-2xl"
                     >
                       {anime.title.english || anime.title.romaji}
