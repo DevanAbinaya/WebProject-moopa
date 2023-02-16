@@ -10,9 +10,8 @@ export default function Himitsu(props) {
   const [isLoading, setIsloading] = useState(false);
   const [showText, setShowtext] = useState(false);
   const [recentWatch, setRecentWatch] = useState([]);
+  const [slicedDesc, setSlicedDesc] = useState("");
   const info = props.data;
-
-  const slicedDesc = info.description.slice(0, 150) + "...";
 
   const handleStore = (props) => {
     let existingData = JSON.parse(localStorage.getItem("recentWatch"));
@@ -28,6 +27,33 @@ export default function Himitsu(props) {
   };
 
   const color = { backgroundColor: `${info.color}` };
+
+  useEffect(() => {
+    // calculate the brightness of the background color
+    function getBrightness(color) {
+      const rgb = color.match(/\d+/g);
+      return (299 * rgb[0] + 587 * rgb[1] + 114 * rgb[2]) / 1000;
+    }
+    // set the text color based on the background color
+    function setTextColor(element) {
+      const backgroundColor = getComputedStyle(element).backgroundColor;
+      const brightness = getBrightness(backgroundColor);
+      if (brightness < 128) {
+        element.style.color = "#fff"; // white
+      } else {
+        element.style.color = "#000"; // black
+      }
+    }
+
+    const elements = document.querySelectorAll(".dynamic-text");
+    elements.forEach((element) => {
+      setTextColor(element);
+    });
+
+    const desc = info.description.slice(0, 150) + "...";
+    setSlicedDesc(desc);
+  }, []);
+
   // console.log(props.firstAnime);
   const epi1 = info.episodes.filter((epi) => epi.number === 1);
 
@@ -142,31 +168,31 @@ export default function Himitsu(props) {
                       </h1>
                       <div className="flex gap-6 text-black">
                         <div
-                          className={`rounded-md px-2 font-karla font-bold`}
+                          className={`dynamic-text rounded-md px-2 font-karla font-bold`}
                           style={color}
                         >
                           {info.episodes.length} Episodes
                         </div>
                         <div
-                          className={`rounded-md px-2 font-karla font-bold`}
+                          className={`dynamic-text rounded-md px-2 font-karla font-bold`}
                           style={color}
                         >
                           {info.releaseDate}
                         </div>
                         <div
-                          className={`rounded-md px-2 font-karla font-bold`}
+                          className={`dynamic-text rounded-md px-2 font-karla font-bold`}
                           style={color}
                         >
                           {info.rating}%
                         </div>
                         <div
-                          className={`rounded-md px-2 font-karla font-bold`}
+                          className={`dynamic-text rounded-md px-2 font-karla font-bold`}
                           style={color}
                         >
                           {info.type}
                         </div>
                         <div
-                          className={`rounded-md px-2 font-karla font-bold`}
+                          className={`dynamic-text rounded-md px-2 font-karla font-bold`}
                           style={color}
                         >
                           {info.subOrDub || "No Sub/Dub"}
