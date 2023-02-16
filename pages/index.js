@@ -10,6 +10,7 @@ import Footer from "../components/footer";
 import Trending from "../components/hero/trending";
 import Image from "next/image";
 import Content from "../components/hero/content";
+import { useRouter } from "next/router";
 
 export default function Home({ detail, populars }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,6 +18,7 @@ export default function Home({ detail, populars }) {
   const [popular, setPopular] = useState(populars.data);
   const data = detail.data[0];
   const topDesc = data.description.slice(0, 350) + "...";
+  const router = useRouter();
 
   const handleShowClick = () => {
     setIsVisible(true);
@@ -49,6 +51,26 @@ export default function Home({ detail, populars }) {
     var slider = document.getElementById("recentslider");
     slider.scrollLeft = slider.scrollLeft + 500;
   };
+
+  const handleFormSubmission = (inputValue) => {
+    console.log(`Search for "${inputValue}"`);
+    // handle form submission with inputValue
+  };
+
+  const handleKeyDown = async (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const inputValue = event.target.value;
+      handleFormSubmission(inputValue);
+    }
+  };
+
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    const inputValue = document.querySelector(".search-text").value;
+    handleFormSubmission(inputValue);
+  };
+
   return (
     <>
       <Head>
@@ -244,8 +266,9 @@ export default function Home({ detail, populars }) {
                   className="search-text"
                   type="text"
                   placeholder="Search Anime"
+                  onKeyDown={handleKeyDown}
                 />
-                <a href="#" className="search-btn">
+                <a href="#" className="search-btn" onClick={handleButtonClick}>
                   <i className="fas fa-search"></i>
                 </a>
               </div>

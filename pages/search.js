@@ -4,6 +4,7 @@ import { ApolloProvider } from "@apollo/client";
 import Anime from "../components/anime";
 import client from "../lib/apolloClient";
 import Layout from "../components/layout";
+import { useRouter } from "next/router";
 
 const MediaTypeSelector = ({ selectedType, onChange }) => (
   <select
@@ -17,8 +18,14 @@ const MediaTypeSelector = ({ selectedType, onChange }) => (
 );
 
 export default function Search() {
-  const [query, setQuery] = useState(null);
   const [selectedType, setSelectedType] = useState("ANIME");
+  const router = useRouter();
+  const [query, setQuery] = useState(null);
+
+  useEffect(() => {
+    const hasil = router.query.hasil;
+    setQuery(hasil);
+  }, []);
 
   function checkSetQuery(e) {
     e.target.value == "" || e.target.value == null
@@ -44,6 +51,7 @@ export default function Search() {
             <input
               className="h-8 rounded-md text-center md:w-52 md:scale-100"
               placeholder="Search here..."
+              type="text"
               onChange={checkSetQuery}
             />
 
