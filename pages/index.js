@@ -49,6 +49,28 @@ export default function Home({ detail, populars }) {
     var slider = document.getElementById("recentslider");
     slider.scrollLeft = slider.scrollLeft + 500;
   };
+<<<<<<< Updated upstream
+=======
+
+  const handleFormSubmission = (inputValue) => {
+    router.push(`/search?hasil=${encodeURIComponent(inputValue)}`);
+  };
+
+  const handleKeyDown = async (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const inputValue = event.target.value;
+      handleFormSubmission(inputValue);
+    }
+  };
+
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    const inputValue = document.querySelector(".search-text").value;
+    handleFormSubmission(inputValue);
+  };
+
+>>>>>>> Stashed changes
   return (
     <>
       <Head>
