@@ -9,8 +9,8 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 export default function Himitsu(props) {
   const [isLoading, setIsloading] = useState(false);
   const [showText, setShowtext] = useState(false);
-  const [recentWatch, setRecentWatch] = useState([]);
   const [slicedDesc, setSlicedDesc] = useState("");
+  const [epi1, setEpi1] = useState([]);
   const info = props.data;
 
   const handleStore = (props) => {
@@ -52,10 +52,12 @@ export default function Himitsu(props) {
 
     const desc = info.description.slice(0, 150) + "...";
     setSlicedDesc(desc);
+
+    const epi1 = info.episodes.filter((epi) => epi.number === 1);
+    setEpi1(epi1);
   }, []);
 
   // console.log(props.firstAnime);
-  const epi1 = info.episodes.filter((epi) => epi.number === 1);
 
   // console.log(epi1[0]);
   return (
@@ -80,8 +82,8 @@ export default function Himitsu(props) {
           {isLoading ? (
             <p>Loading cuy sabar...</p>
           ) : info ? (
-            <div className="flex flex-col items-center">
-              <div className="flex flex-col gap-10 md:w-[70%] ">
+            <div className="flex flex-col items-center ">
+              <div className="flex w-screen flex-col gap-10 md:w-[70%]">
                 <div className="z-40 flex flex-col gap-10 px-5 pt-[8rem] md:flex-row lg:mt-[5rem] lg:px-0">
                   <div className="flex gap-10 md:h-[250px] md:w-52">
                     <div className="flex h-[200px] w-52 bg-[#dadada50] md:h-[250px] md:w-full">
