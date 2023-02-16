@@ -65,10 +65,8 @@ const Trending = () => {
     slider.scrollLeft = slider.scrollLeft + 500;
   };
 
-  // const cleanDescription = description.replace(/<br>/g, '').replace(/\n/g, '  ');
-
   return (
-    <div className="relative flex items-center gap-2">
+    <div className="relative flex items-center gap-0 lg:gap-2">
       <MdChevronLeft
         onClick={slideLeft}
         size={40}
@@ -76,15 +74,9 @@ const Trending = () => {
       />
       <div
         id="slider"
-        className="scroll flex h-full w-full items-center gap-5 overflow-y-hidden overflow-x-scroll scroll-smooth whitespace-nowrap scrollbar-hide"
+        className="scroll flex h-full w-full items-center overflow-x-scroll scroll-smooth whitespace-nowrap  overflow-y-hidden scrollbar-hide lg:gap-5 "
       >
         {media.map((anime) => {
-          // max length desc
-
-          const aniLink = `https://anilist.co/${anime.type
-            .toString()
-            .toLowerCase()}/${anime.id}`;
-
           const url = encodeURIComponent(
             anime.title.english || anime.title.romaji
           );
@@ -92,7 +84,7 @@ const Trending = () => {
           return (
             <div
               key={anime.id}
-              className="flex shrink-0 cursor-pointer items-center"
+              className="flex shrink-0 cursor-pointer lg:items-center "
             >
               <Link href={`/himitsu?title=${url}&id=${anime.id}`}>
                 <Image
@@ -109,7 +101,7 @@ const Trending = () => {
                       }}
                     />
                   }
-                  className="z-20 h-[290px] w-[209px] object-cover p-2 duration-300 ease-in-out hover:scale-105"
+                  className="z-20 h-[230px] w-[168px] object-cover p-2 duration-300 ease-in-out hover:scale-105 lg:h-[290px]  lg:w-[209px]"
                 />
               </Link>
             </div>

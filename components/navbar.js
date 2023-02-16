@@ -246,8 +246,6 @@ function Navbar(props) {
         <nav className="left-0 top-[-100%] hidden w-auto items-center gap-10 px-5 md:flex">
           <ul className="hidden gap-10 font-roboto text-xl md:flex ">
             <li>
-              {/* <button ><a href="/api/auth/anilist">Sign In with AniList</a></button> */}
-              {/* <a href={`https://anilist.co/api/v2/oauth/authorize?client_id=${client_id}&response_type=token`}>Login with AniList</a> */}
               <Link
                 href="/"
                 className="p-2 transition-all duration-100 hover:text-orange-600"

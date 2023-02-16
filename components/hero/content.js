@@ -12,15 +12,14 @@ export default function Content({ ids, section, data }) {
     var slider = document.getElementById(ids);
     slider.scrollLeft = slider.scrollLeft + 500;
   };
-  //   const data = props.data;
-
-  //   console.log(data);
 
   return (
     <div>
-      <h1 className="font-outfit text-[27px] font-extrabold">{section}</h1>
+      <h1 className="px-5 font-outfit text-[20px] font-extrabold lg:text-[27px]">
+        {section}
+      </h1>
       <div className="py-10">
-        <div className="relative flex items-center gap-2">
+        <div className="relative flex items-center lg:gap-2">
           <MdChevronLeft
             onClick={slideLeft}
             size={40}
@@ -28,16 +27,12 @@ export default function Content({ ids, section, data }) {
           />
           <div
             id={ids}
-            className="scroll flex h-full w-full items-center gap-5 overflow-y-hidden overflow-x-scroll scroll-smooth whitespace-nowrap scrollbar-hide"
+            className="scroll flex h-full w-full items-center overflow-x-scroll scroll-smooth whitespace-nowrap overflow-y-hidden scrollbar-hide lg:gap-5"
           >
             {data.map((anime) => {
-              // max length desc
-
               const url = encodeURIComponent(
                 anime.title.english || anime.title.romaji
               );
-
-              //   console.log();
 
               return (
                 <div
@@ -50,7 +45,7 @@ export default function Content({ ids, section, data }) {
                       alt={anime.title.romaji || anime.title.english}
                       width={209}
                       height={300}
-                      className="z-20 h-[290px] w-[209px] object-cover p-2 duration-300 ease-in-out hover:scale-105"
+                      className="z-20 h-[230px] w-[168px] object-cover p-2 duration-300 ease-in-out hover:scale-105 lg:h-[290px] lg:w-[209px]"
                     />
                   </Link>
                 </div>

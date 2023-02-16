@@ -4,6 +4,7 @@ import Link from "next/link";
 import Layout from "../components/layout";
 import { weirdToNormalChars } from "weird-to-normal-chars";
 import Head from "next/head";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 export default function Himitsu(props) {
   const [isLoading, setIsloading] = useState(false);
@@ -243,22 +244,43 @@ export default function Himitsu(props) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const { title, id } = context.query;
-  const query = decodeURIComponent(title);
-  const str = weirdToNormalChars(query);
-  const judul = str.replace(/[\W_]+/g, " ");
-  const idInt = parseInt(id);
-  const results = await axios.get(
-    `https://cors.consumet.stream/https://api.consumet.org/meta/anilist/info/${idInt}`
-  );
-  const data = results.data;
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    const { title, id } = context.query;
+    const query = decodeURIComponent(title);
+    const str = weirdToNormalChars(query);
+    const judul = str.replace(/[\W_]+/g, " ");
+    const idInt = parseInt(id);
+    const results = await axios.get(
+      `https://cors.consumet.stream/https://api.consumet.org/meta/anilist/info/${idInt}`
+    );
+    const data = results.data;
 
-  return {
-    props: {
-      data,
-      idInt,
-      judul,
-    },
-  };
-}
+    return {
+      props: {
+        data,
+        idInt,
+        judul,
+      },
+    };
+  },
+});
+// export async function getServerSideProps(context) {
+//   const { title, id } = context.query;
+//   const query = decodeURIComponent(title);
+//   const str = weirdToNormalChars(query);
+//   const judul = str.replace(/[\W_]+/g, " ");
+//   const idInt = parseInt(id);
+//   const results = await axios.get(
+//     `https://cors.consumet.stream/https://api.consumet.org/meta/anilist/info/${idInt}`
+//   );
+//   const data = results.data;
+
+//   return {
+//     props: {
+//       data,
+//       idInt,
+//       judul,
+//     },
+//   };
+// }
