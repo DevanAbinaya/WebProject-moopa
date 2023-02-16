@@ -99,7 +99,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                     <Image
                       className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
                       src={anime.coverImage.large}
-                      alt={anime.title.english}
+                      alt={anime.title.english || anime.title.romaji}
                       width={224}
                       height={312}
                     />
@@ -110,7 +110,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                     <Image
                       className="absolute top-[2rem] right-[1.5rem] z-10 h-[125px] w-[90px] rounded-lg object-cover shadow-xl md:hidden"
                       src={anime.coverImage.large}
-                      alt={anime.title.english}
+                      alt={anime.title.english || anime.title.romaji}
                       width={90}
                       height={125}
                     />
@@ -121,7 +121,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                           ? anime.bannerImage
                           : anime.coverImage.large
                       }
-                      alt={anime.title.english}
+                      alt={anime.title.english || anime.title.romaji}
                       width={224}
                       height={312}
                     />
@@ -162,7 +162,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                     <Image
                       className="z-0 h-[7rem] w-full object-cover blur-[1px] md:h-[312px] md:w-[224px] md:blur-none"
                       src={anime.coverImage.large}
-                      alt={anime.title.english}
+                      alt={anime.title.english || anime.title.romaji}
                       width={224}
                       height={312}
                     />
@@ -173,7 +173,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                     <Image
                       className="absolute top-[2rem] right-[1.5rem] z-10 h-[125px] w-[90px] rounded-lg object-cover shadow-xl md:hidden"
                       src={anime.coverImage.large}
-                      alt={anime.title.english}
+                      alt={anime.title.english || anime.title.romaji}
                       width={90}
                       height={125}
                     />
@@ -184,7 +184,7 @@ const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
                           ? anime.bannerImage
                           : anime.coverImage.large
                       }
-                      alt={anime.title.english}
+                      alt={anime.title.english || anime.title.romaji}
                       width={224}
                       height={312}
                     />
