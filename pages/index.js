@@ -16,6 +16,7 @@ export default function Home({ detail, populars }) {
   const [isVisible, setIsVisible] = useState(false);
   const [recently, setRecently] = useState(null);
   const [popular, setPopular] = useState(populars.data);
+  const [inputShow, setInputShow] = useState(false);
   const data = detail.data[0];
   const topDesc = data.description.slice(0, 350) + "...";
   const router = useRouter();
@@ -62,12 +63,6 @@ export default function Home({ detail, populars }) {
       const inputValue = event.target.value;
       handleFormSubmission(inputValue);
     }
-  };
-
-  const handleButtonClick = (event) => {
-    event.preventDefault();
-    const inputValue = document.querySelector(".search-text").value;
-    handleFormSubmission(inputValue);
   };
 
   return (
@@ -267,7 +262,7 @@ export default function Home({ detail, populars }) {
                   placeholder="Search Anime"
                   onKeyDown={handleKeyDown}
                 />
-                <a href="#" className="search-btn" onClick={handleButtonClick}>
+                <a href="#" className="search-btn">
                   <i className="fas fa-search"></i>
                 </a>
               </div>
@@ -319,7 +314,7 @@ export default function Home({ detail, populars }) {
 
         {/* Mobile */}
 
-        <div className="flex flex-col items-center">
+        <div className="mt-16 flex flex-col items-center">
           <div className="w-screen flex-none lg:w-[87%]">
             {recently && (
               <div>
