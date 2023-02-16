@@ -3,15 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-scrollbar {
-  width: 0; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
-}
-
 @media (max-width: 768px) {
   svg {
     height: 90%;
   }
+}
+
+body {
+  @apply scrollbar-hide;
 }
 
 .tooltiptext {
@@ -39,6 +38,64 @@ button {
 
 .chapter-button {
   @apply h-auto w-20 scale-100 rounded-full border-[1px] text-center md:w-40 md:scale-90 md:rounded-3xl md:border-2 md:p-3 md:text-2xl;
+}
+
+.search-box {
+  position: absolute;
+  display: flex;
+  top: 50%;
+  left: 50%;
+  transform: translate(-100%, 0%);
+  background: #2f3640;
+  height: 40px;
+  border-radius: 40px;
+  @apply h-12;
+}
+
+.search-box:hover > .search-text {
+  width: 240px;
+  padding: 0 19px;
+  @apply py-2;
+}
+
+.search-box:hover > .search-btn {
+  background: white;
+  color: black;
+}
+
+.search-btn {
+  color: #e84118;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2f3640;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+  cursor: pointer;
+  text-decoration: none;
+  @apply h-12 w-12;
+}
+.search-btn > i {
+  fontsize: 30px;
+}
+
+.search-text {
+  border: none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  color: white;
+  font-size: 16px;
+  font-weight: normal;
+  transition: 0.4s;
+  line-height: 30px;
+  width: 0px;
+
+  /*   width: 250px; */
 }
 
 /* :root {
