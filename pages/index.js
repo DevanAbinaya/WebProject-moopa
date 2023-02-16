@@ -16,9 +16,9 @@ export default function Home({ detail, populars }) {
   const [isVisible, setIsVisible] = useState(false);
   const [recently, setRecently] = useState(null);
   const [popular, setPopular] = useState(populars.data);
+  const [topDesc, setTopDesc] = useState("");
   const [inputShow, setInputShow] = useState(false);
   const data = detail.data[0];
-  const topDesc = data.description.slice(0, 350) + "...";
   const router = useRouter();
 
   const handleShowClick = () => {
@@ -37,6 +37,8 @@ export default function Home({ detail, populars }) {
       }
     }
     fetchData();
+    const topDesc = data.description.slice(0, 350) + "...";
+    setTopDesc(topDesc);
   }, []);
 
   function handleRemove() {
