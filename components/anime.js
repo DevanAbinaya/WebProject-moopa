@@ -3,7 +3,7 @@ import { useQuery, gql } from "@apollo/client";
 import Link from "next/link";
 import Image from "next/image";
 
-const Anime = ({ searchQuery = "overlord", selectedType = "ANIME" }) => {
+const Anime = ({ searchQuery, selectedType = "ANIME" }) => {
   const ANIME_QUERY = gql`
   query ($id: Int, $page: Int, $perPage: Int, $search: String, $sort: [MediaSort]) {
     Page(page: $page, perPage: $perPage) {
