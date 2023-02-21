@@ -17,7 +17,6 @@ export default function Home({ detail, populars }) {
   const [recently, setRecently] = useState(null);
   const [popular, setPopular] = useState(populars.data);
   const [topDesc, setTopDesc] = useState("");
-  const [inputShow, setInputShow] = useState(false);
   const data = detail.data[0];
   const router = useRouter();
 
@@ -285,7 +284,7 @@ export default function Home({ detail, populars }) {
 
               <div className="md:pt-5">
                 <Link
-                  href={`/himitsu?title=${
+                  href={`/anime/info?title=${
                     data.title.english || data.title.romaji
                   }&id=${data.id}`}
                   legacyBehavior
@@ -346,7 +345,7 @@ export default function Home({ detail, populars }) {
 
                       return (
                         <Link
-                          href={`/himitsu?title=${url}&id=${anime.id}`}
+                          href={`/anime/info?title=${url}&id=${anime.id}`}
                           key={index}
                           className="shrink-0 "
                         >

@@ -39,9 +39,9 @@ export default function Content({ ids, section, data }) {
                   key={anime.id}
                   className="flex shrink-0 cursor-pointer items-center"
                 >
-                  <Link href={`/himitsu?title=${url}&id=${anime.id}`}>
+                  <Link href={`/anime/info?title=${url}&id=${anime.id}`}>
                     <Image
-                      src={anime.coverImage.extraLarge}
+                      src={anime.image || anime.coverImage.extraLarge}
                       alt={anime.title.romaji || anime.title.english}
                       width={209}
                       height={300}

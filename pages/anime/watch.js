@@ -2,8 +2,8 @@ import axios from "axios";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { weirdToNormalChars } from "weird-to-normal-chars";
-import Navbar from "../../../components/navbar";
-import Player from "../../../lib/Artplayer";
+import Navbar from "../../components/navbar";
+import Player from "../../lib/Artplayer";
 
 export default function Test(props) {
   const title = props.judul;
@@ -147,9 +147,9 @@ export default function Test(props) {
                           href={
                             episode.number === episodeNumber
                               ? "#"
-                              : `/beta/anime/watch?title=${
-                                  info.title.english
-                                }&id=${episode.id}&idInt=${info.id}&epi=${
+                              : `/anime/watch?title=${info.title.english}&id=${
+                                  episode.id
+                                }&idInt=${info.id}&epi=${
                                   episode.number
                                 }&epiTitle=${encodeURIComponent(episode.title)}`
                           }

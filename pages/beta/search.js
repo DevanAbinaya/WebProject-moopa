@@ -113,9 +113,6 @@ export default function Manga(props) {
 }
 
 Manga.getInitialProps = async function () {
-  const [result, setResults] = useState([]);
-  const manga = new MANGA.Mangasee123();
-
   const res = await fetch(
     "https://manga-api-production-30a1.up.railway.app/api/manga/popular/1"
   );

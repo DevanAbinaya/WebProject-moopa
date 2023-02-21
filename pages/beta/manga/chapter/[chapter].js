@@ -3,10 +3,8 @@ import { useEffect, useState } from "react";
 import Layout from "../../../../components/layout";
 import Head from "next/head";
 
-export default function ChapterRead(props) {
-  const data = props.data;
-  const [isloading, setIsLoading] = useState(true);
-
+export default function Chapter({ data }) {
+  // console.log(data);
   return (
     <>
       <Head>
@@ -19,18 +17,16 @@ export default function ChapterRead(props) {
         <div className="relative flex h-auto min-h-screen w-screen justify-center pt-[5.5rem] md:w-[1600px]">
           {data && (
             <div className="flex flex-col justify-center">
-              {data.chapter_image.map(
-                ({ chapter_image_link, image_number }, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex flex-col justify-center object-contain"
-                    >
-                      <img src={chapter_image_link} alt={image_number} />
-                    </div>
-                  );
-                }
-              )}
+              {data.map(({ page, img }) => {
+                return (
+                  <div
+                    key={page}
+                    className="flex flex-col justify-center object-contain"
+                  >
+                    <img src={img} alt={page} />
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
@@ -42,7 +38,7 @@ export default function ChapterRead(props) {
 export async function getServerSideProps(context) {
   const endpoint = context.query.chapter;
   const res = await fetch(
-    `https://manga-api-production-30a1.up.railway.app/api/chapter/${endpoint}`
+    `https://cors.consumet.stream/https://api.consumet.org/meta/anilist-manga/read?chapterId=${endpoint}`
   );
   const data = await res.json();
   return { props: { data } };

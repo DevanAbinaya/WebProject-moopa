@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 import { weirdToNormalChars } from "weird-to-normal-chars";
 import Head from "next/head";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import Content from "../../components/hero/content";
 
 export default function Himitsu(props) {
   const [isLoading, setIsloading] = useState(false);
@@ -82,7 +83,7 @@ export default function Himitsu(props) {
           {isLoading ? (
             <p>Loading cuy sabar...</p>
           ) : info ? (
-            <div className="flex flex-col items-center ">
+            <div className="flex flex-col items-center gap-10">
               <div className="flex w-screen flex-col gap-10 md:w-[70%]">
                 <div className="z-40 flex flex-col gap-10 px-5 pt-[8rem] md:flex-row lg:mt-[5rem] lg:px-0">
                   <div className="flex gap-10 md:h-[250px] md:w-52">
@@ -117,7 +118,7 @@ export default function Himitsu(props) {
                       <div className="flex">
                         {epi1[0] ? (
                           <Link
-                            href={`/beta/anime/watch?title=${encodeURIComponent(
+                            href={`anime/watch?title=${encodeURIComponent(
                               info.title.english
                             )}&id=${epi1[0].id || null}&idInt=${
                               props.idInt
@@ -126,7 +127,14 @@ export default function Himitsu(props) {
                             }&epiTitle=${encodeURIComponent(
                               epi1[0].title || null
                             )}`}
-                            legacyBehavior
+                            onClick={() =>
+                              handleStore({
+                                title: info.title.english,
+                                description: info.description,
+                                image: info.image,
+                                id: info.id,
+                              })
+                            }
                           >
                             <h1 className="flex cursor-pointer items-center gap-2 rounded-[20px] bg-[#ff9537] px-4 py-2 font-bold text-[#ffffff]">
                               <svg
@@ -235,7 +243,7 @@ export default function Himitsu(props) {
                                 id: info.id,
                               })
                             }
-                            href={`/beta/anime/watch?title=${encodeURIComponent(
+                            href={`/anime/watch?title=${encodeURIComponent(
                               info.title.english
                             )}&id=${episode.id}&idInt=${props.idInt}&epi=${
                               episode.number
@@ -253,6 +261,13 @@ export default function Himitsu(props) {
                     })}
                   </div>
                 </div>
+              </div>
+              <div className="md:w-[80%]">
+                <Content
+                  ids="recommendAnime"
+                  section="Recommendations"
+                  data={info.recommendations}
+                />
               </div>
             </div>
           ) : (

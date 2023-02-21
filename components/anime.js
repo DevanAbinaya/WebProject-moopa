@@ -14,7 +14,7 @@ const Anime = ({ searchQuery, selectedType = "ANIME" }) => {
         hasNextPage
         perPage
       }
-      media(id: $id, search: $search, sort: $sort, type: ${selectedType}) {
+      media(id: $id, search: $search, sort: $sort, isAdult: false, type: ${selectedType}) {
         id
         idMal
         title {
@@ -192,7 +192,7 @@ const Anime = ({ searchQuery, selectedType = "ANIME" }) => {
 
                   <div className="m-5 flex flex-col gap-6 ">
                     <Link
-                      href={`/himitsu?title=${
+                      href={`/anime/info?title=${
                         anime.title.english || anime.title.romaji
                       }&id=${anime.id}`}
                       className="w-64 font-karla text-xl font-bold md:w-full md:text-2xl"
