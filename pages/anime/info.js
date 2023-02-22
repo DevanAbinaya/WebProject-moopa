@@ -6,11 +6,13 @@ import { weirdToNormalChars } from "weird-to-normal-chars";
 import Head from "next/head";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import Content from "../../components/hero/content";
+import Image from "next/image";
 
 export default function Himitsu(props) {
   const [isLoading, setIsloading] = useState(false);
   const [showText, setShowtext] = useState(false);
   const [slicedDesc, setSlicedDesc] = useState("");
+  const [load, setLoad] = useState(true);
   const [epi1, setEpi1] = useState([]);
   const info = props.data;
 
@@ -58,17 +60,23 @@ export default function Himitsu(props) {
     setEpi1(epi1);
   }, []);
 
-  // console.log(props.firstAnime);
+  if (!info) {
+    return <p>Loading...</p>;
+  }
 
-  // console.log(epi1[0]);
+  function handleLoad() {
+    setLoad(false);
+  }
+  // console.log(info.relations);
   return (
     <>
       <Head>
-        <title>{info.title.english}</title>
+        <title>{info.title?.english || info.title.romaji}</title>
         <meta name="detail" content="Detail about the Anime" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/c.svg" />
       </Head>
+
       <Layout navTop="text-white bg-[#121212] md:pt-0 md:px-0 bg-slate bg-opacity-40">
         <div className="text static flex w-screen flex-col justify-center pt-nav pb-10">
           <div className="pointer-events-none absolute top-0 left-0">
@@ -97,7 +105,7 @@ export default function Himitsu(props) {
                     {/* MOBILE */}
                     <div className="flex w-full flex-col gap-5 lg:hidden ">
                       <h1 className="text-2xl font-semibold">
-                        {info.title.english || info.title.romaji}
+                        {info.title?.english || info.title.romaji}
                       </h1>
                       <div className="flex w-[90%] flex-col gap-1">
                         <div className="flex gap-2">
@@ -119,7 +127,7 @@ export default function Himitsu(props) {
                         {epi1[0] ? (
                           <Link
                             href={`anime/watch?title=${encodeURIComponent(
-                              info.title.english
+                              info.title?.english
                             )}&id=${epi1[0].id || null}&idInt=${
                               props.idInt
                             }&epi=${
@@ -129,7 +137,7 @@ export default function Himitsu(props) {
                             )}`}
                             onClick={() =>
                               handleStore({
-                                title: info.title.english,
+                                title: info.title?.english,
                                 description: info.description,
                                 image: info.image,
                                 id: info.id,
@@ -174,7 +182,7 @@ export default function Himitsu(props) {
                   <div className="w-full flex-col gap-5 md:flex">
                     <div className="hidden flex-col gap-5 lg:flex">
                       <h1 className="text-4xl font-bold">
-                        {info.title.english || info.title.romaji}
+                        {info.title?.english || info.title.romaji}
                       </h1>
                       <div className="flex gap-6 text-black">
                         <div
@@ -228,6 +236,82 @@ export default function Himitsu(props) {
                     </div>
                   </div>
                 </div>
+
+                <div className="p-3 lg:p-0">
+                  <h1 className="items-start py-5 text-2xl font-bold">
+                    Relations
+                  </h1>
+                  <div
+                    className={`grid grid-cols-1 justify-items-center py-5 px-5 lg:grid-cols-3 ${
+                      load ? "h-[290px] overflow-y-clip" : ""
+                    }`}
+                  >
+                    {info.relations &&
+                      info.relations.map((relation, index) => {
+                        return (
+                          <div key={index} className="w-full gap-6 p-5 ">
+                            <Link
+                              href={
+                                relation.type === "TV" ||
+                                relation.type === "OVA" ||
+                                relation.type === "MOVIE" ||
+                                relation.type === "SPECIAL" ||
+                                relation.type === "ONA"
+                                  ? `/anime/info?title=${encodeURIComponent(
+                                      relation.title.english ||
+                                        relation.title.romaji
+                                    )}&id=${relation.id}`
+                                  : ""
+                              }
+                              className={`flex w-full justify-between rounded-md bg-[#282828] p-2 shadow-lg duration-300 ease-out hover:scale-105 ${
+                                relation.type === "TV" ||
+                                relation.type === "OVA" ||
+                                relation.type === "MOVIE" ||
+                                relation.type === "SPECIAL"
+                                  ? ``
+                                  : "pointer-events-none"
+                              }`}
+                            >
+                              <div className="flex flex-col justify-between">
+                                <div className="font-bold text-[#FF7F57]">
+                                  {relation.relationType}
+                                </div>
+                                <div className="text-lg font-bold text-white">
+                                  {relation.title.userPreferred}
+                                </div>
+                                <div className="flex">
+                                  <p
+                                    className="dynamic-text rounded-lg p-1 font-outfit text-sm font-semibold "
+                                    style={color}
+                                  >
+                                    {relation.type}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="relative h-[200px] w-[140px] shrink-0">
+                                <Image
+                                  fill
+                                  src={relation.image}
+                                  alt={`Cover Image for ${relation.title}`}
+                                  className=" bg-slate-400 object-cover"
+                                />
+                              </div>
+                            </Link>
+                          </div>
+                        );
+                      })}
+                  </div>
+                  {info.relations.length > 3 && (
+                    <button
+                      type="button"
+                      className="w-full"
+                      onClick={handleLoad}
+                    >
+                      {load ? "Load More" : ""}
+                    </button>
+                  )}
+                </div>
+
                 <div className="z-20 flex flex-col gap-10 p-3 lg:p-0">
                   <h1 className="text-3xl font-bold">Episodes</h1>
                   <div className="flex h-[640px] flex-col gap-5 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-800 scrollbar-thumb-rounded-full hover:scrollbar-thumb-slate-600">
@@ -237,14 +321,14 @@ export default function Himitsu(props) {
                           <Link
                             onClick={() =>
                               handleStore({
-                                title: info.title.english,
+                                title: info.title?.english,
                                 description: info.description,
                                 image: info.image,
                                 id: info.id,
                               })
                             }
                             href={`/anime/watch?title=${encodeURIComponent(
-                              info.title.english
+                              info.title?.english
                             )}&id=${episode.id}&idInt=${props.idInt}&epi=${
                               episode.number
                             }&epiTitle=${encodeURIComponent(episode.title)}`}
@@ -297,6 +381,8 @@ export const getServerSideProps = withPageAuthRequired({
     const results = await axios.get(
       `https://cors.consumet.stream/https://api.consumet.org/meta/anilist/info/${idInt}`
     );
+
+    context.res.setHeader("Cache-Control", "public, max-age=3600");
     const data = results.data;
 
     return {
@@ -308,6 +394,7 @@ export const getServerSideProps = withPageAuthRequired({
     };
   },
 });
+
 // export async function getServerSideProps(context) {
 //   const { title, id } = context.query;
 //   const query = decodeURIComponent(title);

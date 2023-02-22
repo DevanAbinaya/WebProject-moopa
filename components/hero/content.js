@@ -13,6 +13,9 @@ export default function Content({ ids, section, data }) {
     slider.scrollLeft = slider.scrollLeft + 500;
   };
 
+  const array = data;
+  const filteredData = array.filter((item) => item.status !== "Unknown");
+
   return (
     <div>
       <h1 className="px-5 font-outfit text-[20px] font-extrabold lg:text-[27px]">
@@ -29,7 +32,7 @@ export default function Content({ ids, section, data }) {
             id={ids}
             className="scroll flex h-full w-full items-center overflow-x-scroll scroll-smooth whitespace-nowrap overflow-y-hidden scrollbar-hide lg:gap-5"
           >
-            {data.map((anime) => {
+            {filteredData.map((anime) => {
               const url = encodeURIComponent(
                 anime.title.english || anime.title.romaji
               );
@@ -41,7 +44,11 @@ export default function Content({ ids, section, data }) {
                 >
                   <Link href={`/anime/info?title=${url}&id=${anime.id}`}>
                     <Image
-                      src={anime.image || anime.coverImage.extraLarge}
+                      src={
+                        anime.image ||
+                        anime.coverImage?.extraLarge ||
+                        "https://cdn.discordapp.com/attachments/986579286397964290/1058415946945003611/gray_pfp.png"
+                      }
                       alt={anime.title.romaji || anime.title.english}
                       width={209}
                       height={300}
