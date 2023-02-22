@@ -129,8 +129,7 @@ const Anime = ({ searchQuery, selectedType = "ANIME" }) => {
 
                   <div className="m-5 flex flex-col gap-6 ">
                     <Link
-                      href={`/beta/manga/detail/id/[id]`}
-                      as={`/beta/manga/detail/id/${anime.id}`}
+                      href={`/beta/manga/detail/id?aniId=${anime.id}`}
                       className="w-64 font-karla text-xl font-bold md:w-full md:text-2xl"
                     >
                       {anime.title.english
