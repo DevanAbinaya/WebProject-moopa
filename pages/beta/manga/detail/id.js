@@ -1,5 +1,5 @@
-// import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-// import axios from "axios";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import Layout from "../../../../components/layout";
@@ -57,15 +57,15 @@ export default function MangaDetail({ data }) {
   );
 }
 
-// export const getServerSideProps = withPageAuthRequired({
-//   async getServerSideProps(context) {
-//     const { aniId } = context.query;
-//     const res = await axios.get(
-//       `https://api.consumet.org/meta/anilist-manga/info/${aniId}?provider=mangasee123`
-//     );
-//     const data = res.data;
-//     return {
-//       props: { data },
-//     };
-//   },
-// });
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    const { aniId } = context.query;
+    const res = await axios.get(
+      `https://cors.consumet.stream/https://api.consumet.org/meta/anilist-manga/info/${aniId}?provider=mangasee123`
+    );
+    const data = res.data;
+    return {
+      props: { data },
+    };
+  },
+});
