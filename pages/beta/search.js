@@ -3,7 +3,6 @@ import axios from "axios";
 import Layout from "../../components/layout";
 import Link from "next/link";
 import Head from "next/head";
-import { MANGA } from "@consumet/extensions";
 import { motion as m } from "framer-motion";
 
 export default function Manga(props) {
