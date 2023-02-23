@@ -12,7 +12,6 @@
   "dependencies": {
     "@apollo/client": "^3.7.3",
     "@auth0/nextjs-auth0": "^2.2.1",
-    "@consumet/extensions": "^1.4.1",
     "@next/font": "13.0.7",
     "@splinetool/react-spline": "^2.2.5",
     "apollo-client": "^2.6.10",

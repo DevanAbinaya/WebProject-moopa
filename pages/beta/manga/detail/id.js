@@ -61,7 +61,7 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
     const { aniId } = context.query;
     const res = await axios.get(
-      `https://cors.consumet.stream/https://api.consumet.org/meta/anilist-manga/info/${aniId}?provider=mangasee123`
+      `https://cors.consumet.stream/https://self-consumet-api.vercel.app/meta/anilist-manga/info/${aniId}?provider=mangasee123`
     );
     const data = res.data;
     return {
