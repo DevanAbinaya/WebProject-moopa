@@ -4,7 +4,7 @@ import Layout from "../../../../components/layout";
 import Head from "next/head";
 
 export default function Chapter({ data }) {
-  // console.log(data);
+  console.log(data);
   return (
     <>
       <Head>
@@ -38,7 +38,7 @@ export default function Chapter({ data }) {
 export async function getServerSideProps(context) {
   const { id, provider } = context.query;
   const res = await fetch(
-    `https://self-consumet-api.vercel.app/meta/anilist-manga/read?chapterId=${id}&provider=${provider}`
+    `https://api.eucrypt.my.id/meta/anilist-manga/read?chapterId=${id}&provider=${provider}`
   );
   const data = await res.json();
   return { props: { data } };

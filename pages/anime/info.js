@@ -379,7 +379,7 @@ export const getServerSideProps = withPageAuthRequired({
     const judul = str.replace(/[\W_]+/g, " ");
     const idInt = parseInt(id);
     const results = await axios.get(
-      `https://self-consumet-api.vercel.app/meta/anilist/info/${idInt}`
+      `https://api.eucrypt.my.id/meta/anilist/info/${idInt}`
     );
 
     context.res.setHeader("Cache-Control", "public, max-age=3600");
@@ -402,7 +402,7 @@ export const getServerSideProps = withPageAuthRequired({
 //   const judul = str.replace(/[\W_]+/g, " ");
 //   const idInt = parseInt(id);
 //   const results = await axios.get(
-//     `https://self-consumet-api.vercel.app/meta/anilist/info/${idInt}`
+//     `https://api.eucrypt.my.id/meta/anilist/info/${idInt}`
 //   );
 //   const data = results.data;
 

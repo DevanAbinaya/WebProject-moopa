@@ -11,7 +11,7 @@ export default function Content({ ids, providers }) {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        `https://self-consumet-api.vercel.app/meta/anilist-manga/info/${ids}?provider=${providers}`
+        `https://api.eucrypt.my.id/meta/anilist-manga/info/${ids}?provider=${providers}`
       );
       const data = res.data;
       setData(data);
