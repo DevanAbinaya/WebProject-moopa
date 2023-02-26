@@ -14,7 +14,7 @@ export default function Content({ ids, section, data }) {
   };
 
   const array = data;
-  const filteredData = array.filter((item) => item.status !== "Unknown");
+  const filteredData = array?.filter((item) => item.status !== "Unknown");
 
   return (
     <div>
