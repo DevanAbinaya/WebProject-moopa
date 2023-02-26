@@ -10,7 +10,7 @@ function Footer() {
         <div className="md:flex md:flex-col md:gap-y-[3.88rem]">
           <h1 className="font-outfit text-[2.56rem]">moopa</h1>
           <p className="flex items-center gap-1 font-karla text-[0.81rem] text-[#CCCCCC]">
-            &copy; {new Date().getFullYear()} eucrypt.my.id | Website Made by
+            &copy; {new Date().getFullYear()} moopa.my.id | Website Made by
             Factiven
           </p>
         </div>
