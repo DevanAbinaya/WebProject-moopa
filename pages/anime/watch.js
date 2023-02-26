@@ -29,7 +29,7 @@ export default function Test(props) {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `https://self-consumet-api.vercel.app/meta/anilist/watch/${decodeURIComponent(
+          `https://cors.consumet.stream/https://self-consumet-api.vercel.app/meta/anilist/watch/${decodeURIComponent(
             id
           )}`
         );
@@ -188,7 +188,7 @@ export async function getServerSideProps(context) {
   const judul = str.replace(/[\W_]+/g, " ");
   const epiInts = parseInt(epi);
   const results = await axios.get(
-    `https://self-consumet-api.vercel.app/meta/anilist/info/${idInt}`
+    `https://cors.consumet.stream/https://self-consumet-api.vercel.app/meta/anilist/info/${idInt}`
   );
   const data = results.data;
   const text = data.description;

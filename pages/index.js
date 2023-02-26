@@ -11,13 +11,11 @@ import Trending from "../components/hero/trending";
 import Image from "next/image";
 import Content from "../components/hero/content";
 import { useRouter } from "next/router";
-import axios from "axios";
 
-export default function Home({ detail, populars, recentEpi }) {
+export default function Home({ detail, populars }) {
   const [isVisible, setIsVisible] = useState(false);
   const [recently, setRecently] = useState(null);
   const [popular, setPopular] = useState(populars.data);
-  const [recentEpis, setRecentEpis] = useState(recentEpi.data);
   const [topDesc, setTopDesc] = useState("");
   const data = detail.data[0];
   const router = useRouter();
@@ -67,8 +65,6 @@ export default function Home({ detail, populars, recentEpi }) {
       handleFormSubmission(inputValue);
     }
   };
-
-  // console.log(recentEpi);
 
   return (
     <>
@@ -366,12 +362,13 @@ export default function Home({ detail, populars, recentEpi }) {
                 </div>
               </div>
             )}
-            {recentEpis && (
-              <Content
-                ids="recentlyUpdatedAnime"
-                section="Recently Updated Anime"
-                data={recentEpis}
-              />
+            {popular && (
+              <div>
+                {popular.map((pops, index) => {
+                  // console.log(pops.title);
+                  return <div key={index}></div>;
+                })}
+              </div>
             )}
             <div className="">
               <h1 className="px-5 font-outfit text-[20px] font-extrabold lg:text-[27px]">
@@ -408,18 +405,11 @@ export async function getServerSideProps({ req, res }) {
   const popularDetail = await aniListData({ req, res }, "POPULARITY_DESC");
   const genreDetail = await aniListData({ req, res }, "TYPE");
 
-  const response = await axios.get(
-    `https://self-consumet-api.vercel.app/meta/anilist/recent-episodes?&perPage=20`
-  );
-  const recentEpiRaw = response.data.results;
-  const recentEpi = recentEpiRaw.filter((anime) => anime.type.includes("TV"));
-
   return {
     props: {
       genre: genreDetail.props,
       detail: trendingDetail.props,
       populars: popularDetail.props,
-      recentEpi,
     },
   };
 }

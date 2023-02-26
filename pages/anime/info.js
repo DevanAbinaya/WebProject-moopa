@@ -237,132 +237,122 @@ export default function Himitsu(props) {
                   </div>
                 </div>
 
-                {info.relations.length > 0 ? (
-                  <div className="p-3 lg:p-0">
-                    <h1 className="items-start py-5 text-2xl font-bold">
-                      Relations
-                    </h1>
-                    <div
-                      className={`grid grid-cols-1 justify-items-center py-5 px-5 lg:grid-cols-3 ${
-                        load ? "h-[290px] overflow-y-clip" : ""
-                      }`}
-                    >
-                      {info.relations &&
-                        info.relations.map((relation, index) => {
-                          return (
-                            <div key={index} className="w-full gap-6 p-5 ">
-                              <Link
-                                href={
-                                  relation.type === "TV" ||
-                                  relation.type === "OVA" ||
-                                  relation.type === "MOVIE" ||
-                                  relation.type === "SPECIAL" ||
-                                  relation.type === "ONA"
-                                    ? `/anime/info?title=${encodeURIComponent(
-                                        relation.title.english ||
-                                          relation.title.romaji
-                                      )}&id=${relation.id}`
-                                    : ""
-                                }
-                                className={`flex w-full justify-between rounded-md bg-[#282828] p-2 shadow-lg duration-300 ease-out hover:scale-105 ${
-                                  relation.type === "TV" ||
-                                  relation.type === "OVA" ||
-                                  relation.type === "MOVIE" ||
-                                  relation.type === "SPECIAL"
-                                    ? ``
-                                    : "pointer-events-none"
-                                }`}
-                              >
-                                <div className="flex flex-col justify-between">
-                                  <div className="font-bold text-[#FF7F57]">
-                                    {relation.relationType}
-                                  </div>
-                                  <div className="text-lg font-bold text-white">
-                                    {relation.title.userPreferred}
-                                  </div>
-                                  <div className="flex">
-                                    <p
-                                      className="dynamic-text rounded-lg p-1 font-outfit text-sm font-semibold "
-                                      style={color}
-                                    >
-                                      {relation.type}
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="relative h-[200px] w-[140px] shrink-0">
-                                  <Image
-                                    fill
-                                    src={relation.image}
-                                    alt={`Cover Image for ${relation.title}`}
-                                    className=" bg-slate-400 object-cover"
-                                  />
-                                </div>
-                              </Link>
-                            </div>
-                          );
-                        })}
-                    </div>
-                    {info.relations.length > 3 && (
-                      <button
-                        type="button"
-                        className="w-full"
-                        onClick={handleLoad}
-                      >
-                        {load ? "Load More" : ""}
-                      </button>
-                    )}
-                  </div>
-                ) : (
-                  <p>No Relations</p>
-                )}
-
-                <div className="z-20 flex flex-col gap-10 p-3 lg:p-0">
-                  <h1 className="text-3xl font-bold">Episodes</h1>
-                  {info.episodes.length > 0 ? (
-                    <div className="flex h-[640px] flex-col gap-5 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-800 scrollbar-thumb-rounded-full hover:scrollbar-thumb-slate-600">
-                      {info.episodes.map((episode, index) => {
+                <div className="p-3 lg:p-0">
+                  <h1 className="items-start py-5 text-2xl font-bold">
+                    Relations
+                  </h1>
+                  <div
+                    className={`grid grid-cols-1 justify-items-center py-5 px-5 lg:grid-cols-3 ${
+                      load ? "h-[290px] overflow-y-clip" : ""
+                    }`}
+                  >
+                    {info.relations &&
+                      info.relations.map((relation, index) => {
                         return (
-                          <div key={index} className="flex flex-col gap-3">
+                          <div key={index} className="w-full gap-6 p-5 ">
                             <Link
-                              onClick={() =>
-                                handleStore({
-                                  title: info.title?.english,
-                                  description: info.description,
-                                  image: info.image,
-                                  id: info.id,
-                                })
+                              href={
+                                relation.type === "TV" ||
+                                relation.type === "OVA" ||
+                                relation.type === "MOVIE" ||
+                                relation.type === "SPECIAL" ||
+                                relation.type === "ONA"
+                                  ? `/anime/info?title=${encodeURIComponent(
+                                      relation.title.english ||
+                                        relation.title.romaji
+                                    )}&id=${relation.id}`
+                                  : ""
                               }
-                              href={`/anime/watch?title=${encodeURIComponent(
-                                info.title?.english
-                              )}&id=${episode.id}&idInt=${props.idInt}&epi=${
-                                episode.number
-                              }&epiTitle=${encodeURIComponent(episode.title)}`}
-                              className="text-start text-xl"
+                              className={`flex w-full justify-between rounded-md bg-[#282828] p-2 shadow-lg duration-300 ease-out hover:scale-105 ${
+                                relation.type === "TV" ||
+                                relation.type === "OVA" ||
+                                relation.type === "MOVIE" ||
+                                relation.type === "SPECIAL"
+                                  ? ``
+                                  : "pointer-events-none"
+                              }`}
                             >
-                              <p>Episode {episode.number}</p>
-                              <p className="text-[14px] text-[#b1b1b1]">
-                                "{episode.title}"
-                              </p>
+                              <div className="flex flex-col justify-between">
+                                <div className="font-bold text-[#FF7F57]">
+                                  {relation.relationType}
+                                </div>
+                                <div className="text-lg font-bold text-white">
+                                  {relation.title.userPreferred}
+                                </div>
+                                <div className="flex">
+                                  <p
+                                    className="dynamic-text rounded-lg p-1 font-outfit text-sm font-semibold "
+                                    style={color}
+                                  >
+                                    {relation.type}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="relative h-[200px] w-[140px] shrink-0">
+                                <Image
+                                  fill
+                                  src={relation.image}
+                                  alt={`Cover Image for ${relation.title}`}
+                                  className=" bg-slate-400 object-cover"
+                                />
+                              </div>
                             </Link>
-                            <div className="h-[1px] bg-black dark:bg-white" />
                           </div>
                         );
                       })}
-                    </div>
-                  ) : (
-                    <p>No Episodes Found</p>
+                  </div>
+                  {info.relations.length > 3 && (
+                    <button
+                      type="button"
+                      className="w-full"
+                      onClick={handleLoad}
+                    >
+                      {load ? "Load More" : ""}
+                    </button>
                   )}
                 </div>
-              </div>
-              {info.recommendations.length > 0 && (
-                <div className="md:w-[80%]">
-                  <Content
-                    ids="recommendAnime"
-                    section="Recommendations"
-                    data={info.recommendations}
-                  />
+
+                <div className="z-20 flex flex-col gap-10 p-3 lg:p-0">
+                  <h1 className="text-3xl font-bold">Episodes</h1>
+                  <div className="flex h-[640px] flex-col gap-5 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-800 scrollbar-thumb-rounded-full hover:scrollbar-thumb-slate-600">
+                    {info.episodes.map((episode, index) => {
+                      return (
+                        <div key={index} className="flex flex-col gap-3">
+                          <Link
+                            onClick={() =>
+                              handleStore({
+                                title: info.title?.english,
+                                description: info.description,
+                                image: info.image,
+                                id: info.id,
+                              })
+                            }
+                            href={`/anime/watch?title=${encodeURIComponent(
+                              info.title?.english
+                            )}&id=${episode.id}&idInt=${props.idInt}&epi=${
+                              episode.number
+                            }&epiTitle=${encodeURIComponent(episode.title)}`}
+                            className="text-start text-xl"
+                          >
+                            <p>Episode {episode.number}</p>
+                            <p className="text-[14px] text-[#b1b1b1]">
+                              "{episode.title}"
+                            </p>
+                          </Link>
+                          <div className="h-[1px] bg-black dark:bg-white" />
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              )}
+              </div>
+              <div className="md:w-[80%]">
+                <Content
+                  ids="recommendAnime"
+                  section="Recommendations"
+                  data={info.recommendations}
+                />
+              </div>
             </div>
           ) : (
             <div className="flex h-screen flex-col items-center justify-center gap-10 pb-52 ">
@@ -389,18 +379,11 @@ export const getServerSideProps = withPageAuthRequired({
     const judul = str.replace(/[\W_]+/g, " ");
     const idInt = parseInt(id);
     const results = await axios.get(
-      `https://self-consumet-api.vercel.app/meta/anilist/info/${idInt}`
+      `https://cors.consumet.stream/https://self-consumet-api.vercel.app/meta/anilist/info/${idInt}`
     );
 
     context.res.setHeader("Cache-Control", "public, max-age=3600");
     const data = results.data;
-    if (!data) {
-      return {
-        props: {
-          data: null,
-        },
-      };
-    }
 
     return {
       props: {
@@ -419,7 +402,7 @@ export const getServerSideProps = withPageAuthRequired({
 //   const judul = str.replace(/[\W_]+/g, " ");
 //   const idInt = parseInt(id);
 //   const results = await axios.get(
-//     `https://self-consumet-api.vercel.app/meta/anilist/info/${idInt}`
+//     `https://cors.consumet.stream/https://self-consumet-api.vercel.app/meta/anilist/info/${idInt}`
 //   );
 //   const data = results.data;
 
