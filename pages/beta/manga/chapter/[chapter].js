@@ -36,9 +36,9 @@ export default function Chapter({ data }) {
 }
 
 export async function getServerSideProps(context) {
-  const endpoint = context.query.chapter;
+  const { id, provider } = context.query;
   const res = await fetch(
-    `https://self-consumet-api.vercel.app/meta/anilist-manga/read?chapterId=${endpoint}`
+    `https://self-consumet-api.vercel.app/meta/anilist-manga/read?chapterId=${id}&provider=${provider}`
   );
   const data = await res.json();
   return { props: { data } };
