@@ -60,7 +60,7 @@ export default function Himitsu({
     return;
   }
 
-  console.log(episodeList);
+  // console.log(info);
 
   function handleLoad() {
     setLoad(false);
@@ -210,7 +210,7 @@ export default function Himitsu({
                           className={`dynamic-text rounded-md px-2 font-karla font-bold`}
                           style={color}
                         >
-                          {info.subOrDub || "No Sub/Dub"}
+                          {info.status}
                         </div>
                       </div>
                     </div>
