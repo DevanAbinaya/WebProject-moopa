@@ -1,42 +1,31 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { META } from "@consumet/extensions";
 import Link from "next/link";
 import Layout from "../../components/layout";
-import { weirdToNormalChars } from "weird-to-normal-chars";
 import Head from "next/head";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import Content from "../../components/hero/content";
 import Image from "next/image";
 
-export default function Himitsu(props) {
+export default function Himitsu({
+  info,
+  slicedDesc,
+  color,
+  episodeList,
+  episode1,
+}) {
   const [isLoading, setIsloading] = useState(false);
   const [showText, setShowtext] = useState(false);
-  const [slicedDesc, setSlicedDesc] = useState("");
   const [load, setLoad] = useState(true);
-  const [epi1, setEpi1] = useState([]);
-  const info = props.data;
-
-  const handleStore = (props) => {
-    let existingData = JSON.parse(localStorage.getItem("recentWatch"));
-    if (!Array.isArray(existingData)) {
-      existingData = [];
-    }
-    const index = existingData.findIndex((item) => item.title === props.title);
-    if (index !== -1) {
-      existingData.splice(index, 1);
-    }
-    const updatedData = [props, ...existingData];
-    localStorage.setItem("recentWatch", JSON.stringify(updatedData));
-  };
-
-  const color = { backgroundColor: `${info.color}` };
+  const episode = episodeList;
+  const epi1 = episode1;
 
   useEffect(() => {
-    // calculate the brightness of the background color
     function getBrightness(color) {
       const rgb = color.match(/\d+/g);
       return (299 * rgb[0] + 587 * rgb[1] + 114 * rgb[2]) / 1000;
     }
+
     // set the text color based on the background color
     function setTextColor(element) {
       const backgroundColor = getComputedStyle(element).backgroundColor;
@@ -52,22 +41,30 @@ export default function Himitsu(props) {
     elements.forEach((element) => {
       setTextColor(element);
     });
+  }, [color]);
 
-    const desc = info.description.slice(0, 150) + "...";
-    setSlicedDesc(desc);
-
-    const epi1 = info.episodes.filter((epi) => epi.number === 1);
-    setEpi1(epi1);
-  }, []);
+  const handleStore = (props) => {
+    let existingData = JSON.parse(localStorage.getItem("recentWatch"));
+    if (!Array.isArray(existingData)) {
+      existingData = [];
+    }
+    const index = existingData.findIndex((item) => item.title === props.title);
+    if (index !== -1) {
+      existingData.splice(index, 1);
+    }
+    const updatedData = [props, ...existingData];
+    localStorage.setItem("recentWatch", JSON.stringify(updatedData));
+  };
 
   if (!info) {
-    return <p>Loading...</p>;
+    return;
   }
+
+  console.log(episodeList);
 
   function handleLoad() {
     setLoad(false);
   }
-  // console.log(info.relations);
   return (
     <>
       <Head>
@@ -96,16 +93,18 @@ export default function Himitsu(props) {
                 <div className="z-40 flex flex-col gap-10 px-5 pt-[8rem] md:flex-row lg:mt-[5rem] lg:px-0">
                   <div className="flex gap-10 md:h-[250px] md:w-52">
                     <div className="flex h-[200px] w-52 bg-[#dadada50] md:h-[250px] md:w-full">
-                      <img
-                        src={info.image}
-                        className="h-[200px] w-full shrink-0 object-cover md:h-[250px]"
-                      />
+                      {info.image && (
+                        <img
+                          src={info.image}
+                          className="h-[200px] w-full shrink-0 object-cover md:h-[250px]"
+                        />
+                      )}
                     </div>
 
                     {/* MOBILE */}
                     <div className="flex w-full flex-col gap-5 lg:hidden ">
                       <h1 className="text-2xl font-semibold">
-                        {info.title?.english || info.title.romaji}
+                        {info.title?.english}
                       </h1>
                       <div className="flex w-[90%] flex-col gap-1">
                         <div className="flex gap-2">
@@ -124,13 +123,11 @@ export default function Himitsu(props) {
                         </div>
                       </div>
                       <div className="flex">
-                        {epi1[0] ? (
+                        {epi1 && epi1[0] ? (
                           <Link
                             href={`anime/watch?title=${encodeURIComponent(
                               info.title?.english
-                            )}&id=${epi1[0].id || null}&idInt=${
-                              props.idInt
-                            }&epi=${
+                            )}&id=${epi1[0].id || null}&idInt=${info.id}&epi=${
                               epi1[0].number || null
                             }&epiTitle=${encodeURIComponent(
                               epi1[0].title || null
@@ -182,14 +179,14 @@ export default function Himitsu(props) {
                   <div className="w-full flex-col gap-5 md:flex">
                     <div className="hidden flex-col gap-5 lg:flex">
                       <h1 className="text-4xl font-bold">
-                        {info.title?.english || info.title.romaji}
+                        {info.title?.english}
                       </h1>
-                      <div className="flex gap-6 text-black">
+                      <div className="flex gap-6">
                         <div
                           className={`dynamic-text rounded-md px-2 font-karla font-bold`}
                           style={color}
                         >
-                          {info.episodes.length} Episodes
+                          {episode && episode.length} Episodes
                         </div>
                         <div
                           className={`dynamic-text rounded-md px-2 font-karla font-bold`}
@@ -301,7 +298,7 @@ export default function Himitsu(props) {
                         );
                       })}
                   </div>
-                  {info.relations.length > 3 && (
+                  {info && info.relations && info.relations.length > 3 && (
                     <button
                       type="button"
                       className="w-full"
@@ -315,9 +312,17 @@ export default function Himitsu(props) {
                 <div className="z-20 flex flex-col gap-10 p-3 lg:p-0">
                   <h1 className="text-3xl font-bold">Episodes</h1>
                   <div className="flex h-[640px] flex-col gap-5 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-800 scrollbar-thumb-rounded-full hover:scrollbar-thumb-slate-600">
-                    {info.episodes.map((episode, index) => {
+                    {episode.map((episode, index) => {
                       return (
                         <div key={index} className="flex flex-col gap-3">
+                          {/* <div className="relative h-52 w-full">
+                            <Image
+                              fill
+                              src={episode.image}
+                              alt="thumbnail"
+                              className="object-cover"
+                            />
+                          </div> */}
                           <Link
                             onClick={() =>
                               handleStore({
@@ -329,7 +334,7 @@ export default function Himitsu(props) {
                             }
                             href={`/anime/watch?title=${encodeURIComponent(
                               info.title?.english
-                            )}&id=${episode.id}&idInt=${props.idInt}&epi=${
+                            )}&id=${episode.id}&idInt=${info.id}&epi=${
                               episode.number
                             }&epiTitle=${encodeURIComponent(episode.title)}`}
                             className="text-start text-xl"
@@ -373,23 +378,34 @@ export default function Himitsu(props) {
 
 export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
-    const { title, id } = context.query;
-    const query = decodeURIComponent(title);
-    const str = weirdToNormalChars(query);
-    const judul = str.replace(/[\W_]+/g, " ");
-    const idInt = parseInt(id);
-    const results = await axios.get(
-      `https://api.eucrypt.my.id/meta/anilist/info/${idInt}`
-    );
-
     context.res.setHeader("Cache-Control", "public, max-age=3600");
-    const data = results.data;
+    const { id } = context.query;
+
+    const provider = new META.Anilist();
+
+    const [info, episodes] = await Promise.all([
+      provider.fetchAnilistInfoById(id),
+      provider.fetchEpisodesListById(id),
+    ]);
+
+    const desc = info.description.slice(0, 150) + "...";
+    const color = { backgroundColor: `${info.color}` };
+    const epi1 = episodes.filter((epi) => epi.number === 1);
+    const title = info.title?.userPreferred || "No Title";
 
     return {
       props: {
-        data,
-        idInt,
-        judul,
+        info: {
+          ...info,
+          title: {
+            ...info.title,
+            userPreferred: title,
+          },
+        },
+        slicedDesc: desc,
+        color,
+        episodeList: episodes,
+        episode1: epi1,
       },
     };
   },

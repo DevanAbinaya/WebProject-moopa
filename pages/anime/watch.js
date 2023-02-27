@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { weirdToNormalChars } from "weird-to-normal-chars";
 import Navbar from "../../components/navbar";
 import Player from "../../lib/Artplayer";
+import { META } from "@consumet/extensions";
 
 export default function Test(props) {
   const title = props.judul;
@@ -29,7 +30,7 @@ export default function Test(props) {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `https://api.eucrypt.my.id/meta/anilist/watch/${decodeURIComponent(
+          `https://api.consumet.org/meta/anilist/watch/${decodeURIComponent(
             id
           )}`
         );

@@ -1,22 +1,18 @@
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { aniListData } from "../lib/AniList";
-import { ApolloProvider } from "@apollo/client";
 import React, { useState, useEffect } from "react";
 import ReactHtmlParser from "kt-react-html-parser";
-import client from "../lib/apolloClient";
 import Head from "next/head";
 import Link from "next/link";
 import Footer from "../components/footer";
-import Trending from "../components/hero/trending";
 import Image from "next/image";
 import Content from "../components/hero/content";
 import { useRouter } from "next/router";
 
-export default function Home({ detail, populars }) {
+export default function Home({ detail, populars, topDesc }) {
   const [isVisible, setIsVisible] = useState(false);
   const [recently, setRecently] = useState(null);
-  const [popular, setPopular] = useState(populars.data);
-  const [topDesc, setTopDesc] = useState("");
+  const popular = populars.data;
   const data = detail.data[0];
   const router = useRouter();
 
@@ -36,8 +32,6 @@ export default function Home({ detail, populars }) {
       }
     }
     fetchData();
-    const topDesc = data.description.slice(0, 350) + "...";
-    setTopDesc(topDesc);
   }, []);
 
   function handleRemove() {
@@ -345,7 +339,7 @@ export default function Home({ detail, populars }) {
                         >
                           <Image
                             src={anime.image}
-                            alt={anime.title}
+                            alt={anime.title || "cover image"}
                             width={209}
                             height={300}
                             className="z-20 h-[230px] w-[168px] object-cover p-2 duration-300 ease-in-out hover:scale-105 lg:h-[290px] lg:w-[209px]"
@@ -362,24 +356,14 @@ export default function Home({ detail, populars }) {
                 </div>
               </div>
             )}
-            {popular && (
-              <div>
-                {popular.map((pops, index) => {
-                  // console.log(pops.title);
-                  return <div key={index}></div>;
-                })}
-              </div>
+
+            {detail && (
+              <Content
+                ids="trendingAnime"
+                section="Trending Now"
+                data={detail.data}
+              />
             )}
-            <div className="">
-              <h1 className="px-5 font-outfit text-[20px] font-extrabold lg:text-[27px]">
-                Trending Now
-              </h1>
-              <div className="py-10 ">
-                <ApolloProvider client={client}>
-                  <Trending />
-                </ApolloProvider>
-              </div>
-            </div>
 
             {popular && (
               <Content
@@ -404,9 +388,13 @@ export async function getServerSideProps({ req, res }) {
   const trendingDetail = await aniListData({ req, res }, "TRENDING_DESC");
   const popularDetail = await aniListData({ req, res }, "POPULARITY_DESC");
   const genreDetail = await aniListData({ req, res }, "TYPE");
+  const newTrend = await trendingDetail.props;
+  const trends = newTrend.data[0];
+  const topDesc = trends.description.slice(0, 350) + "...";
 
   return {
     props: {
+      topDesc: topDesc,
       genre: genreDetail.props,
       detail: trendingDetail.props,
       populars: popularDetail.props,
