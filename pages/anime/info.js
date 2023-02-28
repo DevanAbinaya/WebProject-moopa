@@ -351,7 +351,7 @@ export default function Himitsu({
                   </div>
                 </div>
               </div>
-              <div className="md:w-[80%]">
+              <div className="w-screen md:w-[80%]">
                 <Content
                   ids="recommendAnime"
                   section="Recommendations"
@@ -410,23 +410,3 @@ export const getServerSideProps = withPageAuthRequired({
     };
   },
 });
-
-// export async function getServerSideProps(context) {
-//   const { title, id } = context.query;
-//   const query = decodeURIComponent(title);
-//   const str = weirdToNormalChars(query);
-//   const judul = str.replace(/[\W_]+/g, " ");
-//   const idInt = parseInt(id);
-//   const results = await axios.get(
-//     `https://api.eucrypt.my.id/meta/anilist/info/${idInt}`
-//   );
-//   const data = results.data;
-
-//   return {
-//     props: {
-//       data,
-//       idInt,
-//       judul,
-//     },
-//   };
-// }
