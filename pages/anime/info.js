@@ -125,7 +125,7 @@ export default function Himitsu({
                       <div className="flex">
                         {epi1 && epi1[0] ? (
                           <Link
-                            href={`anime/watch?title=${encodeURIComponent(
+                            href={`/anime/watch?title=${encodeURIComponent(
                               info.title?.english
                             )}&id=${epi1[0].id || null}&idInt=${info.id}&epi=${
                               epi1[0].number || null
