@@ -44,10 +44,10 @@ export default function Content({ ids, providers }) {
             return (
               <div key={index}>
                 <Link
-                  href={`/beta/manga/chapter/[chapter]`}
-                  as={`/beta/manga/chapter/read?id=${chapter.id}&provider=${providers}`}
+                  href={`/manga/chapter/[chapter]`}
+                  as={`/manga/chapter/read?id=${chapter.id}&provider=${providers}`}
                 >
-                  {chapter.title}
+                  Chapters {index + 1}
                 </Link>
               </div>
             );

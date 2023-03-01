@@ -68,8 +68,8 @@ export default function Manga(props) {
                     {/* <img src={manga.thumb} alt={manga.title} /> */}
                     <div className="space-y-5 text-center font-bold">
                       <Link
-                        href={`/beta/manga/detail/query/[id]`}
-                        as={`/beta/manga/detail/query/${manga.endpoint}`}
+                        href={`/manga/detail/query/[id]`}
+                        as={`/manga/detail/query/${manga.endpoint}`}
                       >
                         {/* <Chapter endPoint={manga.endpoint} /> */}
                         <img
@@ -90,8 +90,8 @@ export default function Manga(props) {
                     {/* <img src={manga.thumb} alt={manga.title} /> */}
                     <div className="space-y-5 text-center font-bold">
                       <Link
-                        href={`/beta/manga/detail/query/[id]`}
-                        as={`/beta/manga/detail/query/${manga.endpoint}`}
+                        href={`/manga/detail/query/[id]`}
+                        as={`/manga/detail/query/${manga.endpoint}`}
                       >
                         {/* <Chapter endPoint={manga.endpoint} /> */}
                         <img

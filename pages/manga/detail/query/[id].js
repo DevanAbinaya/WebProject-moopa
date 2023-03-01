@@ -1,4 +1,4 @@
-import Layout from "../../../../../components/layout";
+import Layout from "../../../../components/layout";
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Head from "next/head";
@@ -126,8 +126,8 @@ export default function Chapter(props) {
                                 <div className="h-[1px] bg-black dark:bg-white"></div>
                                 <Link
                                   onClick={() => handleClick(chapter_endpoint)}
-                                  href={`/beta/manga/chapter/[chapter]`}
-                                  as={`/beta/manga/chapter/${chapter_endpoint}`}
+                                  href={`/manga/chapter/[chapter]`}
+                                  as={`/manga/chapter/${chapter_endpoint}`}
                                 >
                                   <p
                                     className={

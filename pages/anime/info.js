@@ -104,7 +104,9 @@ export default function Himitsu({
                     {/* MOBILE */}
                     <div className="flex w-full flex-col gap-5 lg:hidden ">
                       <h1 className="text-2xl font-semibold">
-                        {info.title?.english}
+                        {info.title?.english ||
+                          info.title.romaji ||
+                          info.title.native}
                       </h1>
                       <div className="flex w-[90%] flex-col gap-1">
                         <div className="flex gap-2">
@@ -126,7 +128,9 @@ export default function Himitsu({
                         {epi1 && epi1[0] ? (
                           <Link
                             href={`/anime/watch?title=${encodeURIComponent(
-                              info.title?.english
+                              info.title?.english ||
+                                info.title.romaji ||
+                                info.title.native
                             )}&id=${epi1[0].id || null}&idInt=${info.id}&epi=${
                               epi1[0].number || null
                             }&epiTitle=${encodeURIComponent(
@@ -134,7 +138,10 @@ export default function Himitsu({
                             )}`}
                             onClick={() =>
                               handleStore({
-                                title: info.title?.english,
+                                title:
+                                  info.title?.english ||
+                                  info.title.romaji ||
+                                  info.title.native,
                                 description: info.description,
                                 image: info.image,
                                 id: info.id,
@@ -179,7 +186,9 @@ export default function Himitsu({
                   <div className="w-full flex-col gap-5 md:flex">
                     <div className="hidden flex-col gap-5 lg:flex">
                       <h1 className="text-4xl font-bold">
-                        {info.title?.english}
+                        {info.title?.english ||
+                          info.title.romaji ||
+                          info.title.native}
                       </h1>
                       <div className="flex gap-6">
                         <div
@@ -255,8 +264,9 @@ export default function Himitsu({
                                 relation.type === "SPECIAL" ||
                                 relation.type === "ONA"
                                   ? `/anime/info?title=${encodeURIComponent(
-                                      relation.title.english ||
-                                        relation.title.romaji
+                                      info.title?.english ||
+                                        info.title.romaji ||
+                                        info.title.native
                                     )}&id=${relation.id}`
                                   : ""
                               }
@@ -326,14 +336,19 @@ export default function Himitsu({
                           <Link
                             onClick={() =>
                               handleStore({
-                                title: info.title?.english,
+                                title:
+                                  info.title?.english ||
+                                  info.title.romaji ||
+                                  info.title.native,
                                 description: info.description,
                                 image: info.image,
                                 id: info.id,
                               })
                             }
                             href={`/anime/watch?title=${encodeURIComponent(
-                              info.title?.english
+                              info.title?.english ||
+                                info.title.romaji ||
+                                info.title.native
                             )}&id=${episode.id}&idInt=${info.id}&epi=${
                               episode.number
                             }&epiTitle=${encodeURIComponent(episode.title)}`}
