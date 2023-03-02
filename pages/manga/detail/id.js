@@ -175,7 +175,7 @@ export const getServerSideProps = withPageAuthRequired({
     context.res.setHeader("Cache-Control", "public, max-age=3600");
     const { aniId, aniTitle } = context.query;
     const info =
-      await axios.get(`https://api.consumet.org/meta/anilist-manga/info/${aniId}?provider=mangadex
+      await axios.get(`https://cors.delusionz.xyz/https://api.consumet.org/meta/anilist-manga/info/${aniId}?provider=mangadex
 `);
     const result = info.data;
     if (!result) {

@@ -12,7 +12,7 @@ export default function Test({ title, id }) {
   useEffect(() => {
     async function fetchData() {
       const urls = [
-        `https://api.consumet.org/meta/anilist-manga/read?chapterId=${id}&provider=mangadex`,
+        `https://cors.delusionz.xyz/https://api.consumet.org/meta/anilist-manga/read?chapterId=${id}&provider=mangadex`,
       ];
       const promises = urls.map((url) => axios.get(url));
 
