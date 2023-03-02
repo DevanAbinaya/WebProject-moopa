@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const NextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: ["tenor.com"],
     unoptimized: true,

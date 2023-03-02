@@ -4,40 +4,13 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Layout from "../../../components/layout";
 
-export default function Test({ title, id }) {
+export default function Test({ title, id, data }) {
   const [loadedImages, setLoadedImages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    async function fetchData() {
-      const urls = [
-        `https://cors.delusionz.xyz/https://api.consumet.org/meta/anilist-manga/read?chapterId=${id}&provider=mangadex`,
-      ];
-      const promises = urls.map((url) => axios.get(url));
-
-      try {
-        const results = await Promise.all(promises);
-        const data = results.map((result) => result.data);
-        setData(data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
 
   const handleImageLoad = (item) => {
     setLoadedImages((prevLoadedImages) => [...prevLoadedImages, item.img]);
   };
   // console.log(data);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <>
@@ -50,7 +23,7 @@ export default function Test({ title, id }) {
       <Layout>
         <div className="flex min-h-screen flex-col items-center pt-nav">
           {data.length > 0 &&
-            data[0].map((item) => (
+            data.map((item) => (
               <img
                 key={item.page}
                 src={item.img}
@@ -67,10 +40,20 @@ export default function Test({ title, id }) {
 
 export async function getServerSideProps(context) {
   const { id, title } = context.query;
+  const urls = [
+    `https://cors.delusionz.xyz/https://api.consumet.org/meta/anilist-manga/read?chapterId=${id}&provider=mangadex`,
+  ];
+  const results = await axios.get(urls);
+  if (!results.data) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
       id,
       title,
+      data: results.data,
     },
   };
 }
