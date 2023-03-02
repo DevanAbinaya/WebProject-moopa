@@ -174,7 +174,7 @@ export const getServerSideProps = withPageAuthRequired({
     context.res.setHeader("Cache-Control", "public, max-age=3600");
     const { aniId, aniTitle } = context.query;
     const provider = new META.Anilist();
-    const mangadex = new MANGA.MangaDex();
+    const mangadex = new MANGA.MangaDex({ url: "https://cors.anime.net.in/" });
 
     const [info, manga] = await Promise.all([
       provider.fetchAnilistInfoById(aniId),

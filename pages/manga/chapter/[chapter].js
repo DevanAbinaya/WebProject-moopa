@@ -1,4 +1,5 @@
-import { MANGA } from "@consumet/extensions";
+// import { MANGA } from "@consumet/extensions";
+import axios from "axios";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Layout from "../../../components/layout";
@@ -7,16 +8,21 @@ export default function Test({ id, title }) {
   const [data, setData] = useState([]);
   const [loadedImages, setLoadedImages] = useState([]);
 
-  const provider = new MANGA.MangaDex();
   useEffect(() => {
-    provider.fetchChapterPages(id).then((data) => {
+    async function fetchData() {
+      const res = await axios.get(
+        `https://cors.anime.net.in/https://api.consumet.org/manga/mangadex/read/${id}`
+      );
+      const data = res.data;
       setData(data);
-    });
+    }
+    fetchData();
   }, [id]);
 
   const handleImageLoad = (item) => {
     setLoadedImages((prevLoadedImages) => [...prevLoadedImages, item.img]);
   };
+  // console.log(id);
 
   return (
     <>
