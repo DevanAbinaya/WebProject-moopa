@@ -4,25 +4,40 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Layout from "../../../components/layout";
 
-export default function Test({ id, title }) {
-  const [data, setData] = useState([]);
+export default function Test({ title, id }) {
   const [loadedImages, setLoadedImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState();
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get(
-        `https://cors.anime.net.in/https://api.consumet.org/manga/mangadex/read/${id}`
-      );
-      const data = res.data;
-      setData(data);
+      const urls = [
+        `https://api.consumet.org/meta/anilist-manga/read?chapterId=${id}&provider=mangadex`,
+      ];
+      const promises = urls.map((url) => axios.get(url));
+
+      try {
+        const results = await Promise.all(promises);
+        const data = results.map((result) => result.data);
+        setData(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     }
+
     fetchData();
-  }, [id]);
+  }, []);
 
   const handleImageLoad = (item) => {
     setLoadedImages((prevLoadedImages) => [...prevLoadedImages, item.img]);
   };
-  // console.log(id);
+  // console.log(data);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -34,15 +49,16 @@ export default function Test({ id, title }) {
       </Head>
       <Layout>
         <div className="flex min-h-screen flex-col items-center pt-nav">
-          {data.map((item) => (
-            <img
-              key={item.page}
-              src={item.img}
-              alt={`Page ${item.page}`}
-              onLoad={() => handleImageLoad(item)}
-              referrerPolicy="origin"
-            />
-          ))}
+          {data.length > 0 &&
+            data[0].map((item) => (
+              <img
+                key={item.page}
+                src={item.img}
+                alt={`Page ${item.page}`}
+                onLoad={() => handleImageLoad(item)}
+                referrerPolicy="origin"
+              />
+            ))}
         </div>
       </Layout>
     </>

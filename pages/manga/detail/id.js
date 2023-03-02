@@ -1,5 +1,6 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { META, MANGA } from "@consumet/extensions";
+import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +18,7 @@ const options = [
   "mangasee123",
 ];
 
-export default function MangaDetail({ data, aniId, manga }) {
+export default function MangaDetail({ data, manga, aniId }) {
   const [selectOption, setSelectedOption] = useState(options[0]);
   const [load, setLoad] = useState(true);
 
@@ -27,7 +28,7 @@ export default function MangaDetail({ data, aniId, manga }) {
 
   const relation = data.relations.filter((relation) => relation.malId !== null);
 
-  // console.log(relation);
+  // console.log(data);
   // console.log(manga);
   return (
     <>
@@ -139,10 +140,10 @@ export default function MangaDetail({ data, aniId, manga }) {
                       </option>
                     ))}
                   </select>
-  
+
                   <Chapters ids={aniId || ""} providers={selectOption} /> */}
                   <div className="flex h-[640px] flex-col gap-10 overflow-y-scroll scrollbar-thin scrollbar-thumb-slate-800 scrollbar-thumb-rounded-full hover:scrollbar-thumb-slate-600">
-                    {manga.chapters?.map((chapter, index) => {
+                    {manga?.map((chapter, index) => {
                       return (
                         <div key={index}>
                           <Link
@@ -151,7 +152,7 @@ export default function MangaDetail({ data, aniId, manga }) {
                               data.title?.english || data.title?.romaji
                             }`}
                           >
-                            Chapters {index + 1}
+                            Chapters {chapter.chapterNumber}
                           </Link>
                         </div>
                       );
@@ -173,41 +174,61 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
     context.res.setHeader("Cache-Control", "public, max-age=3600");
     const { aniId, aniTitle } = context.query;
-    const provider = new META.Anilist();
-    const mangadex = new MANGA.MangaDex({ url: "https://cors.anime.net.in/" });
-
-    const [info, manga] = await Promise.all([
-      provider.fetchAnilistInfoById(aniId),
-      mangadex.search(aniTitle),
-    ]);
-
-    const results = manga.results;
-    if (!results) {
+    const info =
+      await axios.get(`https://api.consumet.org/meta/anilist-manga/info/${aniId}?provider=mangadex
+`);
+    const result = info.data;
+    if (!result) {
       return {
         notFound: true,
       };
     }
-    const mangaId = results[0].id;
 
-    const [chapter] = await Promise.all([mangadex.fetchMangaInfo(mangaId)]);
-
-    const title = info.title?.userPreferred || "No Title";
-    const currentEpisode = info.currentEpisode || "No Episode";
-    const mangaDesc = manga?.description || "No Description";
+    const manga = result.chapters;
 
     return {
       props: {
-        data: {
-          ...info,
-          currentEpisode: currentEpisode,
-          title: {
-            ...info.title,
-            userPreferred: title,
-          },
-        },
+        data: result,
         aniId: aniId,
-        manga: chapter,
+        manga,
       },
     };
+
+    // const provider = new META.Anilist();
+    // const mangadex = new MANGA.MangaDex({ url: "https://cors.anime.net.in/" });
+
+    // const [info, manga] = await Promise.all([
+    //   provider.fetchAnilistInfoById(aniId),
+    //   mangadex.search(aniTitle),
+    // ]);
+
+    // const results = manga.results;
+    // if (!results) {
+    //   return {
+    //     notFound: true,
+    //   };
+    // }
+    // const mangaId = results[0].id;
+
+    // const [chapter] = await Promise.all([mangadex.fetchMangaInfo(mangaId)]);
+
+    // const title = info.title?.userPreferred || "No Title";
+    // const currentEpisode = info.currentEpisode || "No Episode";
+    // const mangaDesc = manga?.description || "No Description";
+
+    // return {
+    //   props: {
+    //     data: {
+    //       ...info,
+    //       currentEpisode: currentEpisode,
+    //       title: {
+    //         ...info.title,
+    //         userPreferred: title,
+    //       },
+    //     },
+    //     aniId: aniId,
+    //     manga: chapter,
+    //   },
+    // };
   },
 });
