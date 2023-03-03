@@ -18,7 +18,7 @@ const options = [
   "mangasee123",
 ];
 
-export default function MangaDetail({ data, manga, aniId }) {
+export default function MangaDetail({ data, manga, aniId, provider }) {
   const [selectOption, setSelectedOption] = useState(options[0]);
   const [load, setLoad] = useState(true);
 
@@ -150,9 +150,9 @@ export default function MangaDetail({ data, manga, aniId }) {
                             href={`/manga/chapter/[chapter]`}
                             as={`/manga/chapter/read?id=${chapter.id}&title=${
                               data.title?.english || data.title?.romaji
-                            }`}
+                            }&provider=${provider}`}
                           >
-                            Chapters {chapter.chapterNumber}
+                            Chapters {chapter.chapterNumber || chapter.title}
                           </Link>
                         </div>
                       );
@@ -175,24 +175,36 @@ export const getServerSideProps = withPageAuthRequired({
     context.res.setHeader("Cache-Control", "public, max-age=3600");
     const { aniId, aniTitle } = context.query;
     const info =
-      await axios.get(`https://cors.delusionz.xyz/https://api.consumet.org/meta/anilist-manga/info/${aniId}?provider=mangadex
+      await axios.get(`https://api.moopa.my.id/meta/anilist-manga/info/${aniId}?provider=mangadex
 `);
     const result = info.data;
-    if (!result) {
-      return {
-        notFound: true,
-      };
-    }
+    const prov = "mangadex";
 
     const manga = result.chapters;
-
-    return {
-      props: {
-        data: result,
-        aniId: aniId,
-        manga,
-      },
-    };
+    if (manga.some((chapter) => chapter.pages === 0)) {
+      const prv = "mangapill";
+      const manga = await axios.get(
+        `https://api.moopa.my.id/meta/anilist-manga/info/${aniId}?provider=${prv}`
+      );
+      const results = manga.data;
+      return {
+        props: {
+          data: result,
+          aniId: aniId,
+          manga: results.chapters,
+          provider: prv,
+        },
+      };
+    } else {
+      return {
+        props: {
+          data: result,
+          aniId: aniId,
+          provider: prov,
+          manga,
+        },
+      };
+    }
 
     // const provider = new META.Anilist();
     // const mangadex = new MANGA.MangaDex({ url: "https://cors.anime.net.in/" });

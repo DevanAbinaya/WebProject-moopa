@@ -1,6 +1,8 @@
 // import { MANGA } from "@consumet/extensions";
+import { MANGA } from "@consumet/extensions";
 import axios from "axios";
 import Head from "next/head";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import Layout from "../../../components/layout";
 
@@ -21,15 +23,19 @@ export default function Test({ title, id, data }) {
         <link rel="icon" href="/c.svg" />
       </Head>
       <Layout>
-        <div className="flex min-h-screen flex-col items-center pt-nav">
+        <div className="relative flex min-h-screen w-screen flex-col items-center pt-nav">
           {data.length > 0 &&
-            data.map((item) => (
-              <img
-                key={item.page}
+            data.map((item, index) => (
+              <Image
+                key={index}
                 src={item.img}
                 alt={`Page ${item.page}`}
-                onLoad={() => handleImageLoad(item)}
-                referrerPolicy="origin"
+                width={600}
+                height={800}
+                loader={({ src }) => {
+                  const newUrl = `${src}?referer=https://mangadex.org/`;
+                  return newUrl;
+                }}
               />
             ))}
         </div>
@@ -39,16 +45,24 @@ export default function Test({ title, id, data }) {
 }
 
 export async function getServerSideProps(context) {
-  const { id, title } = context.query;
+  const { id, title, provider } = context.query;
   const urls = [
-    `https://cors.delusionz.xyz/https://api.consumet.org/meta/anilist-manga/read?chapterId=${id}&provider=mangadex`,
+    `https://api.moopa.my.id/meta/anilist-manga/read?chapterId=${id}&provider=${provider}`,
   ];
   const results = await axios.get(urls);
   if (!results.data) {
+    const data = await axios.get(
+      `https://api.mangadex.org/at-home/server/${id}`
+    );
     return {
-      notFound: true,
+      props: {
+        id,
+        title,
+        data: data.data,
+      },
     };
   }
+
   return {
     props: {
       id,
