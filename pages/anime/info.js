@@ -227,11 +227,11 @@ export default function Himitsu({
                       </div>
                     </div>
                     <div
-                      className={`h-[140px] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#1b1c21] scrollbar-thumb-rounded-md hover:scrollbar-thumb-[#212329]`}
+                      className={`hidden h-[140px] hover:overflow-y-scroll overflow-y-hidden scrollbar-thin hover:scrollbar-thumb-[#2e2f37] scrollbar-thumb-rounded-md scrollbar-thumb-[#1b1c21] lg:block transition-all duration-300`}
                     >
                       <p
                         dangerouslySetInnerHTML={{ __html: info.description }}
-                        className="mr-3 hidden lg:block"
+                        className="mr-3"
                       />
                     </div>
                     <div className="lg:hidden">
