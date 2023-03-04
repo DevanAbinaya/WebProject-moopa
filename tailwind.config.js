@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const scrollbarPlugin = require("tailwind-scrollbar");
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -55,5 +57,10 @@ module.exports = {
     fontWeight: ["responsive", "hover", "focus"],
     scrollbar: ["rounded"],
   },
-  plugins: [require("tailwind-scrollbar"), require("tailwind-scrollbar-hide")],
+  plugins: [
+    scrollbarPlugin({
+      nocompatible: true,
+    }),
+    require("tailwind-scrollbar-hide"),
+  ],
 };
