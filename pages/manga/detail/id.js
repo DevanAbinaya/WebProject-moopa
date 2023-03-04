@@ -1,12 +1,10 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { META, MANGA } from "@consumet/extensions";
 import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Layout from "../../../components/layout";
-import Chapters from "../../../components/manga/chapters";
 
 const options = [
   "mangadex",
@@ -152,7 +150,12 @@ export default function MangaDetail({ data, manga, aniId, provider }) {
                               data.title?.english || data.title?.romaji
                             }&provider=${provider}`}
                           >
-                            Chapters {chapter.chapterNumber || chapter.title}
+                            {typeof chapter.title === "string" &&
+                            !isNaN(Number(chapter.title)) ? (
+                              <div>Chapter {Number(chapter.title)}</div>
+                            ) : (
+                              <div>{chapter.title}</div>
+                            )}
                           </Link>
                         </div>
                       );

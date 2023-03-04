@@ -4,21 +4,20 @@ import React, { useEffect, useState } from "react";
 import { weirdToNormalChars } from "weird-to-normal-chars";
 import Navbar from "../../components/navbar";
 import Player from "../../lib/Artplayer";
-import { META } from "@consumet/extensions";
 
 export default function Test(props) {
   const title = props.judul;
   const info = props.data;
-  const id = props.id;
+
   const potonganDesc = props.potonganDesc;
   const text = props.text;
   const displayTitle = props.displayTitle;
   const episodeNumber = props.epiInts;
 
-  const [isLoading, setIsloading] = useState(false);
+  const [isLoading, setIsloading] = useState(true);
   const [showText, setShowtext] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
-  const [log, setLog] = useState([]);
+  const [id, setId] = useState(props.id);
 
   const [url, setDefUrl] = useState(null);
   const [sources, setSources] = useState(null);
@@ -26,13 +25,10 @@ export default function Test(props) {
   const [isVpn, setIsVpn] = useState(false);
 
   useEffect(() => {
-    setIsloading(true);
     async function fetchData() {
       try {
         const response = await axios.get(
-          `https://api.consumet.org/meta/anilist/watch/${decodeURIComponent(
-            id
-          )}`
+          `https://api.moopa.my.id/meta/anilist/watch/${decodeURIComponent(id)}`
         );
         if (response.status === 404) {
           console.log("Resource not found:", response.status);
@@ -59,18 +55,18 @@ export default function Test(props) {
           sumber.url
         )}/${encodeURIComponent(`{"referer":"https://playgo1.cc"}`)}`;
         setDefUrl(defUrl);
+        setIsloading(false);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         setIsVpn(true);
       }
     }
     fetchData();
 
     setIsloading(false);
-  }, []);
+  }, [id]);
 
-  // console.log(potonganDesc);
-  // console.log(sources);
+  // console.log(url);
 
   useEffect(() => {
     setIsloading(true);
@@ -89,7 +85,7 @@ export default function Test(props) {
     setIsloading(false);
   }, [url, sources]);
 
-  // console.log();
+  // console.log(sources);
 
   return (
     <>
@@ -106,13 +102,21 @@ export default function Test(props) {
             <p>sabar ya bang...</p>
           ) : (
             <div className="flex w-screen flex-col items-center gap-5">
-              <div className="flex h-[260px] w-screen items-center justify-center text-center md:h-[720px] md:w-[85%]">
-                {isVpn ? (
-                  <p>{`> The video isn't showing? Try to use VPN or change your DNS.`}</p>
-                ) : (
-                  <div className="h-[260px] w-screen md:h-full">{players}</div>
-                )}
-              </div>
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <div className="flex h-[260px] w-screen items-center justify-center text-center md:h-[720px] md:w-[85%]">
+                  {isVpn ? (
+                    <p>
+                      {`> Oops.. It seems like there's an error with the server. :(`}
+                    </p>
+                  ) : (
+                    <div className="h-[260px] w-screen md:h-full">
+                      {players}
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="flex flex-col gap-5 lg:w-[85%]">
                 <div className="flex gap-5 px-4 text-2xl md:mx-0">
@@ -140,20 +144,22 @@ export default function Test(props) {
                     {showText ? "Show Less" : "Show More"}
                   </button>
                 </div>
-                <div className="flex h-[640px] flex-col gap-5 overflow-scroll px-3 pt-5 overflow-x-hidden">
+                <div className="flex h-[640px] flex-col gap-5 overflow-scroll px-3 pt-5 overflow-x-hidden scrollbar-thin scrollbar-thumb-[#1b1c21] scrollbar-thumb-rounded-md hover:scrollbar-thumb-[#212329]">
                   {info.episodes.map((episode, index) => {
                     return (
                       <div key={index} className="flex flex-col gap-3">
                         <a
-                          href={
-                            episode.number === episodeNumber
-                              ? "#"
-                              : `/anime/watch?title=${info.title.english}&id=${
-                                  episode.id
-                                }&idInt=${info.id}&epi=${
-                                  episode.number
-                                }&epiTitle=${encodeURIComponent(episode.title)}`
-                          }
+                          // href={
+                          //   episode.number === episodeNumber
+                          //     ? "#"
+                          //     : `/anime/watch?title=${info.title.english}&id=${
+                          //         episode.id
+                          //       }&idInt=${info.id}&epi=${
+                          //         episode.number
+                          //       }&epiTitle=${encodeURIComponent(episode.title)}`
+                          // }
+                          href="#"
+                          onClick={() => setId(episode.id)}
                           className="text-start text-xl"
                         >
                           {episode.number === episodeNumber ? (

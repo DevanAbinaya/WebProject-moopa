@@ -20,6 +20,8 @@ export default function Himitsu({
   const episode = episodeList;
   const epi1 = episode1;
 
+  // const { ref } = useParallax({ speed: 10 });
+
   useEffect(() => {
     function getBrightness(color) {
       const rgb = color.match(/\d+/g);
@@ -79,11 +81,12 @@ export default function Himitsu({
           <div className="pointer-events-none absolute top-0 left-0">
             <div className=" bg-gradient-to-t from-white to-transparent brightness-90 dark:bg-gradient-to-t dark:from-[#121212] dark:to-transparent">
               <img
+                // ref={ref}
                 src={info.cover || info.image}
                 className="blur- h-[400px] w-screen object-cover mix-blend-overlay dark:mix-blend-darken"
               />
+              <div className="z-10 h-full bg-[#fffbfb] drop-shadow-2xl dark:bg-[#121212]" />
             </div>
-            <div className="z-10 h-full bg-[#fffbfb] drop-shadow-2xl dark:bg-[#121212]" />
           </div>
           {isLoading ? (
             <p>Loading cuy sabar...</p>
@@ -223,10 +226,14 @@ export default function Himitsu({
                         </div>
                       </div>
                     </div>
-                    <p
-                      dangerouslySetInnerHTML={{ __html: info.description }}
-                      className="hidden lg:block"
-                    />
+                    <div
+                      className={`h-[140px] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#1b1c21] scrollbar-thumb-rounded-md hover:scrollbar-thumb-[#212329]`}
+                    >
+                      <p
+                        dangerouslySetInnerHTML={{ __html: info.description }}
+                        className="mr-3 hidden lg:block"
+                      />
+                    </div>
                     <div className="lg:hidden">
                       <div
                         dangerouslySetInnerHTML={{
