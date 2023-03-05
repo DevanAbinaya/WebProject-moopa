@@ -24,7 +24,9 @@ export default function MangaDetail({ data, manga, aniId, provider }) {
     setLoad(false);
   }
 
-  const relation = data.relations.filter((relation) => relation.malId !== null);
+  const relation = data?.relations.filter(
+    (relation) => relation.malId !== null
+  );
 
   const mangan = JSON.stringify(manga);
 
@@ -190,78 +192,52 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
     context.res.setHeader("Cache-Control", "public, max-age=3600");
     const { aniId, aniTitle } = context.query;
-    const info = await axios.get(
-      `https://api.moopa.my.id/meta/anilist-manga/info/${aniId}?provider=mangakakalot
-`,
-      { headers: { "Content-Type": "application/json" } }
-    );
-    const result = info.data;
-    const prov = "mangakakalot";
+    const prv = "mangakakalot";
 
-    const manga = result.chapters;
-    if (
-      Object.keys(info.data).length === 1 &&
-      info.data.hasOwnProperty("message")
-    ) {
-      const prv = "mangapill";
-      const manga = await axios.get(
+    try {
+      const info = await axios.get(
         `https://api.moopa.my.id/meta/anilist-manga/info/${aniId}?provider=${prv}`
       );
-      const results = manga.data;
+      const result = info.data;
+      const manga = result.chapters;
+
       return {
         props: {
           data: result,
           aniId: aniId,
-          manga: results.chapters,
           provider: prv,
-        },
-      };
-    } else {
-      return {
-        props: {
-          data: result,
-          aniId: aniId,
-          provider: prov,
           manga,
         },
       };
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        try {
+          const prv = "mangapill";
+          const manga = await axios.get(
+            `https://api.moopa.my.id/meta/anilist-manga/info/${aniId}?provider=${prv}`
+          );
+          const results = manga.data;
+
+          return {
+            props: {
+              data: results,
+              aniId: aniId,
+              manga: results.chapters,
+              provider: prv,
+            },
+          };
+        } catch (error) {
+          console.error(error);
+          return {
+            notFound: true,
+          };
+        }
+      } else {
+        console.error(error);
+        return {
+          notFound: true,
+        };
+      }
     }
-
-    // const provider = new META.Anilist();
-    // const mangadex = new MANGA.MangaDex({ url: "https://cors.anime.net.in/" });
-
-    // const [info, manga] = await Promise.all([
-    //   provider.fetchAnilistInfoById(aniId),
-    //   mangadex.search(aniTitle),
-    // ]);
-
-    // const results = manga.results;
-    // if (!results) {
-    //   return {
-    //     notFound: true,
-    //   };
-    // }
-    // const mangaId = results[0].id;
-
-    // const [chapter] = await Promise.all([mangadex.fetchMangaInfo(mangaId)]);
-
-    // const title = info.title?.userPreferred || "No Title";
-    // const currentEpisode = info.currentEpisode || "No Episode";
-    // const mangaDesc = manga?.description || "No Description";
-
-    // return {
-    //   props: {
-    //     data: {
-    //       ...info,
-    //       currentEpisode: currentEpisode,
-    //       title: {
-    //         ...info.title,
-    //         userPreferred: title,
-    //       },
-    //     },
-    //     aniId: aniId,
-    //     manga: chapter,
-    //   },
-    // };
   },
 });
