@@ -28,9 +28,11 @@ export default function Test({ title, id, data, provider }) {
       const nextIndex = currentIndex + 1;
 
       const nextChapter = chapters[nextIndex];
+      const prevIndex = currentIndex - 1;
 
       setNextChapter(nextChapter);
       setCurrentChapter(currentChapter);
+      setPrevChapter(chapters[prevIndex]);
       setIsLoading(false);
     }
     storedData();
@@ -73,8 +75,17 @@ export default function Test({ title, id, data, provider }) {
     )
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
-        setData(data);
+        if (provider === "mangakakalot") {
+          const datas = data.map((item) => ({
+            img: `https://api.consumet.org/utils/image-proxy?url=${item.img}&referer={Referer:'https://mangakakalot.com/'}`,
+            page: item.page,
+            title: item.title,
+          }));
+          // console.log(datas);
+          setData(datas);
+        } else {
+          setData(data);
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -83,6 +94,7 @@ export default function Test({ title, id, data, provider }) {
     // Update the current chapter id in local storage
     localStorage.setItem("currentChapterId", nextChapter.id);
   }
+  // console.log(data);
 
   function getPrevChapter() {
     // Get the current id
@@ -106,17 +118,22 @@ export default function Test({ title, id, data, provider }) {
     setPrevChapter(prevvChapter);
 
     fetch(
-      `https://proxy.cors.sh/https://api.moopa.my.id/meta/anilist-manga/read?chapterId=${prevChapter.id}&provider=${provider}`,
-      {
-        headers: {
-          "x-cors-api-key": "temp_d64bd31e8704cd3825adef3482b4f4ec",
-        },
-      }
+      `https://api.moopa.my.id/meta/anilist-manga/read?chapterId=${prevChapter.id}&provider=${provider}`
     )
       .then((response) => response.json())
       .then((data) => {
         // console.log(data);
-        setData(data);
+        if (provider === "mangakakalot") {
+          const datas = data.map((item) => ({
+            img: `https://api.consumet.org/utils/image-proxy?url=${item.img}&referer={Referer:'https://mangakakalot.com/'}`,
+            page: item.page,
+            title: item.title,
+          }));
+          // console.log(datas);
+          setData(datas);
+        } else {
+          setData(data);
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -156,17 +173,11 @@ export default function Test({ title, id, data, provider }) {
           <div className="pointer-events-none z-10 flex min-h-screen w-screen flex-col items-center pt-nav">
             {datas.length > 0 &&
               datas.map((item, index) => (
-                <Image
+                <img
                   draggable={false}
                   key={index}
                   src={item.img}
                   alt={`Page ${item.page}`}
-                  width={600}
-                  height={800}
-                  loader={({ src }) => {
-                    const newUrl = `${src}?referer=https://mangadex.org/`;
-                    return newUrl;
-                  }}
                 />
               ))}
           </div>
@@ -220,7 +231,7 @@ export default function Test({ title, id, data, provider }) {
               </div>
             </div>
 
-            <div className="z-30 w-screen bg-[#1e2023] px-5 py-[3px] text-xl lg:w-[30%] lg:-translate-y-[3.6rem] lg:bg-transparent lg:text-end">
+            <div className="z-30 w-screen bg-[#1e2023] px-5 py-[3px] text-xl lg:w-[30%]  lg:bg-transparent lg:text-center">
               {nextChapter ? (
                 nextChapter.chapter ? (
                   <p>Next Chapter {nextChapter.chapter}</p>
@@ -245,17 +256,27 @@ export async function getServerSideProps(context) {
     `https://api.moopa.my.id/meta/anilist-manga/read?chapterId=${id}&provider=${provider}`,
   ];
   const results = await axios.get(urls);
-  if (!results.data) {
-    const data = await axios.get(
-      `https://api.mangadex.org/at-home/server/${id}`
-    );
+
+  if (provider === "mangakakalot") {
+    const data = results.data;
+    const datas = data.map((item) => ({
+      img: `https://api.consumet.org/utils/image-proxy?url=${item.img}&referer={Referer:'https://mangakakalot.com/'}`,
+      page: item.page,
+      title: item.title,
+    }));
     return {
       props: {
         id,
         title,
-        data: data.data,
+        data: datas,
         provider,
       },
+    };
+  }
+
+  if (!results.data) {
+    return {
+      notFound: true,
     };
   }
 

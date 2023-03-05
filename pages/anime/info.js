@@ -64,7 +64,7 @@ export default function Himitsu({
     return;
   }
 
-  console.log(judul);
+  // console.log(judul);
 
   // console.log(info);
 

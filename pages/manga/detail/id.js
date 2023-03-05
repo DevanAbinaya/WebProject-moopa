@@ -161,7 +161,13 @@ export default function MangaDetail({ data, manga, aniId, provider }) {
                             !isNaN(Number(chapter.title)) ? (
                               <div>Chapter {Number(chapter.title)}</div>
                             ) : (
-                              <div>{chapter.title}</div>
+                              <div>
+                                {chapter.chapter ? (
+                                  <p>Chapter {chapter.chapter}</p>
+                                ) : (
+                                  <p>{chapter.title}</p>
+                                )}
+                              </div>
                             )}
                           </Link>
                         </div>
@@ -184,14 +190,19 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
     context.res.setHeader("Cache-Control", "public, max-age=3600");
     const { aniId, aniTitle } = context.query;
-    const info =
-      await axios.get(`https://api.moopa.my.id/meta/anilist-manga/info/${aniId}?provider=mangadex
-`);
+    const info = await axios.get(
+      `https://api.moopa.my.id/meta/anilist-manga/info/${aniId}?provider=mangakakalot
+`,
+      { headers: { "Content-Type": "application/json" } }
+    );
     const result = info.data;
-    const prov = "mangadex";
+    const prov = "mangakakalot";
 
     const manga = result.chapters;
-    if (manga.some((chapter) => chapter.pages === 0)) {
+    if (
+      Object.keys(info.data).length === 1 &&
+      info.data.hasOwnProperty("message")
+    ) {
       const prv = "mangapill";
       const manga = await axios.get(
         `https://api.moopa.my.id/meta/anilist-manga/info/${aniId}?provider=${prv}`
