@@ -106,7 +106,12 @@ export default function Test({ title, id, data, provider }) {
     setPrevChapter(prevvChapter);
 
     fetch(
-      `https://api.moopa.my.id/meta/anilist-manga/read?chapterId=${prevChapter.id}&provider=${provider}`
+      `https://proxy.cors.sh/https://api.moopa.my.id/meta/anilist-manga/read?chapterId=${prevChapter.id}&provider=${provider}`,
+      {
+        headers: {
+          "x-cors-api-key": "temp_d64bd31e8704cd3825adef3482b4f4ec",
+        },
+      }
     )
       .then((response) => response.json())
       .then((data) => {
