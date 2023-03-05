@@ -13,9 +13,11 @@ export default function Himitsu({
   color,
   episodeList,
   episode1,
+  judul,
 }) {
   const [isLoading, setIsloading] = useState(false);
   const [showText, setShowtext] = useState(false);
+  const [title, setTitle] = useState(info.title.english || info.title.romaji);
   const [load, setLoad] = useState(true);
   const episode = episodeList;
   const epi1 = episode1;
@@ -62,6 +64,8 @@ export default function Himitsu({
     return;
   }
 
+  console.log(judul);
+
   // console.log(info);
 
   function handleLoad() {
@@ -97,19 +101,26 @@ export default function Himitsu({
                   <div className="flex gap-10 md:h-[250px] md:w-52">
                     <div className="flex h-[200px] w-52 bg-[#dadada50] md:h-[250px] md:w-full">
                       {info.image && (
-                        <img
-                          src={info.image}
-                          className="h-[200px] w-full shrink-0 object-cover md:h-[250px]"
-                        />
+                        <>
+                          <div
+                            style={{
+                              backgroundImage: `url(${info.image})`,
+                              height: "100%",
+                              width: "100%",
+                              backgroundSize: "cover",
+                              backgroundPosition: "center",
+                            }}
+                            // src={info.image}
+                            className="h-[200px] w-[200px] md:h-[250px]"
+                          />
+                        </>
                       )}
                     </div>
 
                     {/* MOBILE */}
                     <div className="flex w-full flex-col gap-5 lg:hidden ">
-                      <h1 className="text-2xl font-semibold">
-                        {info.title?.english ||
-                          info.title.romaji ||
-                          info.title.native}
+                      <h1 className="shrink-0 text-2xl font-semibold">
+                        {judul}
                       </h1>
                       <div className="flex w-[90%] flex-col gap-1">
                         <div className="flex gap-2">
@@ -227,11 +238,11 @@ export default function Himitsu({
                       </div>
                     </div>
                     <div
-                      className={`hidden h-[140px] hover:overflow-y-scroll overflow-y-hidden scrollbar-thin hover:scrollbar-thumb-[#2e2f37] scrollbar-thumb-rounded-md scrollbar-thumb-[#1b1c21] lg:block transition-all duration-300`}
+                      className={`hidden h-[140px] transition-all duration-300 overflow-y-hidden scrollbar-thin scrollbar-thumb-[#1b1c21] scrollbar-thumb-rounded-md hover:overflow-y-scroll hover:scrollbar-thumb-[#2e2f37] lg:block`}
                     >
                       <p
                         dangerouslySetInnerHTML={{ __html: info.description }}
-                        className="mr-3"
+                        className="mr-5"
                       />
                     </div>
                     <div className="lg:hidden">
@@ -328,18 +339,10 @@ export default function Himitsu({
 
                 <div className="z-20 flex flex-col gap-10 p-3 lg:p-0">
                   <h1 className="text-3xl font-bold">Episodes</h1>
-                  <div className="flex h-[640px] flex-col gap-5 overflow-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-800 scrollbar-thumb-rounded-full hover:scrollbar-thumb-slate-600">
+                  <div className="flex h-[640px] flex-col gap-5 overflow-y-hidden scrollbar-thin scrollbar-thumb-[#1b1c21] scrollbar-thumb-rounded-full hover:overflow-y-scroll hover:scrollbar-thumb-[#2e2f37]">
                     {episode.map((episode, index) => {
                       return (
                         <div key={index} className="flex flex-col gap-3">
-                          {/* <div className="relative h-52 w-full">
-                            <Image
-                              fill
-                              src={episode.image}
-                              alt="thumbnail"
-                              className="object-cover"
-                            />
-                          </div> */}
                           <Link
                             onClick={() =>
                               handleStore({
@@ -415,6 +418,11 @@ export const getServerSideProps = withPageAuthRequired({
     const epi1 = episodes.filter((epi) => epi.number === 1);
     const title = info.title?.userPreferred || "No Title";
 
+    const MAX = 20;
+
+    const oriJ = info.title?.english || info.title.romaji || info.title.native;
+    const judul = oriJ.length > MAX ? `${oriJ.substring(0, MAX)}...` : oriJ;
+
     return {
       props: {
         info: {
@@ -428,6 +436,7 @@ export const getServerSideProps = withPageAuthRequired({
         color,
         episodeList: episodes,
         episode1: epi1,
+        judul,
       },
     };
   },

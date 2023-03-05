@@ -149,17 +149,17 @@ export default function Test(props) {
                     return (
                       <div key={index} className="flex flex-col gap-3">
                         <a
-                          // href={
-                          //   episode.number === episodeNumber
-                          //     ? "#"
-                          //     : `/anime/watch?title=${info.title.english}&id=${
-                          //         episode.id
-                          //       }&idInt=${info.id}&epi=${
-                          //         episode.number
-                          //       }&epiTitle=${encodeURIComponent(episode.title)}`
-                          // }
-                          href="#"
-                          onClick={() => setId(episode.id)}
+                          href={
+                            episode.number === episodeNumber
+                              ? "#"
+                              : `/anime/watch?title=${info.title.english}&id=${
+                                  episode.id
+                                }&idInt=${info.id}&epi=${
+                                  episode.number
+                                }&epiTitle=${encodeURIComponent(episode.title)}`
+                          }
+                          // href="#"
+                          // onClick={() => setId(episode.id)}
                           className="text-start text-xl"
                         >
                           {episode.number === episodeNumber ? (
@@ -189,6 +189,7 @@ export default function Test(props) {
 
 export async function getServerSideProps(context) {
   const { title, id, idInt, epi, epiTitle } = context.query;
+
   const query = decodeURIComponent(title);
   const episode = decodeURIComponent(epiTitle);
   const str = weirdToNormalChars(query);

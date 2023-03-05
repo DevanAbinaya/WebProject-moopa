@@ -289,6 +289,7 @@ export default function Home({ detail, populars, topDesc }) {
                 <div className="absolute bg-gradient-to-t from-[#141519] to-transparent md:h-[662px] md:w-[460px]" />
 
                 <Image
+                  draggable={false}
                   src={data.coverImage.extraLarge}
                   alt={data.title.english || data.title.romaji}
                   width={460}

@@ -36,6 +36,10 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+::selection {
+  background-color: transparent;
+}
+
 .chapter-button {
   @apply h-auto w-20 scale-100 rounded-full border-[1px] text-center md:w-40 md:scale-90 md:rounded-3xl md:border-2 md:p-3 md:text-2xl;
 }

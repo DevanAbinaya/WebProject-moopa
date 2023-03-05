@@ -26,8 +26,15 @@ export default function MangaDetail({ data, manga, aniId, provider }) {
 
   const relation = data.relations.filter((relation) => relation.malId !== null);
 
+  const mangan = JSON.stringify(manga);
+
+  function clickDeez(props) {
+    localStorage.setItem("chapters", mangan);
+    localStorage.setItem("currentChapterId", props);
+  }
+
   // console.log(data);
-  // console.log(manga);
+  // console.log(mangan);
   return (
     <>
       <Head>
@@ -143,7 +150,7 @@ export default function MangaDetail({ data, manga, aniId, provider }) {
                   <div className="flex h-[640px] flex-col gap-10 overflow-y-scroll scrollbar-thin scrollbar-thumb-slate-800 scrollbar-thumb-rounded-full hover:scrollbar-thumb-slate-600">
                     {manga?.map((chapter, index) => {
                       return (
-                        <div key={index}>
+                        <div key={index} onClick={() => clickDeez(chapter.id)}>
                           <Link
                             href={`/manga/chapter/[chapter]`}
                             as={`/manga/chapter/read?id=${chapter.id}&title=${

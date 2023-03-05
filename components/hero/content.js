@@ -44,6 +44,7 @@ export default function Content({ ids, section, data }) {
                 >
                   <Link href={`/anime/info?title=${url}&id=${anime.id}`}>
                     <Image
+                      draggable={false}
                       src={
                         anime.image ||
                         anime.coverImage?.extraLarge ||
