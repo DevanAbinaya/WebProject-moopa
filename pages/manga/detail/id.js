@@ -3,8 +3,23 @@ import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../../components/layout";
+
+// { `Don't touch this` }
+
+// import { useUser } from "@auth0/nextjs-auth0/client";
+// import {
+//   arrayRemove,
+//   arrayUnion,
+//   collection,
+//   doc,
+//   getDoc,
+//   getDocs,
+//   setDoc,
+//   updateDoc,
+// } from "firebase/firestore";
+// import db from "../../../lib/firebase";
 
 const options = [
   "mangadex",
@@ -18,7 +33,38 @@ const options = [
 
 export default function MangaDetail({ data, manga, aniId, provider }) {
   const [selectOption, setSelectedOption] = useState(options[0]);
+  const [recentWatch, setRecentWatch] = useState();
+
+  // const { user, error, loading } = useUser();
+
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>{error.message}</div>;
+
   const [load, setLoad] = useState(true);
+
+  useEffect(() => {
+    // async function firebase() {
+    //   const colRef = collection(db, "user");
+
+    //   const snapshots = await getDocs(colRef);
+
+    //   const docs = snapshots.docs.map((doc) => {
+    //     const data = doc.data();
+    //     data.id = doc.id;
+    //     return data;
+    //   });
+
+    //   // console.log(docs);
+    // }
+    function getRecent() {
+      const recentWatch = JSON.parse(localStorage.getItem("watchedManga"))?.map(
+        (data) => data.id
+      );
+      setRecentWatch(recentWatch);
+    }
+    getRecent();
+    // firebase();
+  }, []);
 
   function handleLoad() {
     setLoad(false);
@@ -30,12 +76,42 @@ export default function MangaDetail({ data, manga, aniId, provider }) {
 
   const mangan = JSON.stringify(manga);
 
-  function clickDeez(props) {
+  async function clickDeez(props) {
     localStorage.setItem("chapters", mangan);
     localStorage.setItem("currentChapterId", props);
+
+    // const colRef = collection(db, "user");
+    // const docRef = doc(colRef, user.sub);
+
+    // const docMangaRef = collection(docRef, "watchedManga");
+    // const watchedMangaRef = doc(docMangaRef, data.id);
+
+    // const watchedMangaSnap = await getDoc(watchedMangaRef);
+
+    // if (watchedMangaSnap.exists()) {
+    //   // Update existing chapter
+    //   await updateDoc(watchedMangaRef, {
+    //     chapter: arrayUnion({
+    //       id: props,
+    //       scrollPercentage: 0,
+    //       timeStamp: null,
+    //     }),
+    //   });
+    //   // console.log("Chapter updated successfully!");
+    // } else {
+    //   // Add new manga with chapter data
+    //   await setDoc(watchedMangaRef, {
+    //     id: data.id,
+    //     image: data.image,
+    //     rating: data.rating,
+    //     title: data.title?.romaji || data.title?.english,
+    //     chapter: [props],
+    //   });
+    //   // console.log("Manga added successfully with chapter data!");
+    // }
   }
 
-  // console.log(data);
+  // console.log(data.id);
   // console.log(mangan);
   return (
     <>
@@ -85,11 +161,18 @@ export default function MangaDetail({ data, manga, aniId, provider }) {
                                   relation.type === "MANGA" ||
                                   relation.type === "NOVEL"
                                     ? `/manga/detail/id?aniId=${relation.id}`
-                                    : ""
+                                    : `/anime/info?title=${
+                                        data.title.english || data.title.romaji
+                                      }&id=${relation.id}`
                                 }
                                 className={`flex w-full justify-between rounded-md bg-[#282828] p-2 shadow-lg duration-300 ease-out hover:scale-105 ${
+                                  relation.type === "TV" ||
+                                  relation.type === "OVA" ||
+                                  relation.type === "MOVIE" ||
+                                  relation.type === "SPECIAL" ||
+                                  relation.type === "ONA" ||
                                   relation.type === "MANGA" ||
-                                  relation.type === "NOVEL"
+                                  relation.type === "TV_SHORT"
                                     ? ``
                                     : "pointer-events-none"
                                 }`}
@@ -152,12 +235,21 @@ export default function MangaDetail({ data, manga, aniId, provider }) {
                   <div className="flex h-[640px] flex-col gap-10 overflow-y-scroll scrollbar-thin scrollbar-thumb-slate-800 scrollbar-thumb-rounded-full hover:scrollbar-thumb-slate-600">
                     {manga?.map((chapter, index) => {
                       return (
-                        <div key={index} onClick={() => clickDeez(chapter.id)}>
+                        <div
+                          key={index}
+                          onClick={() => clickDeez(chapter.id)}
+                          className={`${
+                            recentWatch?.includes(chapter.id)
+                              ? "text-gray-400"
+                              : ""
+                          }`}
+                        >
                           <Link
+                            // href="#"
                             href={`/manga/chapter/[chapter]`}
                             as={`/manga/chapter/read?id=${chapter.id}&title=${
                               data.title?.english || data.title?.romaji
-                            }&provider=${provider}`}
+                            }&provider=${provider}&aniId=${aniId}`}
                           >
                             {typeof chapter.title === "string" &&
                             !isNaN(Number(chapter.title)) ? (
@@ -192,7 +284,7 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
     context.res.setHeader("Cache-Control", "public, max-age=3600");
     const { aniId, aniTitle } = context.query;
-    const prv = "mangakakalot";
+    const prv = "mangapill";
 
     try {
       const info = await axios.get(
@@ -212,7 +304,7 @@ export const getServerSideProps = withPageAuthRequired({
     } catch (error) {
       if (error.response && error.response.status === 404) {
         try {
-          const prv = "mangapill";
+          const prv = "mangakakalot";
           const manga = await axios.get(
             `https://api.moopa.my.id/meta/anilist-manga/info/${aniId}?provider=${prv}`
           );

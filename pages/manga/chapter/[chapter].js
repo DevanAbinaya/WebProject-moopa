@@ -1,19 +1,16 @@
-// import { MANGA } from "@consumet/extensions";
 import axios from "axios";
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import Navbar from "../../../components/navbar";
 import Footer from "../../../components/footer";
+import ScrollTracker from "../../../components/scrollTracker";
 
-export default function Test({ title, id, data, provider }) {
-  const [loadedImages, setLoadedImages] = useState([]);
+export default function Test({ title, id, aniId, data, provider }) {
   const [isLoading, setIsLoading] = useState(true);
   const [datas, setData] = useState(data);
   const [currentChapter, setCurrentChapter] = useState(null);
   const [nextChapter, setNextChapter] = useState(null);
   const [prevChapter, setPrevChapter] = useState(null);
-  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     function storedData() {
@@ -38,17 +35,79 @@ export default function Test({ title, id, data, provider }) {
     storedData();
   }, []);
 
-  // console.log(currentChapter);
-
-  const handleImageLoad = (item) => {
-    setLoadedImages((prevLoadedImages) => [...prevLoadedImages, item.img]);
-  };
-  // console.log(data);
   function getNextChapter() {
-    // Get the current id
-    setIsLoading(true);
     window.scrollTo(0, 0);
+    setIsLoading(true);
     const currentId = localStorage.getItem("currentChapterId");
+    const scrollData = JSON.parse(localStorage.getItem("watchedManga")) || [];
+    const scroll = localStorage.getItem("scrollPercentage");
+    if (scroll >= 5) {
+      const existingDataIndex = scrollData.findIndex(
+        (data) => data.id === currentId
+      );
+      if (existingDataIndex !== -1) {
+        // Update existing data
+        scrollData[existingDataIndex].timestamp = Date.now();
+        scrollData[existingDataIndex].percentage = parseFloat(
+          localStorage.getItem("scrollPercentage")
+        );
+      } else {
+        // Add new data
+        scrollData.push({
+          timestamp: Date.now(),
+          percentage: parseFloat(localStorage.getItem("scrollPercentage")),
+          id: currentId,
+        });
+      }
+
+      localStorage.setItem("watchedManga", JSON.stringify(scrollData));
+
+      const chapt = localStorage.getItem("chapters");
+      const chapters = JSON.parse(chapt);
+
+      const currentIndex = chapters.findIndex(
+        (chapter) => chapter.id === currentId
+      );
+
+      const nextIndex = currentIndex + 1;
+
+      const nextChapter = chapters[nextIndex];
+      const nexttChapter = chapters[nextIndex + 1];
+      const prevChapter = chapters[nextIndex - 1];
+
+      setNextChapter(nexttChapter);
+      setCurrentChapter(nextChapter);
+      setPrevChapter(prevChapter);
+
+      if (!nextChapter) {
+        return;
+      }
+
+      fetch(
+        `https://api.moopa.my.id/meta/anilist-manga/read?chapterId=${nextChapter.id}&provider=${provider}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (provider === "mangakakalot") {
+            const datas = data.map((item) => ({
+              img: `https://api.consumet.org/utils/image-proxy?url=${item.img}&referer={Referer:'https://mangakakalot.com/'}`,
+              page: item.page,
+              title: item.title,
+            }));
+            // console.log(datas);
+            setData(datas);
+          } else {
+            setData(data);
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+
+      // Update the current chapter id in local storage
+      localStorage.setItem("currentChapterId", nextChapter.id);
+    }
+
     const chapt = localStorage.getItem("chapters");
     const chapters = JSON.parse(chapt);
 
@@ -98,9 +157,79 @@ export default function Test({ title, id, data, provider }) {
 
   function getPrevChapter() {
     // Get the current id
-    setIsLoading(true);
     window.scrollTo(0, 0);
+    setIsLoading(true);
+
     const currentId = localStorage.getItem("currentChapterId");
+    const scrollData = JSON.parse(localStorage.getItem("watchedManga")) || [];
+    const scroll = localStorage.getItem("scrollPercentage");
+    if (scroll >= 5) {
+      const existingDataIndex = scrollData.findIndex(
+        (data) => data.id === currentId
+      );
+      if (existingDataIndex !== -1) {
+        // Update existing data
+        scrollData[existingDataIndex].timestamp = Date.now();
+        scrollData[existingDataIndex].percentage = parseFloat(
+          localStorage.getItem("scrollPercentage")
+        );
+      } else {
+        // Add new data
+        scrollData.push({
+          timestamp: Date.now(),
+          percentage: parseFloat(localStorage.getItem("scrollPercentage")),
+          id: currentId,
+        });
+      }
+
+      localStorage.setItem("watchedManga", JSON.stringify(scrollData));
+
+      const chapt = localStorage.getItem("chapters");
+      const chapters = JSON.parse(chapt);
+
+      const currentIndex = chapters.findIndex(
+        (chapter) => chapter.id === currentId
+      );
+
+      const nextIndex = currentIndex + 1;
+
+      const nextChapter = chapters[nextIndex];
+      const nexttChapter = chapters[nextIndex + 1];
+      const prevChapter = chapters[nextIndex - 1];
+
+      setNextChapter(nexttChapter);
+      setCurrentChapter(nextChapter);
+      setPrevChapter(prevChapter);
+
+      if (!nextChapter) {
+        return;
+      }
+
+      fetch(
+        `https://api.moopa.my.id/meta/anilist-manga/read?chapterId=${nextChapter.id}&provider=${provider}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (provider === "mangakakalot") {
+            const datas = data.map((item) => ({
+              img: `https://api.consumet.org/utils/image-proxy?url=${item.img}&referer={Referer:'https://mangakakalot.com/'}`,
+              page: item.page,
+              title: item.title,
+            }));
+            // console.log(datas);
+            setData(datas);
+          } else {
+            setData(data);
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+
+      // Update the current chapter id in local storage
+      localStorage.setItem("currentChapterId", nextChapter.id);
+    }
+
     const chapt = localStorage.getItem("chapters");
     const chapters = JSON.parse(chapt);
 
@@ -155,9 +284,10 @@ export default function Test({ title, id, data, provider }) {
         <link rel="icon" href="/c.svg" />
       </Head>
       <Navbar />
+      <ScrollTracker data={currentChapter} id={aniId} />
 
       <div className="flex h-full min-h-screen w-screen flex-col items-center">
-        <div key={refreshKey} className="pt-nav text-3xl font-semibold">
+        <div className="lg:pt-nav pt-5 text-3xl font-semibold">
           {isLoading ? (
             <div />
           ) : currentChapter && currentChapter.chapter ? (
@@ -251,7 +381,7 @@ export default function Test({ title, id, data, provider }) {
 }
 
 export async function getServerSideProps(context) {
-  const { id, title, provider } = context.query;
+  const { id, title, provider, aniId } = context.query;
   const urls = [
     `https://api.moopa.my.id/meta/anilist-manga/read?chapterId=${id}&provider=${provider}`,
   ];
@@ -266,6 +396,7 @@ export async function getServerSideProps(context) {
     }));
     return {
       props: {
+        aniId,
         id,
         title,
         data: datas,
@@ -282,6 +413,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      aniId,
       id,
       title,
       data: results.data,
