@@ -111,7 +111,7 @@ export default function Himitsu({
                               backgroundPosition: "center",
                             }}
                             // src={info.image}
-                            className="h-[200px] w-[200px] md:h-[250px]"
+                            className="h-[200px] w-[200px] md:h-[250px] bg-white shadow-md"
                           />
                         </>
                       )}
@@ -286,13 +286,22 @@ export default function Himitsu({
                                         info.title.romaji ||
                                         info.title.native
                                     )}&id=${relation.id}`
-                                  : ""
+                                  : `/manga/detail/id?aniId=${
+                                      relation.id
+                                    }&aniTitle=${encodeURIComponent(
+                                      info.title?.english ||
+                                        info.title.romaji ||
+                                        info.title.native
+                                    )}`
                               }
                               className={`flex w-full justify-between rounded-md bg-[#282828] p-2 shadow-lg duration-300 ease-out hover:scale-105 ${
                                 relation.type === "TV" ||
                                 relation.type === "OVA" ||
                                 relation.type === "MOVIE" ||
-                                relation.type === "SPECIAL"
+                                relation.type === "SPECIAL" ||
+                                relation.type === "ONA" ||
+                                relation.type === "MANGA" ||
+                                relation.type === "TV_SHORT"
                                   ? ``
                                   : "pointer-events-none"
                               }`}
