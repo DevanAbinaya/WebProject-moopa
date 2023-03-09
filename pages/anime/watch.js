@@ -28,34 +28,32 @@ export default function Test(props) {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `https://api.moopa.my.id/meta/anilist/watch/${decodeURIComponent(id)}`
-        );
-        if (response.status === 404) {
-          console.log("Resource not found:", response.status);
-          return;
-        }
-        const dataEpi = response.data.sources;
-        let sumber = dataEpi.find((source) => source.quality === "default");
+            `https://api.consumet.org/meta/anilist/watch/${decodeURIComponent(
+              id
+            )}`
+          );
+          if (response.status === 404) {
+            console.log("Resource not found:", response.status);
+            return;
+          }
+          const dataEpi = response.data.sources;
+          let sumber = dataEpi.find((source) => source.quality === "default");
 
-        const source = response.data.sources
-          .map((items) => ({
-            html: items.quality,
-            url: `https://proxy.vnxservers.com/proxy/m3u8/${encodeURIComponent(
-              items.url
-            )}/${encodeURIComponent(`{"referer":"https://playgo1.cc"}`)}`,
-          }))
-          .sort((a, b) => {
-            if (a.html === "default") return -1;
-            if (b.html === "default") return 1;
-            return 0;
-          });
-        setSources(source);
+          const source = response.data.sources
+            .map((items) => ({
+              html: items.quality,
+              url: `https://proxy.vnxservers.com/${items.url}`,
+            }))
+            .sort((a, b) => {
+              if (a.html === "default") return -1;
+              if (b.html === "default") return 1;
+              return 0;
+            });
+          setSources(source);
 
-        const defUrl = `https://proxy.vnxservers.com/proxy/m3u8/${encodeURIComponent(
-          sumber.url
-        )}/${encodeURIComponent(`{"referer":"https://playgo1.cc"}`)}`;
-        setDefUrl(defUrl);
-        setIsloading(false);
+          const defUrl = `https://proxy.vnxservers.com/${sumber.url}`;
+          setDefUrl(defUrl);
+          setIsloading(false);
       } catch (error) {
         // console.log(error);
         setIsVpn(true);
