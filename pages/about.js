@@ -14,11 +14,11 @@ export default function About() {
         <link rel="icon" href="/c.svg" />
       </Head>
       <Layout>
-        <div className="mb-[6rem] flex min-h-screen w-screen flex-col justify-center gap-8 px-6 pt-nav lg:items-center lg:gap-14">
+        <div className="mb-[6rem] bg-[#121212] text-white flex min-h-screen w-screen flex-col justify-center gap-8 px-6 pt-nav lg:items-center lg:gap-14">
           <h1 className="place-items-start font-karla text-[3rem] font-bold">
             Hi !
           </h1>
-          <div className="flex flex-col gap-4 font-roboto text-xl text-[#e9e9e9] lg:mx-52 lg:gap-10 lg:text-center lg:text-2xl">
+          <div className="flex flex-col gap-3 font-roboto text-xl text-[#cdcdcd] lg:mx-52 lg:gap-10 lg:text-2xl">
             <div>
               <p className="inline-block font-extrabold text-[#ffffff]">
                 Welcome to our website!

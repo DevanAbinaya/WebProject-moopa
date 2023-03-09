@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function Footer() {
   return (
-    <section className="bg-[#11161D] text-white dark:bg-black md:flex md:h-[14rem] md:items-center md:justify-between">
+    <section className=" text-white bg-black md:flex md:h-[14rem] md:items-center md:justify-between">
       <div className="mx-auto flex w-[78%] flex-col space-y-10 py-10 md:flex-row md:items-center md:justify-between md:space-y-0 md:py-0">
         <div className="md:flex md:flex-col md:gap-y-[3.88rem]">
           <h1 className="font-outfit text-[2.56rem]">moopa</h1>
@@ -34,10 +34,10 @@ function Footer() {
                 <Link href="/staff">Staff</Link>
               </li>
               <li className="cursor-pointer hover:text-cyan-500">
-                <Link href="/recommendation">Recommendations</Link>
+                <Link href="/contact">Contact</Link>
               </li>
               <li className="cursor-pointer hover:text-cyan-500">
-                <Link href="/contact">Contact</Link>
+                <Link href="/dmca">DMCA</Link>
               </li>
             </ul>
             <ul className="flex flex-col gap-y-[0.7rem]">
