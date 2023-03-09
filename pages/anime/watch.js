@@ -28,7 +28,7 @@ export default function Test(props) {
     async function fetchData() {
       try {
         const response = await axios.get(
-            `https://api.consumet.org/meta/anilist/watch/${decodeURIComponent(
+            `https://api.moopa.my.id/meta/anilist/watch/${decodeURIComponent(
               id
             )}`
           );
