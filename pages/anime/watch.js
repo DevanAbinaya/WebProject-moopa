@@ -196,7 +196,7 @@ export async function getServerSideProps(context) {
   const judul = str.replace(/[\W_]+/g, " ");
   const epiInts = parseInt(epi);
   const results = await axios.get(
-    `https://api.eucrypt.my.id/meta/anilist/info/${idInt}`
+    `https://api.moopa.my.id/meta/anilist/info/${idInt}`
   );
   const data = results.data;
   const text = data.description;
