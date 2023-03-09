@@ -6,7 +6,15 @@ export default function DMCA() {
     <>
       <Head>
         <title>Moopa - DMCA</title>
-        <meta name="recommendation" content="DMCA" />
+        <meta name="DMCA" content="DMCA" />
+        <meta property="og:title" content="DMCA" />
+        <meta
+          property="og:description"
+          content="Moopa.my.id is committed to respecting the intellectual
+                  property rights of others and complying with the Digital
+                  Millennium Copyright Act (DMCA)."
+        />
+        <meta property="og:image" content="/c.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/c.svg" />
       </Head>
