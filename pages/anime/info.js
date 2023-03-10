@@ -4,6 +4,7 @@ import Link from "next/link";
 import Layout from "../../components/layout";
 import Head from "next/head";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { AnimatePresence, motion as m } from "framer-motion";
 import Content from "../../components/hero/content";
 import Image from "next/image";
 
@@ -14,13 +15,24 @@ export default function Himitsu({
   episodeList,
   episode1,
   judul,
+  subIndo,
+  epIndo,
 }) {
   const [isLoading, setIsloading] = useState(false);
   const [showText, setShowtext] = useState(false);
   const [title, setTitle] = useState(info.title.english || info.title.romaji);
   const [load, setLoad] = useState(true);
+  const [Lang, setLang] = useState(true);
   const episode = episodeList;
   const epi1 = episode1;
+
+  function handleEnLang() {
+    setLang(true);
+  }
+
+  function handleIdLang() {
+    setLang(false);
+  }
 
   // const { ref } = useParallax({ speed: 10 });
 
@@ -64,9 +76,13 @@ export default function Himitsu({
     return;
   }
 
-  // console.log(judul);
+  const episodeIndo = episode.slice(0, epIndo);
 
-  // console.log(info);
+  console.log({ NEXT: subIndo });
+
+  console.log(episodeIndo);
+
+  // console.log(Lang);
 
   function handleLoad() {
     setLoad(false);
@@ -83,13 +99,13 @@ export default function Himitsu({
       <Layout navTop="text-white bg-[#121212] md:pt-0 md:px-0 bg-slate bg-opacity-40">
         <div className="text static flex w-screen flex-col justify-center pt-nav pb-10">
           <div className="pointer-events-none absolute top-0 left-0">
-            <div className=" bg-gradient-to-t from-white to-transparent brightness-90 dark:bg-gradient-to-t dark:from-[#121212] dark:to-transparent">
+            <div className="brightness-90 bg-gradient-to-t from-[#121212] to-transparent">
               <img
                 // ref={ref}
                 src={info.cover || info.image}
-                className="blur- h-[400px] w-screen object-cover mix-blend-overlay dark:mix-blend-darken"
+                className="blur- h-[400px] w-screen object-cover mix-blend-darken"
               />
-              <div className="z-10 h-full bg-[#fffbfb] drop-shadow-2xl dark:bg-[#121212]" />
+              <div className="z-10 h-full drop-shadow-2xl bg-[#121212]" />
             </div>
           </div>
           {isLoading ? (
@@ -235,6 +251,12 @@ export default function Himitsu({
                         >
                           {info.status}
                         </div>
+                        <div
+                          className={`dynamic-text rounded-md px-2 font-karla font-bold`}
+                          style={color}
+                        >
+                          Sub | {subIndo === null ? "EN" : "EN/ID"}
+                        </div>
                       </div>
                     </div>
                     <div
@@ -347,41 +369,112 @@ export default function Himitsu({
                 </div>
 
                 <div className="z-20 flex flex-col gap-10 p-3 lg:p-0">
-                  <h1 className="text-3xl font-bold">Episodes</h1>
+                  <div className="flex items-center gap-10">
+                    <h1 className="text-3xl font-bold">Episodes</h1>
+                    <div className="flex items-center rounded-md">
+                      <button
+                        onClick={handleEnLang}
+                        className={
+                          Lang
+                            ? `w-16 p-2 rounded-l-md bg-[#212121]`
+                            : `w-16 p-2 rounded-l-md bg-[#171717] text-[#404040]`
+                        }
+                      >
+                        EN
+                      </button>
+                      <div className="w-[1px] bg-white h-4" />
+                      <button
+                        onClick={handleIdLang}
+                        className={
+                          subIndo === null
+                            ? `w-16 p-2 rounded-r-md bg-[#171717] text-[#404040] pointer-events-none`
+                            : Lang
+                            ? `w-16 p-2 rounded-r-md bg-[#171717] text-[#404040]`
+                            : `w-16 p-2 rounded-r-md bg-[#212121]`
+                        }
+                      >
+                        ID
+                      </button>
+                    </div>
+                  </div>
                   <div className="flex h-[640px] flex-col gap-5 overflow-y-hidden scrollbar-thin scrollbar-thumb-[#1b1c21] scrollbar-thumb-rounded-full hover:overflow-y-scroll hover:scrollbar-thumb-[#2e2f37]">
-                    {episode.map((episode, index) => {
-                      return (
-                        <div key={index} className="flex flex-col gap-3">
-                          <Link
-                            onClick={() =>
-                              handleStore({
-                                title:
-                                  info.title?.english ||
+                    {Lang ? (
+                      episode.map((episode, index) => {
+                        return (
+                          <div key={index} className="flex flex-col gap-3">
+                            <Link
+                              onClick={() =>
+                                handleStore({
+                                  title:
+                                    info.title?.english ||
+                                    info.title.romaji ||
+                                    info.title.native,
+                                  description: info.description,
+                                  image: info.image,
+                                  id: info.id,
+                                })
+                              }
+                              href={`/anime/watch?title=${encodeURIComponent(
+                                info.title?.english ||
                                   info.title.romaji ||
-                                  info.title.native,
-                                description: info.description,
-                                image: info.image,
-                                id: info.id,
-                              })
-                            }
-                            href={`/anime/watch?title=${encodeURIComponent(
-                              info.title?.english ||
-                                info.title.romaji ||
-                                info.title.native
-                            )}&id=${episode.id}&idInt=${info.id}&epi=${
-                              episode.number
-                            }&epiTitle=${encodeURIComponent(episode.title)}`}
-                            className="text-start text-xl"
-                          >
-                            <p>Episode {episode.number}</p>
-                            <p className="text-[14px] text-[#b1b1b1]">
-                              "{episode.title}"
-                            </p>
-                          </Link>
-                          <div className="h-[1px] bg-black dark:bg-white" />
+                                  info.title.native
+                              )}&id=${episode.id}&idInt=${info.id}&epi=${
+                                episode.number
+                              }&epiTitle=${encodeURIComponent(
+                                episode.title
+                              )}&sub=en`}
+                              className="text-start text-xl"
+                            >
+                              <p>Episode {episode.number}</p>
+                              <p className="text-[14px] text-[#b1b1b1] italic">
+                                "{episode.title}"
+                              </p>
+                            </Link>
+                            <div className="h-[1px] bg-white" />
+                          </div>
+                        );
+                      })
+                    ) : subIndo === null ? (
+                      <p>No Episodes Available</p>
+                    ) : (
+                      <>
+                        <div className="flex h-[640px] flex-col gap-5 overflow-y-hidden scrollbar-thin scrollbar-thumb-[#1b1c21] scrollbar-thumb-rounded-full hover:overflow-y-scroll hover:scrollbar-thumb-[#2e2f37]">
+                          {episodeIndo.map((episode, index) => {
+                            return (
+                              <div key={index} className="flex flex-col gap-3">
+                                <Link
+                                  onClick={() =>
+                                    handleStore({
+                                      title:
+                                        info.title?.english ||
+                                        info.title.romaji ||
+                                        info.title.native,
+                                      description: info.description,
+                                      image: info.image,
+                                      id: info.id,
+                                    })
+                                  }
+                                  href={`/anime/watch?title=${encodeURIComponent(
+                                    info.title?.romaji || info.title?.english
+                                  )}&id=${subIndo}&idInt=${info.id}&epi=${
+                                    episode.number
+                                  }&epiTitle=${encodeURIComponent(
+                                    episode.title
+                                  )}&te=${epIndo}&sub=id`}
+                                  className="text-start text-xl"
+                                >
+                                  <p>Episode {episode.number}</p>
+                                  <p className="text-[14px] text-[#b1b1b1] italic">
+                                    "{episode.title}" (Sub Indonesia)
+                                  </p>
+                                </Link>
+                                <div className="h-[1px] bg-white" />
+                              </div>
+                            );
+                          })}
                         </div>
-                      );
-                    })}
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -422,6 +515,63 @@ export const getServerSideProps = withPageAuthRequired({
       provider.fetchEpisodesListById(id),
     ]);
 
+    const ress = await fetch(
+      `https://ani-api-eight.vercel.app/kuramanime/search?query=${
+        info.title.romaji || info.title?.english
+      }`
+    );
+
+    const yes = await ress.json();
+
+    // Clannad Fixer
+    function convertToClannad(text) {
+      const regex = /CLANNAD/g;
+      return text.replace(regex, "Clannad");
+    }
+
+    const fixedTitle = convertToClannad(info.title.romaji);
+
+    if (!yes.error) {
+      const anime = yes.list.filter((item) => item.title === fixedTitle);
+
+      const slug = anime[0].slug;
+      const inf = await fetch(
+        `https://ani-api-eight.vercel.app/kuramanime/anime/${slug}`
+      );
+
+      const dataInf = await inf.json();
+      const epis = dataInf.episode;
+
+      const desc = info.description.slice(0, 150) + "...";
+      const color = { backgroundColor: `${info.color}` };
+      const epi1 = episodes.filter((epi) => epi.number === 1);
+      const title = info.title?.userPreferred || "No Title";
+
+      const MAX = 20;
+
+      const oriJ =
+        info.title?.english || info.title.romaji || info.title.native;
+      const judul = oriJ.length > MAX ? `${oriJ.substring(0, MAX)}...` : oriJ;
+      return {
+        props: {
+          info: {
+            ...info,
+            title: {
+              ...info.title,
+              userPreferred: title,
+            },
+          },
+          slicedDesc: desc,
+          color,
+          episodeList: episodes,
+          episode1: epi1,
+          judul,
+          subIndo: slug,
+          epIndo: epis,
+        },
+      };
+    }
+
     const desc = info.description.slice(0, 150) + "...";
     const color = { backgroundColor: `${info.color}` };
     const epi1 = episodes.filter((epi) => epi.number === 1);
@@ -446,6 +596,8 @@ export const getServerSideProps = withPageAuthRequired({
         episodeList: episodes,
         episode1: epi1,
         judul,
+        subIndo: null,
+        epIndo: null,
       },
     };
   },

@@ -6,6 +6,7 @@ import Navbar from "../../components/navbar";
 import Player from "../../lib/Artplayer";
 
 export default function Test(props) {
+  const sub = props.sub;
   const title = props.judul;
   const info = props.data;
 
@@ -24,11 +25,17 @@ export default function Test(props) {
   const [players, setPlayers] = useState(null);
   const [isVpn, setIsVpn] = useState(false);
 
+  const [Log, setLog] = useState(null);
+
+  // console.log({ ID: props.id });
+  // console.log({ url });
+
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-            `https://api.moopa.my.id/meta/anilist/watch/${decodeURIComponent(
+    if (sub === "en") {
+      async function fetchData() {
+        try {
+          const response = await axios.get(
+            `https://api.consumet.org/meta/anilist/watch/${decodeURIComponent(
               id
             )}`
           );
@@ -42,7 +49,7 @@ export default function Test(props) {
           const source = response.data.sources
             .map((items) => ({
               html: items.quality,
-              url: `https://proxy.vnxservers.com/${items.url}`,
+              url: `https://cors.haikei.xyz/${items.url}`,
             }))
             .sort((a, b) => {
               if (a.html === "default") return -1;
@@ -51,20 +58,42 @@ export default function Test(props) {
             });
           setSources(source);
 
-          const defUrl = `https://proxy.vnxservers.com/${sumber.url}`;
+          const defUrl = `https://cors.haikei.xyz/${sumber.url}`;
           setDefUrl(defUrl);
           setIsloading(false);
-      } catch (error) {
-        // console.log(error);
-        setIsVpn(true);
+        } catch (error) {
+          // console.log(error);
+          setIsVpn(true);
+        }
       }
+      fetchData();
+    } else if (sub === "id") {
+      async function fetchData() {
+        try {
+          const video = id.video;
+          const defaults = video[0];
+          // setLog(video);
+
+          const source = video.map((items) => ({
+            html: items.quality,
+            url: items.url,
+          }));
+          setSources(source);
+
+          const defUrl = `${defaults.url}`;
+          setDefUrl(defUrl);
+          setIsloading(false);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      fetchData();
     }
-    fetchData();
 
     setIsloading(false);
-  }, [id]);
+  }, [sub, id]);
 
-  // console.log(url);
+  // console.log(Log);
 
   useEffect(() => {
     setIsloading(true);
@@ -73,7 +102,12 @@ export default function Test(props) {
         <Player
           option={{
             url: `${url}`,
+            // url: `
+            //   https://maou.my.id/0:/KOI%20KISAMA/OTOTEN/2/MP4/Kuramanime-OTOTEN-02-720p-Doro.mp4`,
             quality: [sources],
+            autoplay: true,
+
+            type: sub === "id" ? "mp4" : "m3u8",
           }}
           style={{ width: "100%", height: "100%", margin: "0 auto 0" }}
           getInstance={(art) => console.info(art)}
@@ -81,9 +115,9 @@ export default function Test(props) {
       );
     }
     setIsloading(false);
-  }, [url, sources]);
+  }, [url, sources, sub]);
 
-  // console.log(sources);
+  // console.log(sub);
 
   return (
     <>
@@ -94,7 +128,7 @@ export default function Test(props) {
         <link rel="icon" href="/c.svg" />
       </Head>
       <Navbar className="md:bg-black" />
-      <div className="flex">
+      <div className="flex text-white">
         <div className="flex">
           {isLoading ? (
             <p>sabar ya bang...</p>
@@ -143,38 +177,77 @@ export default function Test(props) {
                   </button>
                 </div>
                 <div className="flex h-[640px] flex-col gap-5 overflow-scroll px-3 pt-5 overflow-x-hidden scrollbar-thin scrollbar-thumb-[#1b1c21] scrollbar-thumb-rounded-md hover:scrollbar-thumb-[#212329]">
-                  {info.episodes.map((episode, index) => {
-                    return (
-                      <div key={index} className="flex flex-col gap-3">
-                        <a
-                          href={
-                            episode.number === episodeNumber
-                              ? "#"
-                              : `/anime/watch?title=${info.title.english}&id=${
-                                  episode.id
-                                }&idInt=${info.id}&epi=${
-                                  episode.number
-                                }&epiTitle=${encodeURIComponent(episode.title)}`
-                          }
-                          // href="#"
-                          // onClick={() => setId(episode.id)}
-                          className="text-start text-xl"
-                        >
-                          {episode.number === episodeNumber ? (
-                            <div className="flex items-center gap-2">
-                              Episode {episode.number} -
-                              <p className="text-[14px] italic text-[#616161]">
-                                (now watching)
-                              </p>
-                            </div>
-                          ) : (
-                            <div>Episode {episode.number}</div>
-                          )}
-                        </a>
-                        <div className="h-[1px] bg-white" />
-                      </div>
-                    );
-                  })}
+                  {sub === "en"
+                    ? info.episodes.map((episode, index) => {
+                        return (
+                          <div key={index} className="flex flex-col gap-3">
+                            <a
+                              href={
+                                episode.number === episodeNumber
+                                  ? "#"
+                                  : `/anime/watch?title=${encodeURIComponent(
+                                      info.title?.english ||
+                                        info.title.romaji ||
+                                        info.title.native
+                                    )}&id=${episode.id}&idInt=${info.id}&epi=${
+                                      episode.number
+                                    }&epiTitle=${encodeURIComponent(
+                                      episode.title
+                                    )}&sub=en`
+                              }
+                              // href="#"
+                              // onClick={() => setId(episode.id)}
+                              className="text-start text-xl"
+                            >
+                              {episode.number === episodeNumber ? (
+                                <div className="flex items-center gap-2">
+                                  Episode {episode.number} -
+                                  <p className="text-[14px] italic text-[#616161]">
+                                    (now watching)
+                                  </p>
+                                </div>
+                              ) : (
+                                <div>Episode {episode.number}</div>
+                              )}
+                            </a>
+                            <div className="h-[1px] bg-white" />
+                          </div>
+                        );
+                      })
+                    : info.episodes.map((episode, index) => {
+                        return (
+                          <div key={index} className="flex flex-col gap-3">
+                            <a
+                              href={
+                                episode.number === episodeNumber
+                                  ? "#"
+                                  : `/anime/watch?title=${encodeURIComponent(
+                                      info.title?.romaji || info.title?.english
+                                    )}&id=${props.idEpi}&idInt=${info.id}&epi=${
+                                      episode.number
+                                    }&epiTitle=${encodeURIComponent(
+                                      episode.title
+                                    )}&te=${props.epIndo}&sub=id`
+                              }
+                              // href="#"
+                              // onClick={() => setId(episode.id)}
+                              className="text-start text-xl"
+                            >
+                              {episode.number === episodeNumber ? (
+                                <div className="flex items-center gap-2">
+                                  Episode {episode.number} -
+                                  <p className="text-[14px] italic text-[#616161]">
+                                    (now watching)
+                                  </p>
+                                </div>
+                              ) : (
+                                <div>Episode {episode.number}</div>
+                              )}
+                            </a>
+                            <div className="h-[1px] bg-white" />
+                          </div>
+                        );
+                      })}
                 </div>
               </div>
             </div>
@@ -186,7 +259,42 @@ export default function Test(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { title, id, idInt, epi, epiTitle } = context.query;
+  const { title, id, idInt, epi, epiTitle, sub, te } = context.query;
+
+  if (sub === "id") {
+    const query = decodeURIComponent(title);
+    const episode = decodeURIComponent(epiTitle);
+    const str = weirdToNormalChars(query);
+    const judul = str.replace(/[\W_]+/g, " ");
+    const epiInts = parseInt(epi);
+    const results = await axios.get(
+      `https://api.moopa.my.id/meta/anilist/info/${idInt}`
+    );
+    const data = results.data;
+    const text = data.description;
+
+    const potonganDesc = text.slice(0, 150) + "...";
+    const displayTitle = title.slice(0, 25) + "...";
+    const res = await fetch(
+      `https://ani-api-eight.vercel.app/kuramanime/anime/${id}/${epi}`
+    );
+    const subIndo = await res.json();
+    return {
+      props: {
+        data,
+        judul,
+        epiInts,
+        episode,
+        id: subIndo,
+        idEpi: id,
+        potonganDesc,
+        displayTitle,
+        text,
+        epIndo: te,
+        sub: sub,
+      },
+    };
+  }
 
   const query = decodeURIComponent(title);
   const episode = decodeURIComponent(epiTitle);
@@ -212,6 +320,7 @@ export async function getServerSideProps(context) {
       potonganDesc,
       displayTitle,
       text,
+      sub: sub,
     },
   };
 }

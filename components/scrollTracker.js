@@ -104,7 +104,7 @@ const ScrollTracker = () => {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0 }}
-            className="fixed lg:right-10 lg:bottom-10 cursor-pointer bottom-9 right-20 rounded-md z-40 bg-[#2d303a] p-2 lg:p-3"
+            className="fixed lg:right-10 lg:bottom-10 cursor-pointer text-white bottom-9 right-20 rounded-md z-40 bg-[#121212] hover:bg-[#2d303a] p-2 lg:p-3"
             onClick={handleScrollTop}
           >
             <svg
