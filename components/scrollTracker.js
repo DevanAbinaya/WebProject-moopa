@@ -48,17 +48,17 @@ const ScrollTracker = () => {
       localStorage.setItem("scrollPercentage", percentage);
     }
 
-    function handleLoad() {
+    function handlePageshow() {
       const currentChapter = localStorage.getItem("currentChapterId");
       const lastScrollPercentage =
         JSON.parse(localStorage.getItem("watchedManga"))
           ?.filter((data) => data.id === currentChapter)
           .map((data) => data.percentage) || 0;
-      // console.log(yes);
+
       if (lastScrollPercentage >= 95) {
         return;
       }
-      // console.log(lastScrollPercentage);
+
       const scrollTop =
         (lastScrollPercentage / 100) *
         (document.documentElement.scrollHeight -
@@ -67,12 +67,12 @@ const ScrollTracker = () => {
     }
 
     window.addEventListener("scroll", handleScroll);
-    window.addEventListener("load", handleLoad);
+    window.addEventListener("pageshow", handlePageshow);
     window.addEventListener("beforeunload", handleUnload);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("load", handleLoad);
+      window.addEventListener("pageshow", handlePageshow);
       window.removeEventListener("beforeunload", handleUnload);
     };
   }, []);
