@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { AnimatePresence, motion as m } from "framer-motion";
 import { META } from "@consumet/extensions";
+
 import Link from "next/link";
 import Layout from "../../components/layout";
 import Head from "next/head";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { AnimatePresence, motion as m } from "framer-motion";
+
+import { closestMatch } from "closest-match";
 import Content from "../../components/hero/content";
 import Image from "next/image";
 
@@ -76,11 +79,18 @@ export default function Himitsu({
     return;
   }
 
-  const episodeIndo = episode.slice(0, epIndo);
+  let episodeIndo = null;
+  if (epIndo < 17) {
+    episodeIndo = episode.slice(0, epIndo);
+  } else {
+    episodeIndo = episode;
+  }
 
-  console.log({ NEXT: subIndo });
+  // console.log({ NEXT: subIndo });
 
-  console.log(episodeIndo);
+  // console.log(episodeIndo);
+
+  // console.log(subIndo);
 
   // console.log(Lang);
 
@@ -525,16 +535,20 @@ export const getServerSideProps = withPageAuthRequired({
 
     // Clannad Fixer
     function convertToClannad(text) {
-      const regex = /CLANNAD/g;
+      const regex = /(?<!\w)CLANNAD(?!\w)/g;
       return text.replace(regex, "Clannad");
     }
 
     const fixedTitle = convertToClannad(info.title.romaji);
 
     if (!yes.error) {
-      const anime = yes.list.filter((item) => item.title === fixedTitle);
+      // let anime = yes.list.filter((item) => item.title.includes(fixedTitle));
+      let list = yes.list.map((item) => item.title);
+      const match = closestMatch(fixedTitle, list);
 
-      const slug = anime[0].slug;
+      const anime = yes.list.filter((item) => item.title === match);
+
+      const slug = anime[0]?.slug;
       const inf = await fetch(
         `https://ani-api-eight.vercel.app/kuramanime/anime/${slug}`
       );
