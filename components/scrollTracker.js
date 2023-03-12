@@ -35,6 +35,11 @@ const ScrollTracker = () => {
     localStorage.setItem("watchedManga", JSON.stringify(scrollData));
   }
 
+  function handlePageHide() {
+    localStorage.setItem("scrollPercentage", scrollPercentage);
+    handleUnload;
+  }
+
   // console.log(data?.id);
 
   useEffect(() => {
@@ -69,11 +74,13 @@ const ScrollTracker = () => {
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("pageshow", handlePageshow);
     window.addEventListener("beforeunload", handleUnload);
+    window.addEventListener("pagehide", handlePageHide);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.addEventListener("pageshow", handlePageshow);
+      window.removeEventListener("pageshow", handlePageshow);
       window.removeEventListener("beforeunload", handleUnload);
+      window.removeEventListener("pagehide", handlePageHide);
     };
   }, []);
 
