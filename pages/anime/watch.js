@@ -35,7 +35,7 @@ export default function Test(props) {
       async function fetchData() {
         try {
           const response = await axios.get(
-            `https://api.consumet.org/meta/anilist/watch/${decodeURIComponent(
+            `https://api.moopa.my.id/meta/anilist/watch/${decodeURIComponent(
               id
             )}`
           );
@@ -49,7 +49,7 @@ export default function Test(props) {
           const source = response.data.sources
             .map((items) => ({
               html: items.quality,
-              url: `https://cors.haikei.xyz/${items.url}`,
+              url: `https://cors-anywhere-production-4cf2.up.railway.app/${items.url}`,
             }))
             .sort((a, b) => {
               if (a.html === "default") return -1;
@@ -58,7 +58,7 @@ export default function Test(props) {
             });
           setSources(source);
 
-          const defUrl = `https://cors.haikei.xyz/${sumber.url}`;
+          const defUrl = `https://cors-anywhere-production-4cf2.up.railway.app/${sumber.url}`;
           setDefUrl(defUrl);
           setIsloading(false);
         } catch (error) {
@@ -103,7 +103,7 @@ export default function Test(props) {
           option={{
             url: `${url}`,
             // url: `
-            //   https://maou.my.id/0:/KOI%20KISAMA/OTOTEN/2/MP4/Kuramanime-OTOTEN-02-720p-Doro.mp4`,
+            //   https://liscia.my.id/0:/KOI%20DAGA%20KOTOWARU/SKRPET/23/MP4/Kuramanime-SKRPET_BD-23-720p-Jal.mp4`,
             quality: [sources],
             autoplay: true,
 
