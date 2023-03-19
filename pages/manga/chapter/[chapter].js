@@ -286,7 +286,7 @@ export default function Test({ title, id, aniId, data, provider }) {
       <Navbar />
       <ScrollTracker data={currentChapter} id={aniId} />
 
-      <div className="flex h-full min-h-screen w-screen flex-col items-center">
+      <div className="flex h-full min-h-screen w-screen flex-col items-center text-white">
         <div className="lg:pt-nav pt-5 text-3xl font-semibold">
           {isLoading ? (
             <div />

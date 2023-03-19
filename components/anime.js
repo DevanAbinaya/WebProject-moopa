@@ -69,7 +69,7 @@ const Anime = ({ searchQuery, selectedType = "ANIME" }) => {
               if (description.length > maxLength) {
                 return (
                   description.substring(0, maxLength) +
-                  `<a href="${aniLink}" class="read-more-btn text-gray-800 dark:text-gray-300 font-bold">...Read More</a>`
+                  `<a href="${aniLink}" class="read-more-btn text-gray-300 font-bold">...Read More</a>`
                 );
               } else {
                 return description;
@@ -91,7 +91,7 @@ const Anime = ({ searchQuery, selectedType = "ANIME" }) => {
             return (
               <div
                 key={anime.id}
-                className="mx-auto h-auto w-full max-w-md items-center overflow-hidden rounded-xl bg-white shadow-lg transition-colors duration-500  dark:bg-[#212121] md:max-w-[100rem]"
+                className="mx-auto h-auto w-full max-w-md items-center overflow-hidden rounded-xl shadow-lg transition-colors duration-500  bg-[#212121] md:max-w-[100rem]"
               >
                 <div className="items-center md:flex ">
                   {/* PC / Tablet */}
@@ -155,7 +155,7 @@ const Anime = ({ searchQuery, selectedType = "ANIME" }) => {
             return (
               <div
                 key={anime.id}
-                className="mx-auto h-auto w-full max-w-md items-center overflow-hidden rounded-xl bg-white shadow-lg transition-colors duration-500  dark:bg-[#212121] md:max-w-[100rem]"
+                className="mx-auto h-auto w-full max-w-md items-center overflow-hidden rounded-xl shadow-lg transition-colors duration-500  bg-[#212121] md:max-w-[100rem]"
               >
                 <div className="items-center md:flex ">
                   {/* PC / Tablet */}

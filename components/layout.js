@@ -7,33 +7,48 @@ function Layout(props) {
   const [isScrollingDown, setIsScrollingDown] = useState(false);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const bodyHeight = document.body.offsetHeight;
+      const windowHeight = window.innerHeight;
+      const scrollPercent = (scrollY / (bodyHeight - windowHeight)) * 100;
 
-    window.addEventListener("scroll", () => {
-      if (lastScrollY < window.scrollY) {
-        setIsScrollingDown(true);
-        setIsAtTop(false);
-      } else if (window.scrollY === 0) {
-        setIsScrollingDown(false);
+      if (scrollPercent <= 20) {
         setIsAtTop(true);
+        setIsScrollingDown(false);
+      } else if (scrollY > lastScrollY) {
+        setIsAtTop(false);
+        setIsScrollingDown(true);
       } else {
+        setIsAtTop(false);
         setIsScrollingDown(false);
       }
-      lastScrollY = window.scrollY;
-    });
+
+      lastScrollY = scrollY;
+    };
+
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
     <>
-      <main className={`flex h-auto flex-col ${props.className}`}>
+      <main
+        className={`flex h-auto bg-[#121212] text-white flex-col ${props.className}`}
+      >
         {/* PC/Tablet */}
         <Navbar
           className={`absolute z-50 hidden w-full duration-500 md:fixed md:top-0 md:block md:transition-all ${
             isAtTop
-              ? `px-2 pt-2 transition-all duration-500 ${props.navTop}`
+              ? `px-2 pt-2 transition-all duration-1000 ${props.navTop}`
               : isScrollingDown
-              ? "md:h-16 md:translate-y-[-100%] md:bg-white md:shadow-sm md:dark:bg-black "
-              : "md:bg-white md:px-0 md:pt-0 md:shadow-sm md:dark:bg-black"
+              ? "md:h-16 md:translate-y-[-100%] md:shadow-sm md:bg-black "
+              : "md:h-16 md:translate-y-0 md:shadow-sm md:bg-black"
           }`}
         />
 
