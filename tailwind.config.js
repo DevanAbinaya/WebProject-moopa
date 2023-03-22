@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
 const scrollbarPlugin = require("tailwind-scrollbar");
 
 module.exports = {
@@ -8,6 +9,10 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
+    screens: {
+      xs: "475px",
+      ...defaultTheme.screens,
+    },
     extend: {
       animation: {
         text: "text 5s ease infinite",
