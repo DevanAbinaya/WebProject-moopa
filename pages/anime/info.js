@@ -521,7 +521,10 @@ export const getServerSideProps = withPageAuthRequired({
     const provider = new META.Anilist();
 
     const [info, episodes] = await Promise.all([
-      provider.fetchAnilistInfoById(id),
+      // provider.fetchAnilistInfoById(id),
+      fetch(`https://api.moopa.my.id/meta/anilist/info/${id}`).then((res) =>
+        res.json()
+      ),
       provider.fetchEpisodesListById(id),
     ]);
 
