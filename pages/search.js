@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion as m } from "framer-motion";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { useRouter } from "next/router";
 import "react-loading-skeleton/dist/skeleton.css";
 import Link from "next/link";
 import Navbar from "../components/navbar";
@@ -57,21 +58,21 @@ const sort = [
   "ID_DESC",
 ];
 
-export default function Card({ querys }) {
+export default function Card() {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [selectedType, setSelectedType] = useState(type[0]);
   const [selectedSort, setSelectedSort] = useState(null);
 
+  const router = useRouter();
+  const { hasil } = router.query;
+
   const [isVisible, setIsVisible] = useState(false);
 
-  const [query, setQuery] = useState(null);
+  const [query, setQuery] = useState(hasil || null);
   const inputRef = useRef(null);
 
-  // console.log(data);
-
-  // console.log(querys);
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -112,7 +113,6 @@ export default function Card({ querys }) {
     setIsVisible(!isVisible);
   }
 
-  // console.log(data);
   return (
     <>
       <Head>
@@ -374,9 +374,8 @@ export default function Card({ querys }) {
                       </h1>
                     </Link>
                     <h2 className="font-outfit lg:text-[15px] text-[11px] font-light pt-2 text-[#8B8B8B]">
-                      {anime.type || <p>Null</p>} &#183;{" "}
-                      {anime.status || <p>Null</p>} &#183;{" "}
-                      {anime.totalEpisodes || 0} Episodes
+                      {anime.type || <p>-</p>} &#183; {anime.status || <p>-</p>}{" "}
+                      &#183; {anime.totalEpisodes || 0} Episodes
                     </h2>
                   </m.div>
                 );
