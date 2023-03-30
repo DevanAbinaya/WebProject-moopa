@@ -49,7 +49,7 @@ export default function Test(props) {
           const source = response.data.sources
             .map((items) => ({
               html: items.quality,
-              url: `https://moopa.my.id/api/proxy?url=${items.url}`,
+              url: `https://proxy.moopa.my.id/cors?url=${items.url}`,
             }))
             .sort((a, b) => {
               if (a.html === "default") return -1;
@@ -58,7 +58,7 @@ export default function Test(props) {
             });
           setSources(source);
 
-          const defUrl = `https://moopa.my.id/api/proxy?url=${sumber.url}`;
+          const defUrl = `https://proxy.moopa.my.id/cors?url=${sumber.url}`;
           setDefUrl(defUrl);
           setIsloading(false);
         } catch (error) {
