@@ -436,9 +436,11 @@ export default function Himitsu({
                               className="text-start text-xl"
                             >
                               <p>Episode {episode.number}</p>
-                              <p className="text-[14px] text-[#b1b1b1] italic">
-                                "{episode.title}"
-                              </p>
+                              {episode.title && (
+                                <p className="text-[14px] text-[#b1b1b1] italic">
+                                  "{episode.title}"
+                                </p>
+                              )}
                             </Link>
                             <div className="h-[1px] bg-white" />
                           </div>
@@ -528,6 +530,25 @@ export const getServerSideProps = withPageAuthRequired({
       provider.fetchEpisodesListById(id),
     ]);
 
+    let episodeList = episodes;
+    if (episodes.length === 0) {
+      const res = await fetch(
+        `https://api.moopa.my.id/anime/gogoanime/${
+          info.title.romaji || info.title.english
+        }`
+      );
+      const data = await res.json();
+      const match = closestMatch(
+        info.title.romaji,
+        data.results.map((item) => item.title)
+      );
+      const anime = data.results.filter((item) => item.title === match);
+      const infos = await fetch(
+        `https://api.moopa.my.id/anime/gogoanime/info/${anime[0].id}`
+      ).then((res) => res.json());
+      episodeList = infos.episodes;
+    }
+
     const ress = await fetch(
       `https://ani-api-eight.vercel.app/kuramanime/search?query=${
         info.title.romaji || info.title?.english
@@ -610,7 +631,7 @@ export const getServerSideProps = withPageAuthRequired({
         },
         slicedDesc: desc,
         color,
-        episodeList: episodes,
+        episodeList,
         episode1: epi1,
         judul,
         subIndo: null,
