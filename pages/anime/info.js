@@ -523,7 +523,6 @@ export const getServerSideProps = withPageAuthRequired({
     const provider = new META.Anilist();
 
     const [info, episodes] = await Promise.all([
-      // provider.fetchAnilistInfoById(id),
       fetch(`https://api.moopa.my.id/meta/anilist/info/${id}`).then((res) =>
         res.json()
       ),
@@ -565,6 +564,9 @@ export const getServerSideProps = withPageAuthRequired({
 
     const fixedTitle = convertToClannad(info.title.romaji);
 
+    let epis = null;
+    let slug = null;
+
     if (!yes.error) {
       // let anime = yes.list.filter((item) => item.title.includes(fixedTitle));
       let list = yes.list.map((item) => item.title);
@@ -572,42 +574,13 @@ export const getServerSideProps = withPageAuthRequired({
 
       const anime = yes.list.filter((item) => item.title === match);
 
-      const slug = anime[0]?.slug;
+      slug = anime[0]?.slug;
       const inf = await fetch(
         `https://ani-api-eight.vercel.app/kuramanime/anime/${slug}`
       );
 
       const dataInf = await inf.json();
-      const epis = dataInf.episode;
-
-      const desc = info.description.slice(0, 150) + "...";
-      const color = { backgroundColor: `${info.color}` };
-      const epi1 = episodes.filter((epi) => epi.number === 1);
-      const title = info.title?.userPreferred || "No Title";
-
-      const MAX = 20;
-
-      const oriJ =
-        info.title?.english || info.title.romaji || info.title.native;
-      const judul = oriJ.length > MAX ? `${oriJ.substring(0, MAX)}...` : oriJ;
-      return {
-        props: {
-          info: {
-            ...info,
-            title: {
-              ...info.title,
-              userPreferred: title,
-            },
-          },
-          slicedDesc: desc,
-          color,
-          episodeList: episodes,
-          episode1: epi1,
-          judul,
-          subIndo: slug,
-          epIndo: epis,
-        },
-      };
+      epis = dataInf.episode;
     }
 
     const desc = info.description.slice(0, 150) + "...";
@@ -634,8 +607,8 @@ export const getServerSideProps = withPageAuthRequired({
         episodeList,
         episode1: epi1,
         judul,
-        subIndo: null,
-        epIndo: null,
+        subIndo: slug,
+        epIndo: epis,
       },
     };
   },
