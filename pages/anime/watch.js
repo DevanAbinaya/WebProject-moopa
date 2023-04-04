@@ -113,7 +113,17 @@ export default function Test(props) {
           style={{ width: "100%", height: "100%", margin: "0 auto 0" }}
           getInstance={(art) => {
             art.on("ready", () => {
-              art.currentTime = seek;
+              const seekTime = seek;
+              const duration = art.duration;
+              const percentage = seekTime / duration;
+
+              if (percentage >= 0.9) {
+                // use >= instead of >
+                art.currentTime = 0;
+                console.log("Video restarted from the beginning");
+              } else {
+                art.currentTime = seek;
+              }
             });
             art.on("destroy", () => {
               const lastPlayed = {
@@ -159,7 +169,7 @@ export default function Test(props) {
   return (
     <>
       <Head>
-        <title>{props.episode || info.title.romaji}</title>
+        <title>{props.episode || info?.title.romaji}</title>
         <meta name="watching" content="Watching Anime" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/c.svg" />

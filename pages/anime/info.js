@@ -440,7 +440,9 @@ export default function Himitsu({
                               )}&id=${episode.id}&idInt=${info.id}&epi=${
                                 episode.number
                               }&epiTitle=${encodeURIComponent(
-                                episode.title
+                                episode.title ||
+                                  info.title.romaji ||
+                                  info.title.english
                               )}&sub=en${item ? `&seek=${item.time}` : ``}`}
                               className="text-start text-xl"
                             >
