@@ -444,11 +444,17 @@ export default function Himitsu({
                                   info.title.romaji ||
                                   info.title.english
                               )}&sub=en${item ? `&seek=${item.time}` : ``}`}
-                              className="text-start text-xl"
+                              className={`text-start text-xl ${
+                                item ? "text-[#414141]" : "text-white"
+                              }`}
                             >
                               <p>Episode {episode.number}</p>
                               {episode.title && (
-                                <p className="text-[14px] text-[#b1b1b1] italic">
+                                <p
+                                  className={`text-[14px] ${
+                                    item ? "text-[#414141]" : "text-[#b1b1b1]"
+                                  } italic`}
+                                >
                                   "{episode.title}"
                                 </p>
                               )}
