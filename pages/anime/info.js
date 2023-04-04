@@ -26,6 +26,7 @@ export default function Himitsu({
   const [title, setTitle] = useState(info.title.english || info.title.romaji);
   const [load, setLoad] = useState(true);
   const [Lang, setLang] = useState(true);
+  const [lastPlayed, setLastPlayed] = useState(null);
   const episode = episodeList;
   const epi1 = episode1;
 
@@ -40,6 +41,10 @@ export default function Himitsu({
   // const { ref } = useParallax({ speed: 10 });
 
   useEffect(() => {
+    const playedStr = JSON.parse(localStorage.getItem("lastPlayed"));
+    setLastPlayed(
+      playedStr?.filter((item) => item.title === info.title.romaji)[0]?.data
+    );
     function getBrightness(color) {
       const rgb = color.match(/\d+/g);
       return (299 * rgb[0] + 587 * rgb[1] + 114 * rgb[2]) / 1000;
@@ -408,8 +413,12 @@ export default function Himitsu({
                     </div>
                   </div>
                   <div className="flex h-[640px] flex-col gap-5 overflow-y-hidden scrollbar-thin scrollbar-thumb-[#1b1c21] scrollbar-thumb-rounded-full hover:overflow-y-scroll hover:scrollbar-thumb-[#2e2f37]">
-                    {Lang ? (
+                    {episode && Lang ? (
                       episode.map((episode, index) => {
+                        const item = lastPlayed?.find(
+                          (item) => item.id === episode.id
+                        );
+                        // console.log(item);
                         return (
                           <div key={index} className="flex flex-col gap-3">
                             <Link
@@ -432,7 +441,7 @@ export default function Himitsu({
                                 episode.number
                               }&epiTitle=${encodeURIComponent(
                                 episode.title
-                              )}&sub=en`}
+                              )}&sub=en${item ? `&seek=${item.time}` : ``}`}
                               className="text-start text-xl"
                             >
                               <p>Episode {episode.number}</p>

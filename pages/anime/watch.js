@@ -9,6 +9,7 @@ export default function Test(props) {
   const sub = props.sub;
   const title = props.judul;
   const info = props.data;
+  const seek = props.sek;
 
   const potonganDesc = props.potonganDesc;
   const text = props.text;
@@ -110,7 +111,43 @@ export default function Test(props) {
             type: sub === "id" ? "mp4" : "m3u8",
           }}
           style={{ width: "100%", height: "100%", margin: "0 auto 0" }}
-          getInstance={(art) => console.info(art)}
+          getInstance={(art) => {
+            art.on("ready", () => {
+              art.currentTime = seek;
+            });
+            art.on("destroy", () => {
+              const lastPlayed = {
+                id: id,
+                time: art.currentTime,
+              };
+
+              const title = info.title.romaji || info.title.english;
+              const prevDataStr = localStorage.getItem("lastPlayed") || "[]";
+              const prevData = JSON.parse(prevDataStr);
+              let titleExists = false;
+
+              prevData.forEach((item) => {
+                if (item.title === title) {
+                  const foundIndex = item.data.findIndex((e) => e.id === id);
+                  if (foundIndex !== -1) {
+                    item.data[foundIndex] = lastPlayed;
+                  } else {
+                    item.data.push(lastPlayed);
+                  }
+                  titleExists = true;
+                }
+              });
+
+              if (!titleExists) {
+                prevData.push({
+                  title: title,
+                  data: [lastPlayed],
+                });
+              }
+
+              localStorage.setItem("lastPlayed", JSON.stringify(prevData));
+            });
+          }}
         />
       );
     }
@@ -122,7 +159,7 @@ export default function Test(props) {
   return (
     <>
       <Head>
-        <title>{props.episode}</title>
+        <title>{props.episode || info.title.romaji}</title>
         <meta name="watching" content="Watching Anime" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/c.svg" />
@@ -259,7 +296,9 @@ export default function Test(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { title, id, idInt, epi, epiTitle, sub, te } = context.query;
+  const { title, id, idInt, epi, epiTitle, sub, te, seek } = context.query;
+
+  const sek = seek || 0;
 
   if (sub === "id") {
     const query = decodeURIComponent(title);
@@ -292,6 +331,7 @@ export async function getServerSideProps(context) {
         text,
         epIndo: te,
         sub: sub,
+        sek,
       },
     };
   }
@@ -321,6 +361,7 @@ export async function getServerSideProps(context) {
       displayTitle,
       text,
       sub: sub,
+      sek,
     },
   };
 }
