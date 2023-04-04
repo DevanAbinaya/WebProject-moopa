@@ -107,7 +107,7 @@ export default function Test(props) {
             //   https://liscia.my.id/0:/KOI%20DAGA%20KOTOWARU/SKRPET/23/MP4/Kuramanime-SKRPET_BD-23-720p-Jal.mp4`,
             quality: [sources],
             autoplay: true,
-
+            screenshot: true,
             type: sub === "id" ? "mp4" : "m3u8",
           }}
           style={{ width: "100%", height: "100%", margin: "0 auto 0" }}
