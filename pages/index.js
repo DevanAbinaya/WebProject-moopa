@@ -10,7 +10,7 @@ import Content from "../components/hero/content";
 import { useRouter } from "next/router";
 import puppeteer from "puppeteer";
 
-export default function Home({ detail, populars, topDesc, screenshot }) {
+export default function Home({ detail, populars, topDesc }) {
   const [isVisible, setIsVisible] = useState(false);
   const [recently, setRecently] = useState(null);
   const popular = populars.data;
@@ -72,7 +72,10 @@ export default function Home({ detail, populars, topDesc, screenshot }) {
           name="twitter:description"
           content="Moopa - Your ultimate ad-free anime and manga streaming platform. Stream and read a vast collection of anime series and manga titles for free, organized by genre and popularity. No annoying ads, just uninterrupted viewing pleasure. Accessible on multiple devices, no subscription required. Join millions of anime and manga fans worldwide and discover your new favorites on Moopa today."
         />
-        <meta name="twitter:image" content={screenshot} />
+        <meta
+          name="twitter:image"
+          content="https://cdn.discordapp.com/attachments/1084446049986420786/1093300833422168094/image.png"
+        />
         <link rel="icon" href="/c.svg" />
       </Head>
       <div className="z-50">
@@ -391,19 +394,12 @@ export async function getServerSideProps({ req, res }) {
   const trends = newTrend.data[0];
   const topDesc = trends.description.slice(0, 350) + "...";
 
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto("https://moopa.my.id/");
-  await page.setViewport({ width: 1920, height: 1080 });
-  const screenshot = await page.screenshot({ type: "png" });
-
   return {
     props: {
       topDesc: topDesc,
       genre: genreDetail.props,
       detail: trendingDetail.props,
       populars: popularDetail.props,
-      screenshot: `data:image/png;base64,${screenshot.toString("base64")}`,
     },
   };
 }
