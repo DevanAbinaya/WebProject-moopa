@@ -8,7 +8,6 @@ import Footer from "../components/footer";
 import Image from "next/image";
 import Content from "../components/hero/content";
 import { useRouter } from "next/router";
-import puppeteer from "puppeteer";
 
 export default function Home({ detail, populars, topDesc }) {
   const [isVisible, setIsVisible] = useState(false);
