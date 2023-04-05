@@ -8,8 +8,9 @@ import Footer from "../components/footer";
 import Image from "next/image";
 import Content from "../components/hero/content";
 import { useRouter } from "next/router";
+import puppeteer from "puppeteer";
 
-export default function Home({ detail, populars, topDesc }) {
+export default function Home({ detail, populars, topDesc, screenshot }) {
   const [isVisible, setIsVisible] = useState(false);
   const [recently, setRecently] = useState(null);
   const popular = populars.data;
@@ -65,7 +66,13 @@ export default function Home({ detail, populars, topDesc }) {
       <Head>
         <title>Moopa</title>
         <meta charSet="UTF-8"></meta>
-        <meta name="description" content="Are you sure about that?" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Moopa" />
+        <meta
+          name="twitter:description"
+          content="Moopa - Your ultimate ad-free anime and manga streaming platform. Stream and read a vast collection of anime series and manga titles for free, organized by genre and popularity. No annoying ads, just uninterrupted viewing pleasure. Accessible on multiple devices, no subscription required. Join millions of anime and manga fans worldwide and discover your new favorites on Moopa today."
+        />
+        <meta name="twitter:image" content={screenshot} />
         <link rel="icon" href="/c.svg" />
       </Head>
       <div className="z-50">
@@ -250,18 +257,16 @@ export default function Home({ detail, populars, topDesc }) {
         <div className="mt-10 hidden justify-center lg:flex">
           <div className="relative grid grid-rows-2 items-center md:flex md:h-[760px] md:w-[80%] md:justify-between">
             <div className="row-start-2 flex h-full flex-col gap-7 md:w-[55%] md:justify-center">
-              <h1 className="w-[85%] font-outfit font-extrabold md:text-[45px]">
+              <h1 className="w-[85%] font-outfit font-extrabold md:text-[45px] line-clamp-2">
                 {data.title.english}
               </h1>
-              <div className="font-roboto font-light md:text-[24px]">
-                {ReactHtmlParser(topDesc)}
+              <div className="font-roboto font-light md:text-[24px] line-clamp-5">
+                {ReactHtmlParser(data.description)}
               </div>
 
               <div className="md:pt-5">
                 <Link
-                  href={`/anime/info?title=${
-                    data.title.english || data.title.romaji
-                  }&id=${data.id}`}
+                  href={`/anime/${data.id}`}
                   legacyBehavior
                   className="flex"
                 >
@@ -321,7 +326,7 @@ export default function Home({ detail, populars, topDesc }) {
 
                       return (
                         <Link
-                          href={`/anime/info?title=${url}&id=${anime.id}`}
+                          href={`/anime/${anime.id}`}
                           key={index}
                           className="shrink-0 "
                         >
@@ -386,12 +391,19 @@ export async function getServerSideProps({ req, res }) {
   const trends = newTrend.data[0];
   const topDesc = trends.description.slice(0, 350) + "...";
 
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto("https://moopa.my.id/");
+  await page.setViewport({ width: 1920, height: 1080 });
+  const screenshot = await page.screenshot({ type: "png" });
+
   return {
     props: {
       topDesc: topDesc,
       genre: genreDetail.props,
       detail: trendingDetail.props,
       populars: popularDetail.props,
+      screenshot: `data:image/png;base64,${screenshot.toString("base64")}`,
     },
   };
 }
