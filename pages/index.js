@@ -66,10 +66,13 @@ export default function Home({ detail, populars, topDesc }) {
         <title>Moopa</title>
         <meta charSet="UTF-8"></meta>
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Moopa" />
+        <meta
+          name="twitter:title"
+          content="Moopa - Free Anime and Manga Streaming"
+        />
         <meta
           name="twitter:description"
-          content="Moopa - Your ultimate ad-free anime and manga streaming platform. Stream and read a vast collection of anime series and manga titles for free, organized by genre and popularity. No annoying ads, just uninterrupted viewing pleasure. Accessible on multiple devices, no subscription required. Join millions of anime and manga fans worldwide and discover your new favorites on Moopa today."
+          content="Discover your new favorite anime or manga title! Moopa offers a vast library of high-quality content, accessible on multiple devices and without any interruptions. Start using Moopa today!"
         />
         <meta
           name="twitter:image"
