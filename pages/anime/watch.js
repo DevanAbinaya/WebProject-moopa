@@ -45,12 +45,16 @@ export default function Test(props) {
             return;
           }
           const dataEpi = response.data.sources;
+          const referer = response.data.headers.Referer;
+          setLog(referer);
           let sumber = dataEpi.find((source) => source.quality === "default");
 
           const source = response.data.sources
             .map((items) => ({
               html: items.quality,
-              url: `https://proxy.moopa.my.id/cors?url=${items.url}`,
+              url: `https://m3u8proxy.moopa.workers.dev/?url=${encodeURIComponent(
+                items.url
+              )}&referer=${encodeURIComponent(referer)}`,
             }))
             .sort((a, b) => {
               if (a.html === "default") return -1;
@@ -59,7 +63,9 @@ export default function Test(props) {
             });
           setSources(source);
 
-          const defUrl = `https://proxy.moopa.my.id/cors?url=${sumber.url}`;
+          const defUrl = `https://m3u8proxy.moopa.workers.dev/?url=${encodeURIComponent(
+            sumber.url
+          )}&referer=${encodeURIComponent(referer)}`;
           setDefUrl(defUrl);
           setIsloading(false);
         } catch (error) {
