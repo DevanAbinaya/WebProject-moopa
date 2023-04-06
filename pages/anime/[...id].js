@@ -363,7 +363,7 @@ export default function Himitsu({
                                   <div className="text-action font-outfit font-bold">
                                     {relation.relationType}
                                   </div>
-                                  <div className="font-roboto font-thin italic line-clamp-2">
+                                  <div className="font-outfit font-thin italic line-clamp-2">
                                     {relation.title.romaji}
                                   </div>
                                   <div className={``}>{relation.type}</div>
