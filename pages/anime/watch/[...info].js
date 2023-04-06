@@ -1,6 +1,6 @@
 import Layout from "../../../components/layout";
-import { data } from "../../../lib/testData";
-import { aniData } from "../../../lib/infoData";
+// import { data } from "../../../lib/testData";
+// import { aniData } from "../../../lib/infoData";
 import Image from "next/image";
 import VideoPlayer from "../../../components/videoPlayer";
 import Link from "next/link";
