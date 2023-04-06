@@ -49,6 +49,12 @@ module.exports = {
       outfit: ["Outfit", "sans-serif"],
       karla: ["Karla", "sans-serif"],
       roboto: ["Roboto", "sans-serif"],
+      colors: {
+        primary: "#141519",
+        secondary: "#202020",
+        action: "#FF7F57",
+        image: "#3B3C41",
+      },
     },
   },
   variants: {

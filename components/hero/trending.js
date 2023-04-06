@@ -86,7 +86,7 @@ const Trending = () => {
               key={anime.id}
               className="flex shrink-0 cursor-pointer lg:items-center "
             >
-              <Link href={`/anime/info?title=${url}&id=${anime.id}`}>
+              <Link href={`/anime/${anime.id}`}>
                 <Image
                   src={anime.coverImage.large}
                   alt={anime.title.romaji || anime.title.english}

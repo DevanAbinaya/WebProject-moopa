@@ -352,9 +352,7 @@ export default function Card() {
                           ? `/manga/detail/id?aniId=${anime.id}&aniTitle=${
                               anime.title.english || anime.title.romaji
                             }`
-                          : `/anime/info?title=${
-                              anime.title.english || anime.title.romaji
-                            }&id=${anime.id}`
+                          : `/anime/${anime.id}`
                       }
                       className=""
                     >

@@ -26,9 +26,13 @@ export default function Himitsu({
   const [title, setTitle] = useState(info.title.english || info.title.romaji);
   const [load, setLoad] = useState(true);
   const [Lang, setLang] = useState(true);
+  const [showAll, setShowAll] = useState(false);
+
   const [lastPlayed, setLastPlayed] = useState(null);
   const episode = episodeList;
   const epi1 = episode1;
+
+  const maxItems = 3;
 
   function handleEnLang() {
     setLang(true);
@@ -95,9 +99,7 @@ export default function Himitsu({
 
   // console.log(episodeIndo);
 
-  // console.log(subIndo);
-
-  // console.log(Lang);
+  // console.log(lastPlayed);
 
   function handleLoad() {
     setLoad(false);
@@ -118,7 +120,7 @@ export default function Himitsu({
               <img
                 // ref={ref}
                 src={info.cover || info.image}
-                className="blur- h-[400px] w-screen object-cover mix-blend-darken"
+                className="h-[300px] w-screen object-cover brightness-75 mix-blend-darken"
               />
               <div className="z-10 h-full drop-shadow-2xl bg-[#121212]" />
             </div>
@@ -172,15 +174,7 @@ export default function Himitsu({
                       <div className="flex">
                         {epi1 && epi1[0] ? (
                           <Link
-                            href={`/anime/watch?title=${encodeURIComponent(
-                              info.title?.english ||
-                                info.title.romaji ||
-                                info.title.native
-                            )}&id=${epi1[0].id || null}&idInt=${info.id}&epi=${
-                              epi1[0].number || null
-                            }&epiTitle=${encodeURIComponent(
-                              epi1[0].title || null
-                            )}`}
+                            href={`/anime/watch/${epi1[0].id}/${info.id}`}
                             onClick={() =>
                               handleStore({
                                 title:
@@ -298,31 +292,37 @@ export default function Himitsu({
                   </div>
                 </div>
 
-                <div className="p-3 lg:p-0">
-                  <h1 className="items-start py-5 text-2xl font-bold">
-                    Relations
-                  </h1>
+                <div className="">
+                  <div className="flex gap-5 items-center">
+                    <div className="p-3 lg:p-0 text-3xl font-bold">
+                      Relations
+                    </div>
+                    {info.relations.length > maxItems && (
+                      <div
+                        className="cursor-pointer"
+                        onClick={() => setShowAll(!showAll)}
+                      >
+                        {showAll ? "show less" : "show more"}
+                      </div>
+                    )}
+                  </div>
                   <div
-                    className={`grid grid-cols-1 justify-items-center py-5 px-5 lg:grid-cols-3 ${
-                      load ? "h-[290px] overflow-y-clip" : ""
-                    }`}
+                    className={`w-screen lg:w-full grid lg:grid-cols-3 justify-items-center gap-7 lg:pt-7 lg:px-4 pt-10 rounded-xl`}
                   >
                     {info.relations &&
-                      info.relations.map((relation, index) => {
-                        return (
-                          <div key={index} className="w-full gap-6 p-5 ">
+                      info.relations
+                        .slice(0, showAll ? info.relations.length : maxItems)
+                        .map((relation, index) => {
+                          return (
                             <Link
+                              key={relation.id}
                               href={
                                 relation.type === "TV" ||
                                 relation.type === "OVA" ||
                                 relation.type === "MOVIE" ||
                                 relation.type === "SPECIAL" ||
                                 relation.type === "ONA"
-                                  ? `/anime/info?title=${encodeURIComponent(
-                                      info.title?.english ||
-                                        info.title.romaji ||
-                                        info.title.native
-                                    )}&id=${relation.id}`
+                                  ? `/anime/${relation.id}`
                                   : `/manga/detail/id?aniId=${
                                       relation.id
                                     }&aniTitle=${encodeURIComponent(
@@ -331,56 +331,48 @@ export default function Himitsu({
                                         info.title.native
                                     )}`
                               }
-                              className={`flex w-full justify-between rounded-md bg-[#282828] p-2 shadow-lg duration-300 ease-out hover:scale-105 ${
-                                relation.type === "TV" ||
-                                relation.type === "OVA" ||
-                                relation.type === "MOVIE" ||
-                                relation.type === "SPECIAL" ||
-                                relation.type === "ONA" ||
-                                relation.type === "MANGA" ||
-                                relation.type === "TV_SHORT"
-                                  ? ``
-                                  : "pointer-events-none"
+                              className={`hover:scale-[1.02] scale-100 transition-transform duration-200 ease-out ${
+                                relation.type === "MUSIC"
+                                  ? "pointer-events-none"
+                                  : ""
                               }`}
                             >
-                              <div className="flex flex-col justify-between">
-                                <div className="font-bold text-[#FF7F57]">
-                                  {relation.relationType}
+                              <div
+                                key={relation.id}
+                                initial={{ opacity: 0, y: 50 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{
+                                  opacity: 0,
+                                  y: -50,
+                                  transition: { duration: 0.5 },
+                                }}
+                                transition={{
+                                  duration: 0.8,
+                                  delay: index * 0.1,
+                                }}
+                                className="w-[420px] h-[126px] bg-secondary flex rounded-md"
+                              >
+                                <div className="min-w-[20%] bg-image rounded-l-md shrink-0">
+                                  <img
+                                    src={relation.image}
+                                    alt={relation.id}
+                                    className="object-cover h-full w-[90px] shrink-0 rounded-l-md"
+                                  />
                                 </div>
-                                <div className="text-lg font-bold text-white">
-                                  {relation.title.userPreferred}
+                                <div className="min-w-[80%] h-full grid px-3 items-center">
+                                  <div className="text-action font-outfit font-bold">
+                                    {relation.relationType}
+                                  </div>
+                                  <div className="font-roboto font-thin italic line-clamp-2">
+                                    {relation.title.romaji}
+                                  </div>
+                                  <div className={``}>{relation.type}</div>
                                 </div>
-                                <div className="flex">
-                                  <p
-                                    className="dynamic-text rounded-lg p-1 font-outfit text-sm font-semibold "
-                                    style={color}
-                                  >
-                                    {relation.type}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="relative h-[200px] w-[140px] shrink-0">
-                                <Image
-                                  fill
-                                  src={relation.image}
-                                  alt={`Cover Image for ${relation.title}`}
-                                  className=" bg-slate-400 object-cover"
-                                />
                               </div>
                             </Link>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
                   </div>
-                  {info && info.relations && info.relations.length > 3 && (
-                    <button
-                      type="button"
-                      className="w-full"
-                      onClick={handleLoad}
-                    >
-                      {load ? "Load More" : ""}
-                    </button>
-                  )}
                 </div>
 
                 <div className="z-20 flex flex-col gap-10 p-3 lg:p-0">
@@ -433,17 +425,9 @@ export default function Himitsu({
                                   id: info.id,
                                 })
                               }
-                              href={`/anime/watch?title=${encodeURIComponent(
-                                info.title?.english ||
-                                  info.title.romaji ||
-                                  info.title.native
-                              )}&id=${episode.id}&idInt=${info.id}&epi=${
-                                episode.number
-                              }&epiTitle=${encodeURIComponent(
-                                episode.title ||
-                                  info.title.romaji ||
-                                  info.title.english
-                              )}&sub=en${item ? `&seek=${item.time}` : ``}`}
+                              href={`/anime/watch/${episode.id}/${info.id}/${
+                                item ? `${item.time}` : ""
+                              }`}
                               className={`text-start text-xl ${
                                 item ? "text-[#414141]" : "text-white"
                               }`}
@@ -536,14 +520,19 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
     context.res.setHeader("Cache-Control", "public, max-age=3600");
     const { id } = context.query;
+    if (!id) {
+      return {
+        notFound: true,
+      };
+    }
 
     const provider = new META.Anilist();
 
     const [info, episodes] = await Promise.all([
-      fetch(`https://api.moopa.my.id/meta/anilist/info/${id}`).then((res) =>
+      fetch(`https://api.moopa.my.id/meta/anilist/info/${id[0]}`).then((res) =>
         res.json()
       ),
-      provider.fetchEpisodesListById(id),
+      provider.fetchEpisodesListById(id[0]),
     ]);
 
     let episodeList = episodes;
@@ -559,10 +548,12 @@ export const getServerSideProps = withPageAuthRequired({
         data.results.map((item) => item.title)
       );
       const anime = data.results.filter((item) => item.title === match);
-      const infos = await fetch(
-        `https://api.moopa.my.id/anime/gogoanime/info/${anime[0].id}`
-      ).then((res) => res.json());
-      episodeList = infos.episodes;
+      if (anime.length !== 0) {
+        const infos = await fetch(
+          `https://api.moopa.my.id/anime/gogoanime/info/${anime[0].id}`
+        ).then((res) => res.json());
+        episodeList = infos.episodes;
+      }
     }
 
     const ress = await fetch(

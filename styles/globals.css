@@ -10,7 +10,13 @@
 }
 
 body {
-  @apply scrollbar-hide bg-[#131313];
+  @apply bg-[#131313] scrollbar-hide;
+}
+
+@layer components {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
 }
 
 .tooltiptext {
@@ -34,10 +40,6 @@ a {
 
 button {
   -webkit-tap-highlight-color: transparent;
-}
-
-::selection {
-  background-color: transparent;
 }
 
 .chapter-button {
@@ -109,4 +111,14 @@ button {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   white-space: normal;
+}
+
+.banner {
+  transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
