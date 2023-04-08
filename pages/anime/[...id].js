@@ -307,7 +307,7 @@ export default function Himitsu({
                     )}
                   </div>
                   <div
-                    className={`w-screen lg:w-full grid lg:grid-cols-3 justify-items-center gap-7 lg:pt-7 lg:px-4 pt-10 rounded-xl`}
+                    className={`w-screen lg:w-full grid lg:grid-cols-3 justify-items-center gap-7 lg:pt-7 px-3 lg:px-4 pt-10 rounded-xl`}
                   >
                     {info.relations &&
                       info.relations
@@ -331,7 +331,7 @@ export default function Himitsu({
                                         info.title.native
                                     )}`
                               }
-                              className={`hover:scale-[1.02] scale-100 transition-transform duration-200 ease-out ${
+                              className={`hover:scale-[1.02] scale-100 transition-transform duration-200 ease-out w-full ${
                                 relation.type === "MUSIC"
                                   ? "pointer-events-none"
                                   : ""
@@ -350,13 +350,13 @@ export default function Himitsu({
                                   duration: 0.8,
                                   delay: index * 0.1,
                                 }}
-                                className="w-[420px] h-[126px] bg-secondary flex rounded-md"
+                                className="w-full shrink h-[126px] bg-secondary flex rounded-md"
                               >
                                 <div className="min-w-[20%] bg-image rounded-l-md shrink-0">
                                   <img
                                     src={relation.image}
                                     alt={relation.id}
-                                    className="object-cover h-full w-[90px] shrink-0 rounded-l-md"
+                                    className="object-cover h-full w-full shrink-0 rounded-l-md"
                                   />
                                 </div>
                                 <div className="min-w-[80%] h-full grid px-3 items-center">

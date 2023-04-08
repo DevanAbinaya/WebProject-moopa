@@ -161,9 +161,7 @@ export default function MangaDetail({ data, manga, aniId, provider }) {
                                   relation.type === "MANGA" ||
                                   relation.type === "NOVEL"
                                     ? `/manga/detail/id?aniId=${relation.id}`
-                                    : `/anime/info?title=${
-                                        data.title.english || data.title.romaji
-                                      }&id=${relation.id}`
+                                    : `/anime/${relation.id}`
                                 }
                                 className={`flex w-full justify-between rounded-md bg-[#282828] p-2 shadow-lg duration-300 ease-out hover:scale-105 ${
                                   relation.type === "TV" ||

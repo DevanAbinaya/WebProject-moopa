@@ -263,7 +263,7 @@ export default function Home({ detail, populars, topDesc }) {
           <div className="relative grid grid-rows-2 items-center md:flex md:h-[760px] md:w-[80%] md:justify-between">
             <div className="row-start-2 flex h-full flex-col gap-7 md:w-[55%] md:justify-center">
               <h1 className="w-[85%] font-outfit font-extrabold md:text-[45px] line-clamp-2">
-                {data.title.english}
+                {data.title.english || data.title.romaji || data.title.native}
               </h1>
               <div className="font-roboto font-light md:text-[24px] line-clamp-5">
                 {ReactHtmlParser(data.description)}

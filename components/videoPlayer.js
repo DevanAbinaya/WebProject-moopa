@@ -1,7 +1,7 @@
 import Player from "../lib/Artplayer";
 import { useEffect, useState } from "react";
 
-export default function VideoPlayer({ kagi, data, seek, titles, id }) {
+export default function VideoPlayer({ data, seek, titles, id }) {
   const [url, setUrl] = useState();
   const [source, setSource] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,7 +46,6 @@ export default function VideoPlayer({ kagi, data, seek, titles, id }) {
         ""
       ) : (
         <Player
-          key={kagi}
           option={{
             url: `${url}`,
             quality: [source],
