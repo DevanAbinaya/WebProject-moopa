@@ -36,15 +36,20 @@ export default function Info({ info }) {
             />
           </div>
           <div>
-            <Link href={`/anime/${data.id}`} className="">
+            <div className="">
               {data.episodes.length > 0 ? (
                 data.episodes
                   .filter((items) => items.id == info.id)
                   .map((item) => (
                     <div key={item.id} className="p-3 grid gap-2">
-                      <h1 className="text-xl font-outfit font-semibold hover:underline line-clamp-2">
-                        {item.title}
-                      </h1>
+                      <div className="text-xl font-outfit font-semibold line-clamp-2">
+                        <Link
+                          href={`/anime/${data.id}`}
+                          className="inline hover:underline"
+                        >
+                          {item.title}
+                        </Link>
+                      </div>
                       <h4 className="text-sm font-karla font-light">
                         Episode {item.number}
                       </h4>
@@ -56,9 +61,12 @@ export default function Info({ info }) {
                     .filter((item) => item.id == info.id)
                     .map((item) => (
                       <div key={item.id} className="p-3 grid gap-2">
-                        <h1 className="text-xl font-outfit font-semibold hover:underline line-clamp-2">
+                        <Link
+                          href={`/anime/${data.id}`}
+                          className="text-xl font-outfit font-semibold hover:underline line-clamp-2"
+                        >
                           {title}
-                        </h1>
+                        </Link>
                         <h4 className="text-sm font-karla font-light">
                           Episode {item.number}
                         </h4>
@@ -66,7 +74,7 @@ export default function Info({ info }) {
                     ))}
                 </>
               )}
-            </Link>
+            </div>
             <div className="h-[1px] bg-[#3b3b3b]" />
             <div>
               <div className="px-4 pt-7 pb-4 h-full flex">
