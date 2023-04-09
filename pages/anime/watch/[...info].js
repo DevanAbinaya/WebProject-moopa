@@ -61,12 +61,14 @@ export default function Info({ info }) {
                     .filter((item) => item.id == info.id)
                     .map((item) => (
                       <div key={item.id} className="p-3 grid gap-2">
-                        <Link
-                          href={`/anime/${data.id}`}
-                          className="text-xl font-outfit font-semibold hover:underline line-clamp-2"
-                        >
-                          {title}
-                        </Link>
+                        <div className="text-xl font-outfit font-semibold line-clamp-2">
+                          <Link
+                            href={`/anime/${data.id}`}
+                            className="inline hover:underline"
+                          >
+                            {title}
+                          </Link>
+                        </div>
                         <h4 className="text-sm font-karla font-light">
                           Episode {item.number}
                         </h4>
