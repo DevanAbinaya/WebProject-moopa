@@ -7,11 +7,14 @@ import Link from "next/link";
 import { closestMatch } from "closest-match";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import Modal from "../../../components/modal";
 
 export default function Info({ info }) {
   const title = info.aniData.title.romaji || info.aniData.title.english;
   const data = info.aniData;
   const fallback = info.epiFallback;
+
+  const [open, setOpen] = useState(false);
 
   const playingTitle = data.episodes
     .filter((item) => item.id == info.id)
@@ -24,9 +27,32 @@ export default function Info({ info }) {
           {fallback ? data.title.romaji || data.title.english : playingTitle}
         </title>
       </Head>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <div className="bg-[#202020] rounded-lg w-[268px] text-center">
+          <div className="p-5 grid gap-2 justify-center place-items-center">
+            <h1 className="text-md font-extrabold font-karla">
+              Save this Anime to Your List
+            </h1>
+            <h1 className="text-sm font-karla font-extralight w-[205px]">
+              Are you sure you want to save this anime to your list?
+            </h1>
+            <div className="flex gap-12 items-center pt-3 justify-between">
+              <button className="p-2 font-karla font-extrabold text-sm bg-[#93FF3E] w-[84px] rounded-[10px] text-black shadow">
+                YES
+              </button>
+              <button
+                onClick={() => setOpen(false)}
+                className="p-2 font-karla font-extrabold text-sm bg-white w-[84px] rounded-[10px] text-black shadow-lg"
+              >
+                NO
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
       <div className="min-h-screen flex flex-col lg:gap-0 gap-5 lg:flex-row lg:py-10 lg:px-10 justify-start w-screen">
         <div className="w-screen lg:w-[67%]">
-          <div className="h-auto aspect-video">
+          <div className="h-auto aspect-video z-20">
             <VideoPlayer
               key={info.id}
               data={info.epiData}
@@ -95,8 +121,8 @@ export default function Info({ info }) {
                       Studios
                     </h2>
                     <div className="row-start-2">{data.studios}</div>
-                    <div className="grid col-start-2 place-content-end  relative">
-                      <div className="tooltip">
+                    <div className="grid col-start-2 place-content-end relative">
+                      <div className="" onClick={() => setOpen(true)}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -111,9 +137,9 @@ export default function Info({ info }) {
                             d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
                           />
                         </svg>
-                        <span className="tooltiptext transition-all duration-300 absolute -top-12 bg-[#2c2c2c] font-karla p-2 rounded-l-lg rounded-tr-lg right-3 select-none">
+                        {/* <span className=" transition-all duration-300 absolute -top-12 bg-[#2c2c2c] font-karla p-2 rounded-l-lg rounded-tr-lg right-3 select-none">
                           Save to My List
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   </div>
